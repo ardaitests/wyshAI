@@ -26,7 +26,7 @@
 </head>
 <body>
   <h1>Treehouse Home Estimator</h1>
-  <p>Chat with our estimator bot to get a rough idea of your treehouse's value.</p>
+  <p>Launch the chatbot in the lower right corner to find out what Treehouse estimates your house is worth.</p>
 
   <!-- The chat widget will render itself automatically -->
 
@@ -35,7 +35,13 @@
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
     createChat({
-      webhookUrl: 'https://areed.app.n8n.cloud/webhook/603bd278-1f00-4963-8e24-34349b573ce4/chat'
+      webhookUrl: 'https://areed.app.n8n.cloud/webhook/603bd278-1f00-4963-8e24-34349b573ce4/chat',
+      title: 'Treehouse Estimator',
+      subtitle: 'Welcome to the Treehouse Financial AI home estimator.',
+      accentColor: '#1d1d1d', // Custom brand color (teal green)
+      initialMessage: 'To start, can you share the address of the house you would like to sell?',
+      position: 'right',
+      theme: 'light'
     });
   </script>
 </body>
