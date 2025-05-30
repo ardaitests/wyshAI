@@ -1,13 +1,63 @@
-<!-- /demos/TreehouseHomeEstimator/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Treehouse Home Estimator</title>
+  <title>Treehouse Home Estimator Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 3rem auto; padding: 1rem; }
+    h1 { color: #333; }
+    form { margin-top: 2rem; }
+    input, button {
+      padding: 0.5rem; font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    #response {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #f1f1f1;
+      border-left: 4px solid #4CAF50;
+    }
+  </style>
 </head>
 <body>
   <h1>Treehouse Home Estimator</h1>
-  <p>This is a placeholder page for the demo.</p>
+  <p>Ask a question or describe your home. We'll give you an estimate!</p>
+
+  <form id="chatForm">
+    <input type="text" id="message" placeholder="Type your question..." required />
+    <button type="submit">Send</button>
+  </form>
+
+  <div id="response" style="display:none;"></div>
+
+  <script>
+    const form = document.getElementById('chatForm');
+    const responseDiv = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('message');
+      const message = input.value;
+      input.value = '';
+
+      responseDiv.style.display = 'block';
+      responseDiv.textContent = 'Thinking...';
+
+      try {
+        const res = await fetch('https://areed.app.n8n.cloud/webhook/603bd278-1f00-4963-8e24-34349b573ce4/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        responseDiv.textContent = data.reply || 'No response received.';
+      } catch (err) {
+        console.error(err);
+        responseDiv.textContent = 'An error occurred. Please try again.';
+      }
+    });
+  </script>
 </body>
 </html>
