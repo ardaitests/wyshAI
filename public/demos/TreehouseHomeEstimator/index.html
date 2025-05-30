@@ -3,61 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Treehouse Home Estimator Chat</title>
+  <title>Treehouse Home Estimator</title>
+
+  <!-- n8n Chat Widget Styles -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
   <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 3rem auto; padding: 1rem; }
-    h1 { color: #333; }
-    form { margin-top: 2rem; }
-    input, button {
-      padding: 0.5rem; font-size: 1rem;
-      margin-right: 0.5rem;
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
     }
-    #response {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #f1f1f1;
-      border-left: 4px solid #4CAF50;
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #555;
+      margin-bottom: 2rem;
     }
   </style>
 </head>
 <body>
   <h1>Treehouse Home Estimator</h1>
-  <p>Ask a question or describe your home. We'll give you an estimate!</p>
+  <p>Chat with our estimator bot to get an estimate of the value of your house.</p>
 
-  <form id="chatForm">
-    <input type="text" id="message" placeholder="" required />
-    <button type="submit">Send</button>
-  </form>
+  <!-- The chat widget will render itself automatically -->
 
-  <div id="response" style="display:none;"></div>
-
-  <script>
-    const form = document.getElementById('chatForm');
-    const responseDiv = document.getElementById('response');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const input = document.getElementById('message');
-      const message = input.value;
-      input.value = '';
-
-      responseDiv.style.display = 'block';
-      responseDiv.textContent = 'Thinking...';
-
-      try {
-        const res = await fetch('https://areed.app.n8n.cloud/webhook/603bd278-1f00-4963-8e24-34349b573ce4/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message })
-        });
-
-        const data = await res.json();
-        responseDiv.textContent = data.reply || 'No response received.';
-      } catch (err) {
-        console.error(err);
-        responseDiv.textContent = 'An error occurred. Please try again.';
-      }
-    });
-  </script>
-</body>
-</html>
+  <!-- n8n Chat Widget Script -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.b
