@@ -26,10 +26,17 @@
 </head>
 <body>
   <h1>Treehouse Home Estimator</h1>
-  <p>Chat with our estimator bot to get an estimate of the value of your house.</p>
+  <p>Chat with our estimator bot to get a rough idea of your treehouse's value.</p>
 
   <!-- The chat widget will render itself automatically -->
 
   <!-- n8n Chat Widget Script -->
   <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.b
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'https://areed.app.n8n.cloud/webhook/603bd278-1f00-4963-8e24-34349b573ce4/chat'
+    });
+  </script>
+</body>
+</html>
