@@ -33,12 +33,22 @@
   <!-- n8n Chat Widget Script -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
+/*
     createChat({
       webhookUrl: 'https://areed.app.n8n.cloud/webhook/603bd278-1f00-4963-8e24-34349b573ce4/chat',
       title: 'Treehouse Estimator',
       subtitle: 'Welcome to the Treehouse Financial AI home estimator.',
       accentColor: '#1d1d1d', // Custom brand color (graphite)
+      initialMessage: 'To start, can you share the address of the house you would like to sell?',
+      position: 'right',
+      theme: 'light'
+    });
+*/
+    createChat({
+      webhookUrl: 'https://areed.app.n8n.cloud/webhook/chatbot',
+      title: 'Treehouse Estimator',
+      subtitle: 'Let’s estimate your home’s value!',
+      accentColor: '#1d1d1d',
       initialMessage: 'To start, can you share the address of the house you would like to sell?',
       position: 'right',
       theme: 'light'
