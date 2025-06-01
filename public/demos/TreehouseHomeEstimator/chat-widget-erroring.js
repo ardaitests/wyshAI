@@ -424,7 +424,6 @@
             console.log("Webhook URL:", config.webhook.url);
             console.log("Payload being sent to webhook:", data);
             console.log("Session ID:", currentSessionId);
-
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
                 headers: {
@@ -432,27 +431,6 @@
                 },
                 body: JSON.stringify(data)
             });
-
-            const rawText = await response.text(); // Get raw text first
-            console.log("🚨 Raw response from server:", rawText); // DEBUG LOG
-
-            let responseData;
-            try {
-              responseData = JSON.parse(rawText);
-            } catch (err) {
-              console.error("❌ Failed to parse JSON:", err.message);
-              return;
-            }
-
-            chatContainer.querySelector('.brand-header').style.display = 'none';
-            chatContainer.querySelector('.new-conversation').style.display = 'none';
-            chatInterface.classList.add('active');
-
-            const botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
-            messagesContainer.appendChild(botMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
             const responseData = await response.json();
             chatContainer.querySelector('.brand-header').style.display = 'none';
