@@ -374,11 +374,6 @@
 
     chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
 
-    async function startNewConversation() {
-        console.log('🎬 New conversation started'); // <-- Debug log
-        ...
-    }
-
 
     const toggleButton = document.createElement('button');
     toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
