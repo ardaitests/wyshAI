@@ -393,13 +393,18 @@
     const sendButton = chatContainer.querySelector('button[type="submit"]');
 
     function generateUUID() {
-        return crypto.randomUUID();
+        // return crypto.randomUUID(); //this is not supported in Safari, sigh.
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
     }
 
     async function startNewConversation() {
         currentSessionId = generateUUID();
         const data = [{
-            action: "loadPreviousSession",
+            action: "loadPreviousSession", //must be a valid UUID
             sessionId: currentSessionId,
             route: config.webhook.route,
             metadata: {
@@ -409,6 +414,8 @@
 
         try {
             console.log("Webhook URL:", config.webhook.url);
+            console.log("Payload being sent to webhook:", data);
+            console.log("Session ID:", currentSessionId);
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
                 headers: {
