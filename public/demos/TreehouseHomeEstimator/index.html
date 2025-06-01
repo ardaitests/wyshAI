@@ -31,7 +31,7 @@
   <!-- The chat widget will render itself automatically -->
 
   <!-- n8n Chat Widget Script -->
-  <script type="module">
+  <!-- <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
     createChat({
@@ -55,6 +55,32 @@
       theme: 'light'
     });
 */
-  </script>
+</script-->
+
+<!-- NoCodeCreative Widget Configuration -->
+    <script>
+        window.ChatWidgetConfig = {
+            webhook: {
+                url: 'https://areed.app.n8n.cloud/webhook/chatbot',
+                route: 'general'
+            },
+            branding: {
+                logo: 'https://www.drpepper.com/s/sfsites/c/resource/KDP_Assets/images/dr-pepper.svg',
+                name: 'Treehouse Financial', // Your company name
+                welcomeText: 'Hi 👋, let‘s find out how much your house is worth.', //Welcome message
+                responseTimeText: 'Begin by typing a message or entering your address.' //Response time message
+            },
+            style: {
+                primaryColor: '#854fff', //Primary color
+                secondaryColor: '#6b3fd4', //Secondary color
+                position: 'right', //Position of the widget (left or right)
+                backgroundColor: '#ffffff', //Background color of the chat widget
+                fontColor: '#333333' //Text color for messages and interface
+            }
+        };
+    </script>
+    <script src="chat-widget.js"></script>
+<!-- Widget Script -->
+
 </body>
 </html>
