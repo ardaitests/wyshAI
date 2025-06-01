@@ -374,8 +374,6 @@
 
     chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
 
-    newChatBtn.addEventListener('click', startNewConversation);
-
     async function startNewConversation() {
         console.log('🎬 New conversation started'); // <-- Debug log
         ...
@@ -476,7 +474,7 @@
         }
     }
 
-    //newChatBtn.addEventListener('click', startNewConversation);
+    newChatBtn.addEventListener('click', startNewConversation);
 
     sendButton.addEventListener('click', () => {
         const message = textarea.value.trim();
