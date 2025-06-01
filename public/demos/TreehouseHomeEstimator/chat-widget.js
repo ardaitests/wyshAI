@@ -298,6 +298,7 @@
             poweredBy: {
                 text: 'Powered by wyshAI',
                 link: 'https://wyshai.com'
+            }
         },
         style: {
             primaryColor: '',
