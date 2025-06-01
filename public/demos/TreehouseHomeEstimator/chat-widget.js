@@ -408,6 +408,7 @@
         }];
 
         try {
+            console.log("Webhook URL:", config.webhook.url);
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
                 headers: {
