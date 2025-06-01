@@ -409,10 +409,9 @@
     }
 
     async function startNewConversation() {
-        //currentSessionId = generateUUID(); //used initially with crypto.randomUUID
         currentSessionId = generateSessionId();
         const data = [{
-            action: "loadPreviousSession", //must be a valid UUID
+            action: "loadPreviousSession",
             sessionId: currentSessionId,
             route: config.webhook.route,
             metadata: {
@@ -433,15 +432,15 @@
                 body: JSON.stringify(data)
             });
 
-            const rawText = await response.text(); // Get raw text first
-            console.log("🚨 Raw response from server:", rawText); // DEBUG LOG
+            const rawText = await response.text();
+            console.log("🚨 Raw response from server:", rawText);
 
             let responseData;
             try {
-              responseData = JSON.parse(rawText);
+                responseData = JSON.parse(rawText);
             } catch (err) {
-              console.error("❌ Failed to parse JSON:", err.message);
-              return;
+                console.error("❌ Failed to parse JSON:", err.message);
+                return;
             }
 
             chatContainer.querySelector('.brand-header').style.display = 'none';
@@ -450,10 +449,9 @@
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
+            botMessageDiv.textContent = responseData.output || 'No response received.';
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
         } catch (error) {
             console.error('Error:', error);
         }
@@ -489,7 +487,7 @@
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(data) ? data[0].output : data.output;
+            botMessageDiv.textContent = data.output || 'No response received.';
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
@@ -522,11 +520,11 @@
         chatContainer.classList.toggle('open');
     });
 
-    // Add close button handlers
     const closeButtons = chatContainer.querySelectorAll('.close-button');
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             chatContainer.classList.remove('open');
         });
     });
-})();
+
+// })();
