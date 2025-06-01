@@ -392,17 +392,25 @@
     const textarea = chatContainer.querySelector('textarea');
     const sendButton = chatContainer.querySelector('button[type="submit"]');
 
-    function generateUUID() {
+    //function generateUUID() {
         // return crypto.randomUUID(); //this is not supported in Safari, sigh.
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          const r = Math.random() * 16 | 0,
-            v = c === 'x' ? r : (r & 0x3 | 0x8);
-          return v.toString(16);
-        });
+
+        // below provided by ChatGPT as an alternative due to lack of support in Safari
+        //return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          //const r = Math.random() * 16 | 0,
+            //v = c === 'x' ? r : (r & 0x3 | 0x8);
+          //return v.toString(16);
+        //});
+    //}
+
+    //ChatGPT says to try this
+    function generateSessionId() {
+      return [...Array(32)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
     }
 
     async function startNewConversation() {
-        currentSessionId = generateUUID();
+        //currentSessionId = generateUUID(); //used initially with crypto.randomUUID
+        currentSessionId = generateSessionId();
         const data = [{
             action: "loadPreviousSession", //must be a valid UUID
             sessionId: currentSessionId,
