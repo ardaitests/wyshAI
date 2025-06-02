@@ -296,8 +296,8 @@
             welcomeText: '',
             responseTimeText: '',
             poweredBy: {
-                text: 'Powered by wyshAI',
-                link: 'https://wyshai.com'
+                text: 'Powered by n8n',
+                link: 'https://n8n.partnerlinks.io/m8a94i19zhqq?utm_source=nocodecreative.io'
             }
         },
         style: {
@@ -348,7 +348,7 @@
                 <svg class="message-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/>
                 </svg>
-                Start a conversation
+                Send us a message
             </button>
             <p class="response-text">${config.branding.responseTimeText}</p>
         </div>
@@ -374,7 +374,6 @@
 
     chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
 
-
     const toggleButton = document.createElement('button');
     toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
     toggleButton.innerHTML = `
@@ -392,24 +391,12 @@
     const textarea = chatContainer.querySelector('textarea');
     const sendButton = chatContainer.querySelector('button[type="submit"]');
 
-    //function generateUUID() {
-        // return crypto.randomUUID(); //this is not supported in Safari, sigh.
-
-        // below provided by ChatGPT as an alternative due to lack of support in Safari
-        //return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          //const r = Math.random() * 16 | 0,
-            //v = c === 'x' ? r : (r & 0x3 | 0x8);
-          //return v.toString(16);
-        //});
-    //}
-
-    //ChatGPT says to try this
-    function generateSessionId() {
-      return [...Array(32)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+    function generateUUID() {
+        return crypto.randomUUID();
     }
 
     async function startNewConversation() {
-        currentSessionId = generateSessionId();
+        currentSessionId = generateUUID();
         const data = [{
             action: "loadPreviousSession",
             sessionId: currentSessionId,
@@ -420,10 +407,6 @@
         }];
 
         try {
-            console.log("Webhook URL:", config.webhook.url);
-            console.log("Payload being sent to webhook:", data);
-            console.log("Session ID:", currentSessionId);
-
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
                 headers: {
@@ -432,24 +415,14 @@
                 body: JSON.stringify(data)
             });
 
-            const rawText = await response.text();
-            console.log("🚨 Raw response from server:", rawText);
-
-            let responseData;
-            try {
-                responseData = JSON.parse(rawText);
-            } catch (err) {
-                console.error("❌ Failed to parse JSON:", err.message);
-                return;
-            }
-
+            const responseData = await response.json();
             chatContainer.querySelector('.brand-header').style.display = 'none';
             chatContainer.querySelector('.new-conversation').style.display = 'none';
             chatInterface.classList.add('active');
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = responseData.output || 'No response received.';
+            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
@@ -487,7 +460,7 @@
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = data.output || 'No response received.';
+            botMessageDiv.textContent = Array.isArray(data) ? data[0].output : data.output;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
@@ -520,11 +493,11 @@
         chatContainer.classList.toggle('open');
     });
 
+    // Add close button handlers
     const closeButtons = chatContainer.querySelectorAll('.close-button');
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             chatContainer.classList.remove('open');
         });
     });
-
 })();
