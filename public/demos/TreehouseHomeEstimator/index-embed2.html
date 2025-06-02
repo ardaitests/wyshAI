@@ -42,7 +42,30 @@
   	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
   	createChat({
-  		webhookUrl: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat'
+  		webhookUrl: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+      webhookConfig: {
+    		method: 'POST',
+    		headers: {}
+    	},
+    	target: '#n8n-chat',
+    	mode: 'window',
+    	chatInputKey: 'chatInput',
+    	chatSessionKey: 'sessionId',
+    	metadata: {},
+    	showWelcomeScreen: false,
+    	defaultLanguage: 'en',
+    	initialMessages: [
+    		'Let’s get started. What is the address of the house you would like to sell?'
+    	],
+    	i18n: {
+    		en: {
+    			title: 'Treehouse Financial',
+    			subtitle: '',
+    			footer: '',
+    			getStarted: 'New Conversation',
+    			inputPlaceholder: 'Type your message...',
+    		},
+    	}
   	});
   </script>
   <!-- <script src="https://wyshai.com/demos/treehousehomeestimator/chat-widget.js"></script> -->
