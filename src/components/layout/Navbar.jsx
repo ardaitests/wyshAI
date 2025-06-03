@@ -31,8 +31,8 @@ const Navbar = () => {
   ];
 
   const Logo = () => (
-    <Link to="/" className="text-2xl font-archivo font-bold text-primary" data-analytics-id="navbar-logo-wyshAI">
-      wyshAI
+    <Link to="/" className="flex items-center" data-analytics-id="navbar-logo-wyshAI">
+      <img src="/images/wyshAI-logo.png" alt="wyshAI Logo" className="h-8 w-auto" />
     </Link>
   );
 
@@ -69,7 +69,7 @@ const Navbar = () => {
             onClick={handleJoinClick}
             data-analytics-id="navbar-cta-join"
           >
-            Join
+            Get in touch
           </Button>
         </div>
 
