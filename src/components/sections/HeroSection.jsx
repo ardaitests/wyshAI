@@ -2,71 +2,67 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
-import { ArrowRight, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 
 const HeroSection = () => {
   const { openChat } = useChatbot();
 
-  const handleLearnMoreClick = () => {
-    openChat({
-      initialMessage: "Interested in learning more? Great! To start, what's your name?",
-      initialStep: 'getName'
-    });
+  const handleGetStarted = () => {
+    openChat({ initialMessage: "I'm interested in getting started with Wysh AI!", initialStep: 'getName' });
   };
 
-  return (
-    <section className="relative min-h-screen flex items-center justify-center text-center px-4 pt-20 md:pt-0 bg-gradient-to-br from-background via-slate-900 to-purple-900/30 overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <img  class="w-full h-full object-cover" alt="Abstract AI background" src="https://images.unsplash.com/photo-1678995635432-d9e89c7a8fc5" />
-      </div>
-      
-      <motion.div 
-        className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/30 rounded-full filter blur-2xl animate-pulse-slow"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatType: "mirror" }}
-      />
-      <motion.div 
-        className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent/20 rounded-full filter blur-3xl animate-pulse-slow-reverse"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 2.5, delay: 0.8, repeat: Infinity, repeatType: "mirror" }}
-      />
+  const handleLearnMore = () => {
+     // Could scroll to a section or open chat with specific context
+    const servicesSection = document.getElementById('services-overview'); // Assuming ServicesSection has this ID
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      openChat({ initialMessage: "I'd like to learn more about Wysh AI's capabilities.", initialStep: 'getMoreInfo' });
+    }
+  };
 
-      <div className="relative z-10 container mx-auto">
+
+  return (
+    <section className="bg-primary-light text-foreground pt-32 pb-20 md:pt-40 md:pb-28">
+      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+        {/* Text Content */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <Zap className="h-16 w-16 text-primary mx-auto mb-6 animate-pulse-glow" />
-          <h1 className="text-5xl md:text-7xl font-archivo font-extrabold mb-6">
-            Custom AI Agents for <span className="gradient-text">Your Business</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-archivo font-extrabold mb-6 text-gray-800">
+            Empower Your Business with AI Solutions
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10">
-            Wysh AI partners with business owners to design and build custom AI agents, unlocking more time and money through the power of artificial intelligence.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 text-gray-600">
+            Unlock the potential of artificial intelligence to drive growth and efficiency in your small business. Let WyshAI guide you on your journey to success.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-primary to-accent text-primary-foreground text-lg px-10 py-6 rounded-full shadow-xl hover:opacity-90 transition-opacity transform hover:scale-105"
-              onClick={handleLearnMoreClick}
-            >
-              Learn More <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">
+              Get Started 
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-10 py-6 rounded-full border-primary text-primary hover:bg-primary/10 transition-colors transform hover:scale-105">
-              View Services
+            <Button size="lg" variant="outline" onClick={handleLearnMore} className="border-primary text-primary hover:bg-primary/10">
+              Learn More <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </motion.div>
+
+        {/* Image Content */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="relative flex justify-center md:justify-end"
+        >
+          <div className="w-full max-w-md lg:max-w-lg aspect-square rounded-xl shadow-2xl overflow-hidden">
+            <img 
+              className="w-full h-full object-cover"
+              alt="Modern office scene with a person interacting with AI technology"
+             src="https://images.unsplash.com/photo-1627896034609-3b43479de776" />
+          </div>
+        </motion.div>
       </div>
-      <motion.div 
-        className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      />
     </section>
   );
 };

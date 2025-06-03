@@ -5,65 +5,40 @@
 
 @layer base {
   :root {
-    --background: 224 71% 4%; /* Dark Blue/Black */
-    --foreground: 210 40% 98%; /* Light Gray */
+    --background: 210 40% 98%; /* Light Gray - Almost White */
+    --foreground: 224 71% 15%; /* Dark Blue/Black for text */
 
-    --card: 224 71% 9%; /* Slightly Lighter Dark Blue */
-    --card-foreground: 210 40% 98%;
+    --card: 210 40% 100%; /* White */
+    --card-foreground: 224 71% 15%;
 
-    --popover: 224 71% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 40% 100%;
+    --popover-foreground: 224 71% 15%;
 
-    --primary: 259 95% 69%; /* Vibrant Purple */
-    --primary-foreground: 210 40% 98%;
+    --primary: 250 60% 50%; /* Medium Purple (Hero, Buttons) */
+    --primary-foreground: 210 40% 98%; /* Light Gray for text on primary */
+    
+    --primary-light: 250 70% 95%; /* Light Purple (Hero Background) */
 
-    --secondary: 217 32.6% 17.5%; /* Dark Slate Blue */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 250 40% 90%; /* Lighter Purple or Grey for accents */
+    --secondary-foreground: 250 60% 50%; /* Medium Purple for text on secondary */
 
-    --muted: 217 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 20% 90%; /* Light Grey for muted elements */
+    --muted-foreground: 220 10% 45%; /* Darker Grey for muted text */
 
-    --accent: 217 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%; /* Light Gray for accent text */
+    --accent: 250 65% 60%; /* A slightly different purple for accents if needed */
+    --accent-foreground: 210 40% 98%;
     
     --destructive: 0 70% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 32.6% 17.5%;
-    --input: 217 32.6% 17.5%;
-    --ring: 259 95% 69%; /* Vibrant Purple for rings */
+    --border: 220 20% 85%; /* Light Grey border */
+    --input: 210 40% 100%; /* White input background */
+    --ring: 250 60% 50%; /* Medium Purple for rings */
 
-    --radius: 0.75rem;
-  }
+    --footer-background: 250 30% 25%; /* Dark Purple for Footer */
+    --footer-foreground: 210 40% 90%; /* Light Grey for Footer text */
 
-  .dark {
-    --background: 224 71% 4%;
-    --foreground: 210 40% 98%;
-
-    --card: 224 71% 9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 224 71% 9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 259 95% 69%; 
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 217 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 300 80% 60%; /* Vibrant Pink/Magenta for accents */
-    --accent-foreground: 210 40% 98%;
-    
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217 32.6% 22%; /* Slightly lighter border for dark mode */
-    --input: 217 32.6% 22%;
-    --ring: 259 95% 75%; /* Lighter Purple for rings in dark mode */
+    --radius: 0.5rem; /* Consistent rounded corners */
   }
 }
 
@@ -76,23 +51,25 @@
     font-family: 'Inter', sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-archivo;
+    @apply font-montserrat text-foreground;
+  }
+  section {
+    @apply py-12 md:py-20;
   }
 }
 
-.glassmorphic-card {
-  @apply bg-card/30 backdrop-blur-lg border border-border/50 shadow-xl;
-}
-
-.gradient-text {
-  @apply bg-gradient-to-r from-primary via-accent to-pink-500 text-transparent bg-clip-text;
-}
-
 .section-padding {
-  @apply py-16 md:py-24;
+  @apply py-12 md:py-20;
 }
 
-.animated-item {
-  opacity: 0;
-  animation-fill-mode: forwards;
+.button-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+}
+
+.button-secondary {
+  @apply bg-primary-light text-primary border border-primary hover:bg-purple-100;
+}
+
+.button-outline-white {
+  @apply bg-transparent text-white border border-white hover:bg-white/10;
 }

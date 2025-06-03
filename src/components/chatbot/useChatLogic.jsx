@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useToast } from '@/components/ui/use-toast.jsx';
 import { supabase } from '@/lib/supabaseClient.jsx';
