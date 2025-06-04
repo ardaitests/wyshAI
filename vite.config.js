@@ -1,31 +1,13 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { createLogger, defineConfig } from 'vite';
-import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDev = process.env.NODE_ENV !== 'production';
+let inlineEditPlugin, editModeDevPlugin;
 
-let plugins = [
-  react(),
-  // Other plugins will be added conditionally
-];
-
-// Only include development plugins in development
 if (isDev) {
-  try {
-    const { default: inlineEdit } = await import('./plugins/visual-editor/vite-plugin-react-inline-editor.js');
-    const { default: editMode } = await import('./plugins/visual-editor/vite-plugin-edit-mode.js');
-    plugins = [
-      ...plugins,
-      inlineEdit(),
-      editMode()
-    ];
-  } catch (error) {
-    console.warn('Failed to load development plugins:', error);
-  }
+	inlineEditPlugin = (await import('./plugins/visual-editor/vite-plugin-react-inline-editor.js')).default;
+	editModeDevPlugin = (await import('./plugins/visual-editor/vite-plugin-edit-mode.js')).default;
 }
 
 const configHorizonsViteErrorHandler = `
@@ -208,40 +190,33 @@ logger.error = (msg, options) => {
 }
 
 export default defineConfig({
-  customLogger: logger,
-  plugins: [
-    ...plugins,
-    addTransformIndexHtml
-  ],
-  css: {
-    postcss: {
-      plugins: [
-        tailwindcss,
-        autoprefixer
-      ]
-    }
-  },
-  server: {
-    cors: true,
-    headers: {
-      'Cross-Origin-Embedder-Policy': 'credentialless',
-    },
-    allowedHosts: true,
-  },
-  resolve: {
-    extensions: ['.jsx', '.js', '.tsx', '.ts', '.json'],
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  build: {
-    rollupOptions: {
-      external: [
-        '@babel/parser',
-        '@babel/traverse',
-        '@babel/generator',
-        '@babel/types'
-      ]
-    }
-  }
+	customLogger: logger,
+	plugins: [
+		...(isDev ? [inlineEditPlugin(), editModeDevPlugin()] : []),
+		react(),
+		addTransformIndexHtml
+	],
+	server: {
+		cors: true,
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'credentialless',
+		},
+		allowedHosts: true,
+	},
+	resolve: {
+		extensions: ['.jsx', '.js', '.tsx', '.ts', '.json', ],
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+		},
+	},
+	build: {
+		rollupOptions: {
+			external: [
+				'@babel/parser',
+				'@babel/traverse',
+				'@babel/generator',
+				'@babel/types'
+			]
+		}
+	}
 });

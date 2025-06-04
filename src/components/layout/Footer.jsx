@@ -1,77 +1,142 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const quickLinks = [
+    { name: 'Home', path: '/', analyticsId: 'footer-nav-home' },
+    { name: 'About Us', path: '/about', analyticsId: 'footer-nav-about' },
+    { name: 'Services', path: '/services', analyticsId: 'footer-nav-services' },
+    // { name: 'Contact', path: '/contact', analyticsId: 'footer-nav-contact' }, // Assuming contact is handled by chatbot for now
+  ];
+
+  // const resourcesLinks = [
+  //   { name: 'FAQs', path: '/faq', analyticsId: 'footer-nav-faq' },
+  //   { name: 'Blog', path: '/blog', analyticsId: 'footer-nav-blog' },
+  // ];
+
+  const legalLinks = [
+    { name: 'Privacy Policy', path: '/privacy-policy', analyticsId: 'footer-legal-privacy' },
+    { name: 'Terms of Service', path: '/terms-of-service', analyticsId: 'footer-legal-terms' },
+    // { name: 'Cookie Settings', path: '/cookie-settings', analyticsId: 'footer-legal-cookies' }, // Assuming not yet implemented
+  ];
+
+  const socialMedia = [
+    { icon: <Facebook size={20} />, name: 'Facebook', path: 'https://facebook.com/wyshai', analyticsId: 'footer-social-facebook' },
+    { icon: <Twitter size={20} />, name: 'Twitter', path: 'https://twitter.com/wyshai', analyticsId: 'footer-social-twitter' },
+    { icon: <Instagram size={20} />, name: 'Instagram', path: 'https://instagram.com/wyshai', analyticsId: 'footer-social-instagram' },
+    { icon: <Linkedin size={20} />, name: 'LinkedIn', path: 'https://linkedin.com/company/wyshai', analyticsId: 'footer-social-linkedin' },
+  ];
+
   return (
-    <footer className="bg-footer text-footer-foreground pt-16 pb-8">
+    <footer className="bg-footer-background text-footer-foreground pt-16 pb-8">
       <div className="container mx-auto px-4">
-        {/* Top section: Logo/Links and Subscribe */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Logo and Quick Links */}
-          <div className="flex flex-col md:flex-row md:col-span-2 gap-8">
-            {/* Logo and Company */}
-            <div className="mb-6 md:mb-0">
-              <Link to="/" className="flex items-center gap-2 mb-4" data-analytics-id="footer-logo-wyshAI">
-                {/* Replace with an actual logo image if available */}
-                <span className="text-3xl font-archivo font-bold text-primary">wysh</span>
-                <span className="text-3xl font-archivo font-bold text-white">AI</span>
-              </Link>
-              <div className="hidden md:block">
-                <p className="text-sm text-footer-foreground/80">Quick Links</p>
-                <ul className="mt-2 space-y-2">
-                  <li><Link to="/" className="hover:text-primary transition-colors text-sm">Home</Link></li>
-                  <li><Link to="/about" className="hover:text-primary transition-colors text-sm">About Us</Link></li>
-                  <li><Link to="/services" className="hover:text-primary transition-colors text-sm">Services</Link></li>
-                </ul>
-              </div>
-            </div>
-            {/* Quick Links for mobile */}
-            <div className="md:hidden">
-              <p className="text-sm text-footer-foreground/80">Quick Links</p>
-              <ul className="mt-2 space-y-2">
-                <li><Link to="/" className="hover:text-primary transition-colors text-sm">Home</Link></li>
-                <li><Link to="/about" className="hover:text-primary transition-colors text-sm">About Us</Link></li>
-                <li><Link to="/services" className="hover:text-primary transition-colors text-sm">Services</Link></li>
-              </ul>
-            </div>
-          </div>
-          {/* Subscribe Section */}
-          <div className="">
-            <p className="font-semibold text-white mb-3">Subscribe</p>
-            <p className="text-sm mb-3 text-footer-foreground/80">Join our newsletter for updates on features and company news.</p>
-            <form className="flex gap-2 mb-2">
-              <input
-                type="email"
-                placeholder="Your Email Here"
-                className="w-full px-3 py-2 rounded-md text-sm text-foreground focus:ring-primary focus:border-primary border-none bg-footer-foreground/10 placeholder-footer-foreground/60"
-                data-analytics-id="footer-newsletter-email-input"
-              />
-              <button
-                type="submit"
-                className="bg-footer-foreground/20 text-footer-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-                data-analytics-id="footer-newsletter-subscribe-button"
-              >
-                Subscribe
-              </button>
-            </form>
-            <p className="text-xs text-footer-foreground/60">
-              By subscribing, you agree to our <Link to="/privacy-policy" className="underline hover:text-primary">Privacy Policy</Link> and consent to receive updates.
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+          {/* Logo and Company */}
+          <div className="col-span-2 lg:col-span-2">
+            <Link to="/" className="text-3xl font-archivo font-bold text-white mb-3 block" data-analytics-id="footer-logo-wyshAI">
+              wyshAI
+            </Link>
+            <p className="text-sm text-footer-foreground/80">
+              Empowering businesses with intelligent AI solutions.
             </p>
           </div>
-        </div>
-        {/* Bottom row: divider, copyright, privacy, LinkedIn */}
-        <div className="border-t border-footer-foreground/20 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex-1 text-xs text-footer-foreground/70">© {currentYear} wyshAI LLC. All rights reserved.</div>
-          <div className="flex-1 flex justify-center">
-            <Link to="/privacy-policy" className="text-xs hover:text-primary transition-colors">Privacy Policy</Link>
+
+          {/* Quick Links */}
+          <div>
+            <p className="font-semibold text-white mb-3">Quick Links</p>
+            <ul className="space-y-2">
+              {quickLinks.map(link => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.path} 
+                    className="hover:text-primary transition-colors text-sm"
+                    data-analytics-id={link.analyticsId}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="flex-1 flex justify-end">
-            <a href="https://linkedin.com/company/wyshai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors">
-              <Linkedin size={20} />
-            </a>
+
+          {/* Resources - Commented out for now */}
+          {/*
+          <div>
+            <p className="font-semibold text-white mb-3">Resources</p>
+            <ul className="space-y-2">
+              {resourcesLinks.map(link => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.path} 
+                    className="hover:text-primary transition-colors text-sm"
+                    data-analytics-id={link.analyticsId}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          */}
+          
+          {/* Stay Updated / Subscribe - Commented out for now */}
+          {/*
+          <div className="col-span-2 md:col-span-1">
+             <p className="font-semibold text-white mb-3">Stay Updated</p>
+             <p className="text-sm mb-3 text-footer-foreground/80">Join our newsletter for updates on features and company news.</p>
+             <form className="flex">
+                <input 
+                  type="email" 
+                  placeholder="Your Email Here" 
+                  className="w-full px-3 py-2 rounded-l-md text-sm text-foreground focus:ring-primary focus:border-primary border-gray-600 bg-slate-700 placeholder-gray-400" 
+                  data-analytics-id="footer-newsletter-email-input"
+                />
+                <button 
+                  type="submit" 
+                  className="bg-primary text-primary-foreground px-4 py-2 rounded-r-md text-sm font-medium hover:bg-primary/90"
+                  data-analytics-id="footer-newsletter-subscribe-button"
+                >
+                  Subscribe
+                </button>
+             </form>
+          </div>
+          */}
+
+        </div>
+
+        <div className="border-t border-footer-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-xs text-footer-foreground/70 mb-4 md:mb-0">
+            &copy; {currentYear} wyshAI. All rights reserved.
+          </p>
+          <div className="flex space-x-4 mb-4 md:mb-0">
+            {legalLinks.map(link => (
+              <Link 
+                key={link.name} 
+                to={link.path} 
+                className="text-xs hover:text-primary transition-colors"
+                data-analytics-id={link.analyticsId}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+          <div className="flex space-x-4">
+            {socialMedia.map(social => (
+              <a 
+                key={social.name} 
+                href={social.path} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label={social.name} 
+                className="hover:text-primary transition-colors"
+                data-analytics-id={social.analyticsId}
+              >
+                {social.icon}
+              </a>
+            ))}
           </div>
         </div>
       </div>

@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <main className="flex-grow pt-[80px] bg-background"> {/* Moved bg-background to main content only */}
+      <main className="flex-grow pt-[80px]"> {/* Adjust pt to match navbar height */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -61,7 +61,7 @@ const ServicesSection = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {servicesOverview.map((service, index) => (
-            <motion.div
+            <motion.custom
               key={index}
               custom={index}
               variants={cardVariants}
@@ -70,13 +70,13 @@ const ServicesSection = () => {
               viewport={{ once: true, amount: 0.2 }}
               className="h-full"
             >
-              <Card className="h-full flex flex-col text-center items-center hover:shadow-lg transition-shadow duration-300 p-2">
+              <Card className="bg-white h-full flex flex-col text-center items-center hover:shadow-lg transition-shadow duration-300 p-2">
                 <CardHeader className="items-center pt-6 pb-2">
                   {service.icon}
-                  <CardTitle className="text-xl font-archivo font-semibold">{service.title}</CardTitle>
+                  <CardTitle className="text-xl font-archivo font-semibold text-gray-700">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow pb-2">
-                  <CardDescription className="text-sm">
+                  <CardDescription className="text-gray-500 text-sm">
                     {service.description}
                   </CardDescription>
                 </CardContent>
@@ -86,7 +86,7 @@ const ServicesSection = () => {
                   </Link>
                 </div>
               </Card>
-            </motion.div>
+            </motion.custom>
           ))}
         </div>
         
