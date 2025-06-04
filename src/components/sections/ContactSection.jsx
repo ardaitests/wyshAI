@@ -53,7 +53,7 @@ const ContactSection = () => {
             transition={{ duration: 0.6 }}
           >
             <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4">
               Unlock Your AI Potential
             </h2>
             <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
@@ -81,7 +81,7 @@ const ContactSection = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-3 text-gray-800">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-3 text-gray-800">
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto text-gray-600">

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog.jsx';
-import { MessageSquare, Send, User, ClipboardX as BotIcon, X, Loader2 } from 'lucide-react';
+import { MessageSquare, Send, User, X, Loader2 } from 'lucide-react';
 
 const ChatbotUI = ({
   isOpen,
@@ -39,8 +39,8 @@ const ChatbotUI = ({
           <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[450px] h-[70vh] flex flex-col p-0 glassmorphic-card border-primary/50">
               <DialogHeader className="p-4 border-b border-border/50">
-                <DialogTitle className="flex items-center text-xl font-archivo">
-                  <BotIcon className="h-7 w-7 mr-2 text-primary" /> wyshAI Assistant
+                <DialogTitle className="flex items-center text-xl font-montserrat">
+                  <img src="/images/wyshAI-Icon-Light-June-2025.svg" alt="wyshAI" className="h-7 w-7 mr-2" /> wyshAI Assistant
                 </DialogTitle>
               </DialogHeader>
               
@@ -58,7 +58,7 @@ const ChatbotUI = ({
                         ? 'bg-primary text-primary-foreground rounded-br-none' 
                         : 'bg-secondary text-secondary-foreground rounded-bl-none'
                     }`}>
-                      {msg.sender === 'bot' && <BotIcon className="h-6 w-6 mr-2 self-start flex-shrink-0 text-primary/80" />}
+                      {msg.sender === 'bot' && <img src="/images/wyshAI-Icon-Light-June-2025.svg" alt="wyshAI" className="h-6 w-6 mr-2 self-start flex-shrink-0" />}
                       <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
                       {msg.sender === 'user' && <User className="h-6 w-6 ml-2 self-start flex-shrink-0 text-primary-foreground/80" />}
                     </div>
@@ -72,7 +72,7 @@ const ChatbotUI = ({
                     className="flex justify-start"
                   >
                     <div className="flex items-end max-w-[80%] p-3 rounded-xl bg-secondary text-secondary-foreground rounded-bl-none">
-                      <BotIcon className="h-6 w-6 mr-2 self-start flex-shrink-0 text-primary/80" />
+                      <img src="/images/wyshAI-Icon-Light-June-2025.svg" alt="wyshAI" className="h-6 w-6 mr-2 self-start flex-shrink-0" />
                       <div className="flex items-center">
                         <Loader2 className="h-5 w-5 animate-spin mr-2" />
                         <p className="text-sm">Saving your details...</p>

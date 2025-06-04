@@ -101,7 +101,7 @@ const AboutPage = () => {
       >
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-archivo font-extrabold mb-6 text-primary-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
               About wyshAI
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-primary-foreground/80">
@@ -131,7 +131,7 @@ const AboutPage = () => {
                 <Card className="bg-gray-50 border-none h-full">
                   <CardHeader className="items-center pt-8 pb-4">
                     <div className="mb-4">{stat.icon}</div>
-                    <CardTitle className="text-xl font-archivo font-bold text-gray-800">
+                    <CardTitle className="text-xl font-montserrat font-bold text-gray-800">
                       {stat.title}
                     </CardTitle>
                   </CardHeader>
@@ -207,7 +207,7 @@ const AboutPage = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-4 text-gray-800">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-gray-800">
               What Sets Us Apart
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-gray-600">
@@ -230,7 +230,7 @@ const AboutPage = () => {
                   {value.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-archivo font-semibold mb-2 text-gray-800">
+                  <h3 className="text-xl font-montserrat font-semibold mb-2 text-gray-800">
                     {value.title}
                   </h3>
                   <p className="text-gray-600">
@@ -336,7 +336,7 @@ const AboutPage = () => {
       >
         <div className="container mx-auto px-4 text-center">
           <Users className="h-12 w-12 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4">
             Let's Build Something Amazing Together
           </h2>
           <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">

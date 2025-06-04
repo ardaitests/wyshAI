@@ -32,7 +32,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-archivo font-extrabold mb-6 text-primary-foreground">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
             Empower Your Business with AI Solutions
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 text-primary-foreground/80">

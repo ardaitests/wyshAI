@@ -98,7 +98,7 @@ const ServicesPage = () => {
       >
         <div className="relative z-10 container mx-auto px-4">
           <Lightbulb className="h-14 w-14 text-primary mx-auto mb-5" />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-archivo font-extrabold mb-6 text-primary-foreground">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
             Our AI Services
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-primary-foreground/80">
@@ -139,11 +139,11 @@ const ServicesPage = () => {
               <div className="md:w-1/2">
                 <div className="mb-3 flex items-center gap-3">
                   {service.icon}
-                  <h2 className="text-2xl md:text-3xl font-archivo font-bold text-gray-800">{service.title}</h2>
+                  <h2 className="text-2xl md:text-3xl font-montserrat font-bold text-gray-800">{service.title}</h2>
                 </div>
                 <p className="text-md text-muted-foreground mb-3 text-gray-600">{service.shortDescription}</p>
                 <p className="text-sm text-gray-500 mb-5">{service.detailedDescription}</p>
-                <h4 className="text-lg font-archivo font-semibold mb-2 text-primary">Key Benefits:</h4>
+                <h4 className="text-lg font-montserrat font-semibold mb-2 text-primary">Key Benefits:</h4>
                 <ul className="space-y-1.5 mb-5">
                   {service.benefits.map((benefit) => (
                     <li key={benefit} className="flex items-start">
@@ -171,7 +171,7 @@ const ServicesPage = () => {
       >
         <div className="container mx-auto text-center px-4">
           <Target className="h-12 w-12 text-primary mx-auto mb-5" />
-          <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-4 text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-gray-800">
             Ready to Elevate Your Business with AI?
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 text-gray-600">

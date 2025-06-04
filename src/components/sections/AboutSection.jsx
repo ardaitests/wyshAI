@@ -29,7 +29,7 @@ const AboutSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-6 text-gray-800">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-6 text-gray-800">
               Unlock Your Business Potential with the Power of AI Technology
             </h2>
             <p className="text-lg text-muted-foreground mb-8 text-gray-600">
@@ -61,8 +61,8 @@ const AboutSection = () => {
             <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
               <img 
                 className="w-full h-full object-cover"
-                alt="Woman drinking coffee while working on a tablet in a cafe"
-               src="https://images.unsplash.com/photo-1648747067002-e0872aae5eac" />
+                alt="Team collaborating in a modern office environment"
+                src="/images/Office-Collaboration in-Color.png" />
             </div>
           </motion.div>
         </div>

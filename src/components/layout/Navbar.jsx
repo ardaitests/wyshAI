@@ -45,7 +45,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-primary-medium h-20 flex items-center
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-primary-dark h-20 flex items-center
                   ${isScrolled || isMenuOpen ? 'shadow-md' : 'bg-opacity-90 backdrop-blur-sm'}`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -68,12 +68,13 @@ const Navbar = () => {
             </NavLink>
           ))}
           <Button 
-            variant="join" 
+            variant="secondary"
             size="sm" 
             onClick={handleJoinClick}
-            data-analytics-id="navbar-cta-join"
+            data-analytics-id="navbar-cta-contact"
+            className="bg-[hsl(4_96%_100%)] text-primary hover:bg-card"
           >
-            Join
+            Contact us
           </Button>
         </div>
 
@@ -116,13 +117,13 @@ const Navbar = () => {
               </NavLink>
             ))}
             <Button 
-              variant="join" 
+              variant="secondary"
               size="default" 
-              className="w-full mt-2" 
+              className="w-full mt-2 bg-[hsl(4_96%_100%)] text-primary hover:bg-card" 
               onClick={() => { handleJoinClick(); setIsMenuOpen(false);}}
-              data-analytics-id="navbar-cta-join-mobile"
+              data-analytics-id="navbar-cta-contact-mobile"
             >
-              Join
+              Contact us
             </Button>
           </div>
         </motion.div>

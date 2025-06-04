@@ -18,7 +18,7 @@ const buttonVariants = cva(
           'bg-primary-light text-primary hover:bg-purple-200/70 border border-primary/30', // Light purple bg, purple text
         ghost: 'hover:bg-accent hover:text-accent-foreground', // Kept for utility
         link: 'text-primary underline-offset-4 hover:underline', // Kept for utility
-        join: 'bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2', // Specific for "Join" button
+        contact: 'bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2', // Specific for "Contact" button
         subtle: 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300',
       },
       size: {

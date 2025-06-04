@@ -51,7 +51,7 @@ const ServicesSection = () => {
           transition={{ duration: 0.7 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-4 text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-gray-800">
             Unlock AI Insights for Smarter Business Decisions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-gray-600">
@@ -73,7 +73,7 @@ const ServicesSection = () => {
               <Card className="bg-white h-full flex flex-col text-center items-center hover:shadow-lg transition-shadow duration-300 p-2">
                 <CardHeader className="items-center pt-6 pb-2">
                   {service.icon}
-                  <CardTitle className="text-xl font-archivo font-semibold text-gray-700">{service.title}</CardTitle>
+                  <CardTitle className="text-xl font-montserrat font-semibold text-gray-700">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow pb-2">
                   <CardDescription className="text-gray-500 text-sm">
