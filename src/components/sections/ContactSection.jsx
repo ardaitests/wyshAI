@@ -12,20 +12,20 @@ import { Mail, MessageSquare, HelpCircle } from 'lucide-react';
 
 const faqsData = [
   {
-    question: "What is WyshAI?",
-    answer: "WyshAI is a platform designed to empower small and medium-sized businesses with AI-driven solutions. We provide tools that streamline operations, enhance customer engagement, and drive growth. Our goal is to make AI accessible and beneficial for every business.",
+    question: "What is wyshAI?",
+    answer: "wyshAI is a platform designed to empower small and medium-sized businesses with AI-driven solutions. We provide tools that streamline operations, enhance customer engagement, and drive growth. Our goal is to make AI accessible and beneficial for every business.",
   },
   {
     question: "How does it work?",
-    answer: "Our platform utilizes advanced algorithms to analyze data and generate actionable insights. By integrating seamlessly with your existing systems, WyshAI automates tasks and enhances decision-making. This allows you to focus on what matters most—growing your business.",
+    answer: "Our platform utilizes advanced algorithms to analyze data and generate actionable insights. By integrating seamlessly with your existing systems, wyshAI automates tasks and enhances decision-making. This allows you to focus on what matters most—growing your business.",
   },
   {
     question: "Who can benefit?",
-    answer: "Any small or medium-sized business looking to leverage technology can benefit from WyshAI. Our solutions cater to various industries, helping you optimize processes and improve customer experiences. Whether you're in retail, services, or manufacturing, we have something for you.",
+    answer: "Any small or medium-sized business looking to leverage technology can benefit from wyshAI. Our solutions cater to various industries, helping you optimize processes and improve customer experiences. Whether you're in retail, services, or manufacturing, we have something for you.",
   },
   {
     question: "Is there a trial?",
-    answer: "Yes, we offer a free trial for new users to explore our features. This allows you to experience the benefits of WyshAI without any commitment. Sign up today and see how we can transform your business.",
+    answer: "Yes, we offer a free trial for new users to explore our features. This allows you to experience the benefits of wyshAI without any commitment. Sign up today and see how we can transform your business.",
   }
 ];
 
@@ -38,7 +38,7 @@ const ContactSection = () => {
   };
   
   const handleDemo = () => {
-    openChat({ initialMessage: "I'm interested in a demo of WyshAI.", initialStep: 'scheduleDemo' });
+    openChat({ initialMessage: "I'm interested in a demo of wyshAI.", initialStep: 'scheduleDemo' });
   };
 
   return (
@@ -57,7 +57,7 @@ const ContactSection = () => {
               Unlock Your AI Potential
             </h2>
             <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
-              Discover how WyshAI can transform your business. Get in touch or request a demo today!
+              Discover how wyshAI can transform your business. Get in touch or request a demo today!
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
               <Button size="lg" onClick={handleContact} className="bg-white text-primary hover:bg-gray-100">
@@ -85,7 +85,7 @@ const ContactSection = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto text-gray-600">
-              Discover the answers to your most pressing questions about WyshAI and our innovative services.
+              Discover the answers to your most pressing questions about wyshAI and our innovative services.
             </p>
           </motion.div>
 
@@ -118,7 +118,7 @@ const ContactSection = () => {
             className="text-center mt-12"
           >
             <Button variant="subtle" size="lg" onClick={handleContact}>
-                Still have questions? Contact Support <Mail className="ml-2 h-5 w-5"/>
+                Still have questions? Send us a message <MessageSquare className="ml-2 h-5 w-5"/>
             </Button>
           </motion.div>
 

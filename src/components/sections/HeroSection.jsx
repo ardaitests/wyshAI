@@ -24,7 +24,7 @@ const HeroSection = () => {
 
 
   return (
-    <section className="bg-primary-light text-foreground pt-32 pb-20 md:pt-40 md:pb-28">
+    <section className="bg-primary-light text-foreground pt-24 pb-20 md:pt-32 md:pb-28">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         {/* Text Content */}
         <motion.div
@@ -36,7 +36,7 @@ const HeroSection = () => {
             Empower Your Business with AI Solutions
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 text-primary-foreground/80">
-            Unlock the potential of artificial intelligence to drive growth and efficiency in your small business. Let WyshAI guide you on your journey to success.
+            Unlock the potential of artificial intelligence to drive growth and efficiency in your small business. Let wyshAI guide you on your journey to success.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
             <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">

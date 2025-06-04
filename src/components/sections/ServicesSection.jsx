@@ -22,7 +22,7 @@ const servicesOverview = [
   {
     icon: <Zap className="h-8 w-8 text-primary mb-3" />,
     title: "Seamless Integration",
-    description: "Easily connect WyshAI with your current systems for a smooth transition.",
+    description: "Easily connect wyshAI with your current systems for a smooth transition.",
     link: "/services#data-system-integration"
   },
 ];

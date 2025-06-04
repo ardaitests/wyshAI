@@ -36,11 +36,15 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
           {/* Logo and Company */}
           <div className="col-span-2 lg:col-span-2">
-            <Link to="/" className="text-3xl font-archivo font-bold text-white mb-3 block" data-analytics-id="footer-logo-wyshAI">
-              wyshAI
+            <Link to="/" className="block mb-3" data-analytics-id="footer-logo-wyshAI">
+              <img 
+                src="/images/wyshAI-Logo-Dark-June-2025.svg" 
+                alt="wyshAI Logo" 
+                className="h-10 w-auto" 
+              />
             </Link>
             <p className="text-sm text-footer-foreground/80">
-              Empowering businesses with intelligent AI solutions.
+              Want to use AI for your business? <span className="italic">Just wysh for it.</span>
             </p>
           </div>
 

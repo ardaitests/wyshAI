@@ -31,8 +31,12 @@ const Navbar = () => {
   ];
 
   const Logo = () => (
-    <Link to="/" className="text-2xl font-archivo font-bold text-primary" data-analytics-id="navbar-logo-wyshAI">
-      wyshAI
+    <Link to="/" className="flex items-center" data-analytics-id="navbar-logo-wyshAI">
+      <img 
+        src="/images/wyshAI-Logo-Dark-June-2025.svg" 
+        alt="wyshAI Logo" 
+        className="h-10 w-auto" 
+      />
     </Link>
   );
 
@@ -41,8 +45,8 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out
-                  ${isScrolled || isMenuOpen ? 'bg-white shadow-md py-3' : 'bg-transparent py-4'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-primary-medium h-20 flex items-center
+                  ${isScrolled || isMenuOpen ? 'shadow-md' : 'bg-opacity-90 backdrop-blur-sm'}`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Logo />
@@ -55,7 +59,7 @@ const Navbar = () => {
               to={link.path}
               className={({ isActive }) =>
                 `text-sm font-medium transition-colors ${
-                  isActive ? 'text-primary' : 'text-foreground hover:text-primary/80'
+                  isActive ? 'text-white font-semibold' : 'text-white/90 hover:text-white'
                 }`
               }
               data-analytics-id={link.analyticsId}
@@ -77,7 +81,7 @@ const Navbar = () => {
         <div className="md:hidden">
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
-            className="text-foreground"
+            className="text-white"
             data-analytics-id="navbar-mobile-menu-toggle"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -93,7 +97,7 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg pb-4"
+          className="md:hidden absolute top-full left-0 right-0 bg-primary-medium shadow-lg pb-4"
         >
           <div className="container mx-auto px-4 flex flex-col space-y-3 pt-3">
             {navLinks.map((link) => (
@@ -103,7 +107,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
                   `text-sm font-medium py-2 transition-colors ${
-                    isActive ? 'text-primary' : 'text-foreground hover:text-primary/80'
+                    isActive ? 'text-white font-semibold' : 'text-white/90 hover:text-white'
                   }`
                 }
                 data-analytics-id={`${link.analyticsId}-mobile`}

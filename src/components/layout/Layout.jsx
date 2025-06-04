@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <main className="flex-grow pt-[80px]"> {/* Adjust pt to match navbar height */}
+      <main className="flex-grow">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
