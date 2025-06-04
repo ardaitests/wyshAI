@@ -92,7 +92,7 @@ const AboutPage = () => {
       initial="initial"
       animate="in"
       exit="out"
-      className="bg-white text-foreground"
+      className="bg-swiss-coffee-lightest text-foreground"
     >
       {/* Hero Section */}
       <motion.section
@@ -131,12 +131,12 @@ const AboutPage = () => {
                 <Card className="bg-gray-50 border-none h-full">
                   <CardHeader className="items-center pt-8 pb-4">
                     <div className="mb-4">{stat.icon}</div>
-                    <CardTitle className="text-xl font-montserrat font-bold text-gray-800">
+                    <CardTitle className="text-xl font-montserrat font-bold text-foreground">
                       {stat.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pb-8">
-                    <CardDescription className="text-gray-600 text-sm leading-relaxed">
+                    <CardDescription className="text-muted-foreground-darker text-sm leading-relaxed">
                       {stat.description}
                     </CardDescription>
                   </CardContent>
@@ -207,10 +207,10 @@ const AboutPage = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-gray-800">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-foreground">
               What Sets Us Apart
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-gray-600">
+            <p className="text-lg text-muted-foreground-darker max-w-2xl mx-auto">
               Our approach combines innovation with practicality, ensuring every solution we deliver 
               is both cutting-edge and immediately valuable to your business.
             </p>
@@ -230,10 +230,10 @@ const AboutPage = () => {
                   {value.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-montserrat font-semibold mb-2 text-gray-800">
+                  <h3 className="text-xl font-montserrat font-semibold mb-2 text-foreground">
                     {value.title}
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-muted-foreground-darker">
                     {value.description}
                   </p>
                 </div>
@@ -272,11 +272,11 @@ const AboutPage = () => {
               <div className="mt-8 space-y-3">
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-700">Deep understanding of your business goals</span>
+                  <span className="text-foreground">Deep understanding of your business goals</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-700">Tailored solutions that drive sustainable growth</span>
+                  <span className="text-foreground">Tailored solutions that drive sustainable growth</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
@@ -347,7 +347,7 @@ const AboutPage = () => {
             <Button 
               size="lg" 
               onClick={handleGetStarted}
-              className="bg-white text-primary hover:bg-gray-100"
+              className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100"
               data-analytics-id="about-cta-get-started"
             >
               Get Started Today <ArrowRight className="ml-2 h-5 w-5" />
@@ -356,7 +356,7 @@ const AboutPage = () => {
               size="lg" 
               variant="outline" 
               onClick={handlePartnership}
-              className="border-white text-white hover:bg-white/10"
+              className="border-white text-white hover:bg-swiss-coffee-lightest/10"
               data-analytics-id="about-cta-discuss-partnership"
             >
               Discuss Partnership

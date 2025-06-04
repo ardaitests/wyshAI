@@ -89,7 +89,7 @@ const ServicesPage = () => {
       initial="initial"
       animate="in"
       exit="out"
-      className="bg-white text-foreground"
+      className="bg-swiss-coffee-lightest text-foreground"
     >
       {/* Hero Section */}
       <motion.section
@@ -116,7 +116,7 @@ const ServicesPage = () => {
       </motion.section>
 
       {/* Services Details Section */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-swiss-coffee-lightest">
         <div className="container mx-auto px-4">
           {servicesData.map((service, index) => (
             <motion.div
@@ -139,16 +139,16 @@ const ServicesPage = () => {
               <div className="md:w-1/2">
                 <div className="mb-3 flex items-center gap-3">
                   {service.icon}
-                  <h2 className="text-2xl md:text-3xl font-montserrat font-bold text-gray-800">{service.title}</h2>
+                  <h2 className="text-2xl md:text-3xl font-montserrat font-bold text-foreground">{service.title}</h2>
                 </div>
-                <p className="text-md text-muted-foreground mb-3 text-gray-600">{service.shortDescription}</p>
-                <p className="text-sm text-gray-500 mb-5">{service.detailedDescription}</p>
+                <p className="text-md text-muted-foreground-darker mb-3">{service.shortDescription}</p>
+                <p className="text-sm text-muted-foreground mb-5">{service.detailedDescription}</p>
                 <h4 className="text-lg font-montserrat font-semibold mb-2 text-primary">Key Benefits:</h4>
                 <ul className="space-y-1.5 mb-5">
                   {service.benefits.map((benefit) => (
                     <li key={benefit} className="flex items-start">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-gray-600">{benefit}</span>
+                      <span className="text-sm text-foreground">{benefit}</span>
                     </li>
                   ))}
                 </ul>
@@ -171,10 +171,10 @@ const ServicesPage = () => {
       >
         <div className="container mx-auto text-center px-4">
           <Target className="h-12 w-12 text-primary mx-auto mb-5" />
-          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-foreground">
             Ready to Elevate Your Business with AI?
           </h2>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 text-gray-600">
+          <p className="text-lg text-muted-foreground-darker max-w-xl mx-auto mb-8">
             Partner with wyshAI to unlock the full potential of artificial intelligence. Let's build custom solutions that drive real results for your business.
           </p>
           <Button

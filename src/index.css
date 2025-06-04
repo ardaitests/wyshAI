@@ -23,8 +23,9 @@
   :root {
     --background: 4 96% 100%; /* Swiss Coffee Lighter - Almost White */
     --foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */
+    --swiss-coffee-lightest: 0 0% 96%; /* Swiss Coffee Lightest */
 
-    --card: 0 0% 96%; /* Swiss Coffee Lightest */
+    --card: var(--swiss-coffee-lightest); /* Swiss Coffee Lightest */
     --card-foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */
 
     --popover: 4 96% 100%; /* Matching background color */
@@ -46,6 +47,7 @@
 
     --muted: 20 8% 92%; /* Swiss Coffee Light for muted elements */
     --muted-foreground: 24 4% 60%; /* Swiss Coffee Dark for muted text */
+    --muted-foreground-darker: 24 2% 32%; /* Swiss Coffee Darker for less muted text */
 
     --accent: 256 56% 60%; /* A slightly different purple for accents if needed */
     --accent-foreground: 256 56% 24%;
@@ -93,5 +95,5 @@
 }
 
 .button-outline-white {
-  @apply bg-transparent text-white border border-white hover:bg-white/10;
+  @apply bg-transparent text-white border border-white hover:bg-swiss-coffee-lightest/10;
 }

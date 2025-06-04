@@ -26,6 +26,9 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        'swiss-coffee-lightest': "hsl(var(--swiss-coffee-lightest))",
+        'muted-foreground-darker': "hsl(var(--muted-foreground-darker))",
+        'white': "hsl(var(--swiss-coffee-lightest))",  /* Override white with Swiss Coffee Lightest */
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

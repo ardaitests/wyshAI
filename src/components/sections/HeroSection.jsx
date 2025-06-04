@@ -35,13 +35,13 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
-            Harness the power of AI for your small business
+            Unlock the power of AI for your small business
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 text-primary-foreground/80">
-            Drive business growth and efficiency while improving customer satisfaction with AI. wyshAI designs and builds custom AI tools and solutions to get you started.
+            Drive business growth and efficiency while improving customer satisfaction with AI. wyshAI empowers small business owners to  with customized AI tools and agents.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
             <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">

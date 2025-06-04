@@ -60,10 +60,10 @@ const ContactSection = () => {
               Discover how wyshAI can transform your business. Get in touch or request a demo today!
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-              <Button size="lg" onClick={handleContact} className="bg-white text-primary hover:bg-gray-100">
+              <Button size="lg" onClick={handleContact} className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100">
                 Contact Us
               </Button>
-              <Button size="lg" variant="outline" onClick={handleDemo} className="border-white text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" onClick={handleDemo} className="border-white text-white hover:bg-swiss-coffee-lightest/10">
                 Request a Demo
               </Button>
             </div>
@@ -72,7 +72,7 @@ const ContactSection = () => {
       </section>
 
       {/* FAQs Section */}
-      <section className="section-padding bg-white text-foreground" id="faq">
+      <section className="section-padding bg-swiss-coffee-lightest text-foreground" id="faq">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -81,10 +81,10 @@ const ContactSection = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-3 text-gray-800">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-3 text-foreground">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto text-gray-600">
+            <p className="text-lg text-muted-foreground-darker max-w-xl mx-auto">
               Discover the answers to your most pressing questions about wyshAI and our innovative services.
             </p>
           </motion.div>
@@ -99,10 +99,10 @@ const ContactSection = () => {
             <Accordion type="single" collapsible className="w-full">
               {faqsData.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left hover:no-underline text-base md:text-lg font-medium text-gray-700">
+                  <AccordionTrigger className="text-left hover:no-underline text-base md:text-lg font-medium text-foreground">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 text-sm md:text-base">
+                  <AccordionContent className="text-muted-foreground-darker text-sm md:text-base">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

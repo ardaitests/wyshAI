@@ -9,20 +9,20 @@ import { Link } from 'react-router-dom';
 const servicesOverview = [
   {
     icon: <BrainCircuit className="h-8 w-8 text-primary mb-3" />,
-    title: "Automate Tasks",
-    description: "Leverage advanced AI algorithms to gain actionable insights that drive growth.",
-    link: "/services#ai-task-automation" 
+    title: "Task Automation",
+    description: "Eliminate repetitive and manual tasks with AI-powered automated workflows.",
+    link: "/services#ai-task-automation"
+  },
+  {
+    icon: <MessageCircle className="h-8 w-8 text-primary mb-3" />,
+    title: "AI Customer Service",
+    description: "Enable AI agents to handle customer inquiries, schedule appointments, and process orders.",
+    link: "/services#enhanced-customer-service"
   },
   {
     icon: <Settings2 className="h-8 w-8 text-primary mb-3" />,
-    title: "Personalized Recommendations",
-    description: "Receive customized suggestions that align with your unique business objectives.",
-    link: "/services#personalized-customer-experiences"
-  },
-  {
-    icon: <Zap className="h-8 w-8 text-primary mb-3" />,
     title: "Seamless Integration",
-    description: "Easily connect wyshAI with your current systems for a smooth transition.",
+    description: "Connect AI workflows and tools with your current data and tech stack.",
     link: "/services#data-system-integration"
   },
 ];
@@ -51,10 +51,10 @@ const ServicesSection = () => {
           transition={{ duration: 0.7 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-foreground">
             Unlock AI Insights for Smarter Business Decisions
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-gray-600">
+          <p className="text-lg text-muted-foreground-darker max-w-2xl mx-auto">
             Explore how our AI-driven solutions can simplify complexities and enhance your decision-making process.
           </p>
         </motion.div>
@@ -70,13 +70,13 @@ const ServicesSection = () => {
               viewport={{ once: true, amount: 0.2 }}
               className="h-full"
             >
-              <Card className="bg-white h-full flex flex-col text-center items-center hover:shadow-lg transition-shadow duration-300 p-2">
+              <Card className="bg-swiss-coffee-lightest h-full flex flex-col text-center items-center hover:shadow-lg transition-shadow duration-300 p-2">
                 <CardHeader className="items-center pt-6 pb-2">
                   {service.icon}
-                  <CardTitle className="text-xl font-montserrat font-semibold text-gray-700">{service.title}</CardTitle>
+                  <CardTitle className="text-xl font-montserrat font-semibold text-foreground">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow pb-2">
-                  <CardDescription className="text-gray-500 text-sm">
+                  <CardDescription className="text-foreground-darker text-sm">
                     {service.description}
                   </CardDescription>
                 </CardContent>
