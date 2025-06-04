@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button.jsx';
 import { motion } from 'framer-motion';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
@@ -9,9 +9,15 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { openChat } = useChatbot();
+  const location = useLocation();
+
+  // Scroll to top when location changes
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const handleJoinClick = () => {
-    openChat({ initialMessage: "Hi! I'm interested in wyshAI. Can you tell me more?", initialStep: 'getStarted' });
+    openChat({ initialMessage: "Hi! I'm an AI assistant. Can you tell me more about what you're interested in?", initialStep: 'getStarted' });
   };
 
   React.useEffect(() => {
@@ -30,8 +36,19 @@ const Navbar = () => {
     // { name: 'Blog', path: '/blog', analyticsId: 'navbar-nav-blog' }, // Example for blog
   ];
 
+  // Close mobile menu and scroll to top when a nav link is clicked
+  const handleNavLinkClick = () => {
+    setIsMenuOpen(false);
+    window.scrollTo(0, 0);
+  };
+
   const Logo = () => (
-    <Link to="/" className="flex items-center" data-analytics-id="navbar-logo-wyshAI">
+    <Link 
+      to="/" 
+      className="flex items-center" 
+      data-analytics-id="navbar-logo-wyshAI"
+      onClick={() => window.scrollTo(0, 0)}
+    >
       <img 
         src="/images/wyshAI-Logo-Dark-June-2025.svg" 
         alt="wyshAI Logo" 
@@ -58,11 +75,12 @@ const Navbar = () => {
               key={link.name}
               to={link.path}
               className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${
+                `text-sm font-montserrat font-medium transition-colors ${
                   isActive ? 'text-white font-semibold' : 'text-white/90 hover:text-white'
                 }`
               }
               data-analytics-id={link.analyticsId}
+              onClick={handleNavLinkClick}
             >
               {link.name}
             </NavLink>
@@ -72,7 +90,7 @@ const Navbar = () => {
             size="sm" 
             onClick={handleJoinClick}
             data-analytics-id="navbar-cta-contact"
-            className="bg-[hsl(4_96%_100%)] text-primary hover:bg-card"
+            className="bg-[hsl(4_96%_100%)] text-primary hover:bg-card font-montserrat"
           >
             Contact us
           </Button>
@@ -105,9 +123,9 @@ const Navbar = () => {
               <NavLink
                 key={link.name}
                 to={link.path}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={handleNavLinkClick}
                 className={({ isActive }) =>
-                  `text-sm font-medium py-2 transition-colors ${
+                  `text-sm font-montserrat font-medium py-2 transition-colors ${
                     isActive ? 'text-white font-semibold' : 'text-white/90 hover:text-white'
                   }`
                 }
@@ -119,7 +137,7 @@ const Navbar = () => {
             <Button 
               variant="secondary"
               size="default" 
-              className="w-full mt-2 bg-[hsl(4_96%_100%)] text-primary hover:bg-card" 
+              className="w-full mt-2 bg-[hsl(4_96%_100%)] text-primary hover:bg-card font-montserrat" 
               onClick={() => { handleJoinClick(); setIsMenuOpen(false);}}
               data-analytics-id="navbar-cta-contact-mobile"
             >

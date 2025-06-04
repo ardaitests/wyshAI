@@ -33,10 +33,10 @@ const HeroSection = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
-            Empower Your Business with AI Solutions
+            Harness the power of AI for your small business
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 text-primary-foreground/80">
-            Unlock the potential of artificial intelligence to drive growth and efficiency in your small business. Let wyshAI guide you on your journey to success.
+            Drive business growth and efficiency while improving customer satisfaction with AI. wyshAI designs and builds custom AI tools and solutions to get you started.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
             <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">

@@ -17,6 +17,9 @@ const ChatbotUI = ({
   messagesEndRef,
   openChat
 }) => {
+  // Debug log to check chat step and input state
+  console.log('Chat Step:', chatStep, 'Input Disabled:', isSubmitting || (chatStep !== 'initial' && chatStep !== 'getName' && chatStep !== 'getEmail' && chatStep !== 'getQuery' && chatStep !== 'completed'));
+
   return (
     <>
       <motion.div
@@ -92,14 +95,14 @@ const ChatbotUI = ({
                     onChange={handleInputChange}
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                     className="flex-grow bg-input/70 focus:ring-primary"
-                    disabled={isSubmitting || (chatStep !== 'initial' && chatStep !== 'getName' && chatStep !== 'getEmail' && chatStep !== 'getQuery' && chatStep !== 'completed')}
+                    disabled={isSubmitting}
                   />
                   <Button 
                     type="submit" 
                     size="icon" 
                     onClick={handleSendMessage}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    disabled={inputValue.trim() === '' || isSubmitting || (chatStep !== 'initial' && chatStep !== 'getName' && chatStep !== 'getEmail' && chatStep !== 'getQuery' && chatStep !== 'completed')}
+                    disabled={inputValue.trim() === '' || isSubmitting}
                   >
                     {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
                   </Button>
