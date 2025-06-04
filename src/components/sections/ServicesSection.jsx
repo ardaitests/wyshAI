@@ -11,16 +11,16 @@ const servicesOverview = [
     icon: <BrainCircuit className="h-8 w-8 text-primary mb-3" />,
     title: "Task Automation",
     description: "Eliminate repetitive and manual tasks with AI-powered automated workflows.",
-    link: "/services#ai-task-automation"
-  },
-  {
-    icon: <MessageCircle className="h-8 w-8 text-primary mb-3" />,
-    title: "AI Customer Service",
-    description: "Enable AI agents to handle customer inquiries, schedule appointments, and process orders.",
-    link: "/services#enhanced-customer-service"
+    link: "/services#ai-task-automation" 
   },
   {
     icon: <Settings2 className="h-8 w-8 text-primary mb-3" />,
+    title: "AI Agents",
+    description: "Enable AI agents to handle customer inquiries, schedule appointments, and process orders.",
+    link: "/services#ai-agents"
+  },
+  {
+    icon: <Zap className="h-8 w-8 text-primary mb-3" />,
     title: "Seamless Integration",
     description: "Connect AI workflows and tools with your current data and tech stack.",
     link: "/services#data-system-integration"
