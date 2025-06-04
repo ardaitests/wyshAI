@@ -115,7 +115,7 @@ const useChatLogic = () => {
           return;
         }
         setUserData(prev => ({ ...prev, email: input }));
-        addBotMessage("Great! And briefly, how can Wysh AI help you or your business today?");
+        addBotMessage("Great! And briefly, how can wyshAI help you or your business today?");
         setChatStep('getQuery');
         break;
       case 'getQuery':

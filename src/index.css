@@ -5,38 +5,43 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%; /* Light Gray - Almost White */
-    --foreground: 224 71% 15%; /* Dark Blue/Black for text */
+    --background: 4 96% 100%; /* Swiss Coffee Lighter - Almost White */
+    --foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */
 
-    --card: 210 40% 100%; /* White */
-    --card-foreground: 224 71% 15%;
+    --card: 0 0% 96%; /* Swiss Coffee Lightest */
+    --card-foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */
 
-    --popover: 210 40% 100%;
-    --popover-foreground: 224 71% 15%;
+    --popover: 4 96% 100%; /* Matching background color */
+    --popover-foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */
 
-    --primary: 250 60% 50%; /* Medium Purple (Hero, Buttons) */
-    --primary-foreground: 210 40% 98%; /* Light Gray for text on primary */
+    --primary: 256 56% 48%; /* Electric Violet Dark (Hero, Buttons) */
+    --primary-foreground: 4 96% 100%; /* Swiss Coffee Lighter - Almost White */
     
-    --primary-light: 250 70% 95%; /* Light Purple (Hero Background) */
+    --primary-lightest: 256 92% 96%; /* Electric Violet Lightest */
+    --primary-lighter: 256 92% 92%; /* Electric Violet Lighter */
+    --primary-light: 256 92% 72%; /* Electric Violet Light */
+    --primary-dark: 256 56% 48%; /* Electric Violet */
+    --primary-darker: 256 56% 24%; /* Electric Violet Darker */
+    --primary-darkest: 256 56% 16%; /* Electric Violet Darkest */
 
-    --secondary: 250 40% 90%; /* Lighter Purple or Grey for accents */
-    --secondary-foreground: 250 60% 50%; /* Medium Purple for text on secondary */
+    --secondary: 256 56% 92%; /* Lighter Purple or Grey for accents */
+    --secondary-foreground: 256 56% 24%; /* Dark Purple for text on secondary */
 
-    --muted: 220 20% 90%; /* Light Grey for muted elements */
-    --muted-foreground: 220 10% 45%; /* Darker Grey for muted text */
+    --muted: 20 8% 92%; /* Swiss Coffee Light for muted elements */
+    --muted-foreground: 24 4% 60%; /* Swiss Coffee Dark for muted text */
 
-    --accent: 250 65% 60%; /* A slightly different purple for accents if needed */
-    --accent-foreground: 210 40% 98%;
+    --accent: 256 56% 60%; /* A slightly different purple for accents if needed */
+    --accent-foreground: 256 56% 24%;
     
     --destructive: 0 70% 50%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 256 56% 24%;
 
     --border: 220 20% 85%; /* Light Grey border */
-    --input: 210 40% 100%; /* White input background */
-    --ring: 250 60% 50%; /* Medium Purple for rings */
+    --input: 256 56% 100%; /* White input background */
+    --ring: 256 56% 50%; /* Medium Purple for rings */
 
-    --footer-background: 250 30% 25%; /* Dark Purple for Footer */
-    --footer-foreground: 210 40% 90%; /* Light Grey for Footer text */
+    --footer-background: hsl(var(--primary-darker)); /* Using primary-darker for Footer */
+    --footer-foreground: 0 0% 96%; /* Light color for Footer text */
 
     --radius: 0.5rem; /* Consistent rounded corners */
   }

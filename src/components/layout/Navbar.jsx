@@ -11,7 +11,7 @@ const Navbar = () => {
   const { openChat } = useChatbot();
 
   const handleJoinClick = () => {
-    openChat({ initialMessage: "Hi! I'm interested in Wysh AI. Can you tell me more?", initialStep: 'getStarted' });
+    openChat({ initialMessage: "Hi! I'm interested in wyshAI. Can you tell me more?", initialStep: 'getStarted' });
   };
 
   React.useEffect(() => {

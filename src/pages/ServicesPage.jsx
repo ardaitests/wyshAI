@@ -31,7 +31,7 @@ const servicesData = [
     icon: <Settings2 className="h-10 w-10 text-primary" />,
     title: "Data & System Integration",
     shortDescription: "Unify your data sources and systems for a holistic view of your business.",
-    detailedDescription: "Wysh AI connects your disparate software, databases, and platforms (CRMs, ERPs, marketing tools) into a cohesive ecosystem. This enables real-time data flow, comprehensive analytics, and eliminates data silos, providing you with actionable insights.",
+    detailedDescription: "wyshAI connects your disparate software, databases, and platforms (CRMs, ERPs, marketing tools) into a cohesive ecosystem. This enables real-time data flow, comprehensive analytics, and eliminates data silos, providing you with actionable insights.",
     benefits: ["Single source of truth for data", "Enhanced decision-making capabilities", "Streamlined cross-departmental workflows", "Improved data accuracy and consistency"],
     imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Data & System Integration" src="https://images.unsplash.com/photo-1697564265161-647d73c3fdf9" />
   },
@@ -67,7 +67,7 @@ const servicesData = [
     icon: <BarChart3 className="h-10 w-10 text-primary" />,
     title: "Business Process Optimization",
     shortDescription: "Leverage AI-driven analytics to identify inefficiencies and optimize your core business processes.",
-    detailedDescription: "Wysh AI helps you analyze your existing workflows, identify bottlenecks, and implement AI solutions to streamline operations. From supply chain management to internal communications, we find ways to make your business run smoother and more efficiently.",
+    detailedDescription: "wyshAI helps you analyze your existing workflows, identify bottlenecks, and implement AI solutions to streamline operations. From supply chain management to internal communications, we find ways to make your business run smoother and more efficiently.",
     benefits: ["Data-driven process improvements", "Reduced waste and inefficiencies", "Enhanced operational agility", "Better resource allocation"],
     imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Business Process Optimization" src="https://images.unsplash.com/photo-1634864481356-f7db7e601075" />
   },
@@ -98,10 +98,10 @@ const ServicesPage = () => {
       >
         <div className="relative z-10 container mx-auto px-4">
           <Lightbulb className="h-14 w-14 text-primary mx-auto mb-5" />
-          <h1 className="text-4xl md:text-5xl font-archivo font-extrabold mb-5 text-gray-800">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-archivo font-extrabold mb-6 text-primary-foreground">
             Our AI Services
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-gray-600">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-primary-foreground/80">
             Empowering your business with bespoke AI solutions designed for growth, efficiency, and innovation.
           </p>
           <Button
@@ -175,7 +175,7 @@ const ServicesPage = () => {
             Ready to Elevate Your Business with AI?
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 text-gray-600">
-            Partner with Wysh AI to unlock the full potential of artificial intelligence. Let's build custom solutions that drive real results for your business.
+            Partner with wyshAI to unlock the full potential of artificial intelligence. Let's build custom solutions that drive real results for your business.
           </p>
           <Button
             size="lg"

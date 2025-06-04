@@ -101,13 +101,13 @@ const AboutPage = () => {
       >
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-archivo font-extrabold mb-6 text-gray-800">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-archivo font-extrabold mb-6 text-primary-foreground">
               About wyshAI
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-gray-600">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-primary-foreground/80">
               Innovating with purpose, driven by experience
             </p>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto">
               wyshAI was founded on a simple yet powerful idea: technology should empower businesses, not complicate them. 
               We bridge the gap between technical innovation and real-world application, helping organizations unlock new opportunities.
             </p>

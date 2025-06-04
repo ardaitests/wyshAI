@@ -40,7 +40,7 @@ const ChatbotUI = ({
             <DialogContent className="sm:max-w-[450px] h-[70vh] flex flex-col p-0 glassmorphic-card border-primary/50">
               <DialogHeader className="p-4 border-b border-border/50">
                 <DialogTitle className="flex items-center text-xl font-archivo">
-                  <BotIcon className="h-7 w-7 mr-2 text-primary" /> Wysh AI Assistant
+                  <BotIcon className="h-7 w-7 mr-2 text-primary" /> wyshAI Assistant
                 </DialogTitle>
               </DialogHeader>
               
@@ -83,7 +83,7 @@ const ChatbotUI = ({
                 <div ref={messagesEndRef} />
               </div>
 
-              <DialogFooter className="p-4 border-t border-border/50 bg-background/50">
+               <DialogFooter className="p-4 border-t border-border/50 bg-background/50">
                 <div className="flex w-full items-center space-x-2">
                   <Input
                     type="text"
@@ -105,11 +105,6 @@ const ChatbotUI = ({
                   </Button>
                 </div>
               </DialogFooter>
-              <DialogClose asChild>
-                <Button variant="ghost" size="icon" className="absolute right-4 top-3">
-                  <X className="h-5 w-5" />
-                </Button>
-              </DialogClose>
             </DialogContent>
           </Dialog>
         )}
