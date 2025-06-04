@@ -3,6 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 10s ease infinite;
+}
+
 @layer base {
   :root {
     --background: 4 96% 100%; /* Swiss Coffee Lighter - Almost White */
@@ -19,9 +35,9 @@
     
     --primary-lightest: 256 92% 96%; /* Electric Violet Lightest */
     --primary-lighter: 256 92% 92%; /* Electric Violet Lighter */
-    --primary-light: 256 92% 72%; /* Electric Violet Light */
-    --primary-medium: 256 92% 60%; /* Electric Violet Medium */
-    --primary-dark: 256 56% 48%; /* Electric Violet */
+    --primary-light: 256 84% 72%; /* Electric Violet Light */
+    --primary-medium: 256 60% 60%; /* Electric Violet Medium */
+    --primary-dark: 256 56% 48%; /* Electric Violet Dark */
     --primary-darker: 256 56% 24%; /* Electric Violet Darker */
     --primary-darkest: 256 56% 16%; /* Electric Violet Darkest */
 

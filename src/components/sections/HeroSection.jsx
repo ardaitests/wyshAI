@@ -24,7 +24,12 @@ const HeroSection = () => {
 
 
   return (
-    <section className="bg-primary-light text-foreground pt-24 pb-20 md:pt-32 md:pb-28">
+    <section 
+      className="text-foreground pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-to-br from-primary-lighter via-primary-light to-primary-medium bg-[length:200%_200%] animate-gradient"
+      style={{
+        backgroundImage: 'linear-gradient(-40deg, hsl(256 92% 92%) 0%, hsl(256 84% 72%) 50%, hsl(256 60% 60%) 100%)'
+      }}
+    >
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         {/* Text Content */}
         <motion.div
