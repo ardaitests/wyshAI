@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "customData": [
+    "./node_modules/tailwindcss/language-service-rules"
+  ]
+}

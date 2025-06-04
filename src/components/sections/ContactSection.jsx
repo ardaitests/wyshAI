@@ -118,7 +118,7 @@ const ContactSection = () => {
             className="text-center mt-12"
           >
             <Button variant="subtle" size="lg" onClick={handleContact}>
-                Still have questions? Contact Support <Mail className="ml-2 h-5 w-5"/>
+                Still have questions? Contact us <MessageSquare className="ml-2 h-5 w-5"/>
             </Button>
           </motion.div>
 
