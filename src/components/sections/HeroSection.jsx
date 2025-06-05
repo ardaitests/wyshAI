@@ -9,7 +9,7 @@ const HeroSection = () => {
   const { openChat } = useChatbot();
 
   const handleGetStarted = () => {
-    openChat({ initialMessage: "I'm interested in getting started with wyshAI!", initialStep: 'getName' });
+    openChat({ initialMessage: "I'm interested in getting started with Wysh AI!", initialStep: 'getName' });
   };
 
   const handleLearnMore = () => {

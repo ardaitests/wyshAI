@@ -18,7 +18,7 @@ const Navbar = () => {
   }, [location]);
 
   const handleJoinClick = () => {
-    openChat({ initialMessage: "Hi! I'm the wyshAI assistant. Can you tell me more about what you're interested in?", initialStep: 'getStarted' });
+    openChat({ initialMessage: "Hi! I'm the Wysh AI assistant. Can you tell me more about what you're interested in?", initialStep: 'getStarted' });
   };
 
   React.useEffect(() => {

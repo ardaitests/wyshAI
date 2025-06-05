@@ -13,20 +13,27 @@ import officePortraitImage from '@/assets/Office-Portrait-with-Depth.png';
 
 const faqsData = [
   {
-    question: "What is wyshAI?",
-    answer: "wyshAI is a platform designed to empower small and medium-sized businesses with AI-driven solutions. We provide tools that streamline operations, enhance customer engagement, and drive growth. Our goal is to make AI accessible and beneficial for every business.",
+    question: "What is Wysh AI?",
+    answer: "Wysh AI provides creates and connects intelligent automated workflows and AI agents that reduce or eliminate manual tasks, integrate data and systems, generate marketing content, improve customer service, and provide your customers with better digital experiences. Our goal is to make AI simple, accessible, and valuable for every business.",
   },
   {
     question: "How does it work?",
-    answer: "Our platform utilizes advanced algorithms to analyze data and generate actionable insights. By integrating seamlessly with your existing systems, wyshAI automates tasks and enhances decision-making. This allows you to focus on what matters most—growing your business.",
+    answer: (
+      <>
+        Our digital experience design and development capabilities enable us to create custom AI tools and agents that are tailored to your specific needs. <br /><br />
+        First, we meet with you to understand your business goals, needs, and challenges. We start with <em>why AI is right for you.</em> <br /><br />
+        Then, working closely with you, we use human-centered design principles to envision and create apps, tools, and agents that meet your specific needs. <br /><br />
+        Finally, we set up platforms, connect data and systems, and develop users experiences you, and your customers, will love. We provide training and ongoing support to ensure you feel great about working with us.
+      </>
+    ),
   },
   {
     question: "Who can benefit?",
-    answer: "Any small or medium-sized business looking to leverage technology can benefit from wyshAI. Our solutions cater to various industries, helping you optimize processes and improve customer experiences. Whether you're in retail, services, or manufacturing, we have something for you.",
+    answer: "Any small or medium-sized business owner or manager interested in adopting AI technology to help them save effort and time, reduce costs, simplify processes, offer better customer experiences, and focus on what matters most – improving their business.",
   },
   {
-    question: "Is there a trial?",
-    answer: "Yes, we offer a free trial for new users to explore our features. This allows you to experience the benefits of wyshAI without any commitment. Sign up today and see how we can transform your business.",
+    question: "Do I have to customize?",
+    answer: "No, we have pre-built AI tools and agents that are ready to use. By updating a few settings, you can be up and running in 24 hours.",
   }
 ];
 
@@ -39,7 +46,7 @@ const ContactSection = () => {
   };
   
   const handleDemo = () => {
-    openChat({ initialMessage: "I'm interested in a demo of wyshAI.", initialStep: 'scheduleDemo' });
+    openChat({ initialMessage: "I'm interested in a demo of Wysh AI.", initialStep: 'scheduleDemo' });
   };
 
   return (
@@ -85,10 +92,10 @@ const ContactSection = () => {
               className="order-1 md:order-2 text-center md:text-left"
             >
               <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-6 text-white">
-                Unlock Your AI Potential
+                Don't wait to get started.
               </h2>
               <p className="text-lg text-slate-300 max-w-xl mx-auto md:mx-0 mb-8">
-                Discover how wyshAI can transform your business. Get in touch or request a demo today!
+                Get in touch or request a demo to see how quickly and easily you can have AI working for you!
               </p>
               <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-3 sm:space-y-0 sm:space-x-4">
                 <Button size="lg" onClick={handleContact} className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100">
@@ -117,7 +124,7 @@ const ContactSection = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground-darker max-w-xl mx-auto">
-              Discover the answers to your most pressing questions about wyshAI and our innovative services.
+              Common questions and answers about <span className="whitespace-nowrap">Wysh AI</span> and our services.
             </p>
           </motion.div>
 

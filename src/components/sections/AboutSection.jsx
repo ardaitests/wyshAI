@@ -8,15 +8,15 @@ const AboutSection = () => {
   const features = [
     {
       icon: <TrendingDown className="h-6 w-6 text-primary" />,
-      text: "Streamline operations to save significant time and money.",
+      text: "Save time and money — streamlining operations and reducing effort.",
     },
     {
       icon: <ThumbsUp className="h-6 w-6 text-primary" />,
-      text: "Improve customer satisfaction with impressive, personalized experiences.",
+      text: "Impress customers — improve customer satisfaction with personalized experiences.",
     },
     {
       icon: <CheckCircle className="h-6 w-6 text-primary" />,
-      text: "Stay ahead of competitors with modern AI solutions.",
+      text: "Gain an edge — get ahead and stay ahead of competitors with modern AI solutions.",
     },
   ];
 
@@ -38,7 +38,7 @@ const AboutSection = () => {
               <i>It's smarter, faster, and cheaper.</i>
             </h2>
             <p className="text-lg text-muted-foreground-darker mb-8">
-            wyshAI employs the latest no-code platforms and generative AI technologies to design, build, and deploy AI tools and agents tailored to your specific business needs.
+            Wysh AI employs the latest no-code platforms and generative AI technologies to create AI tools and agents tailored to your specific business needs.
             </p>
             <ul className="space-y-6">
               {features.map((feature, index) => (
