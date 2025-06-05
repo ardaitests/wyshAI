@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingDown, CheckCircle, ThumbsUp } from 'lucide-react';
+import aboutImage from '@/assets/about-image.png';
 
 const AboutSection = () => {
   const features = [
@@ -62,21 +63,13 @@ const AboutSection = () => {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
             className="relative flex justify-center md:justify-start"
           >
-            <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
+            <div className="w-full max-w-md lg:max-w-lg">
               <img 
-                className="w-full h-full object-cover"
+                className="w-full h-auto rounded-xl shadow-xl"
                 alt="Team collaborating in a modern office environment"
-                src="/images/office-collab.png"
-                onError={(e) => { 
-                  console.error('Failed to load image:', {
-                    src: e.target.src,
-                    complete: e.target.complete,
-                    naturalWidth: e.target.naturalWidth,
-                    naturalHeight: e.target.naturalHeight,
-                    error: e.nativeEvent?.message || 'Unknown error'
-                  });
-                  e.target.style.display = 'none';
-                }} />
+                src={aboutImage}
+                onError={(e) => console.error('About image failed to load', e)}
+              />
             </div>
           </motion.div>
         </div>

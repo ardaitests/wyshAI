@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import logoImage from '@/assets/wyshAI-Logo-Dark-June-2025.svg';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -38,7 +39,7 @@ const Footer = () => {
           <div className="col-span-2 lg:col-span-2">
             <Link to="/" className="block mb-3" data-analytics-id="footer-logo-wyshAI">
               <img 
-                src="/images/wyshAI-Logo-Dark-June-2025.svg" 
+                src={logoImage} 
                 alt="wyshAI Logo" 
                 className="h-10 w-auto" 
               />

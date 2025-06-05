@@ -61,7 +61,7 @@ const ServicesSection = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {servicesOverview.map((service, index) => (
-            <motion.custom
+            <motion.div
               key={index}
               custom={index}
               variants={cardVariants}
@@ -86,7 +86,7 @@ const ServicesSection = () => {
                   </Link>
                 </div>
               </Card>
-            </motion.custom>
+            </motion.div>
           ))}
         </div>
         

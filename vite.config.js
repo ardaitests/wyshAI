@@ -191,6 +191,12 @@ logger.error = (msg, options) => {
 
 export default defineConfig({
 	customLogger: logger,
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+			'@/assets': path.resolve(__dirname, './src/assets')
+		}
+	},
 	plugins: [
 		...(isDev ? [inlineEditPlugin(), editModeDevPlugin()] : []),
 		react(),

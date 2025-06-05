@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { motion } from 'framer-motion';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import { Menu, X } from 'lucide-react';
+import logoImage from '@/assets/wyshAI-Logo-Dark-June-2025.svg';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -50,7 +51,7 @@ const Navbar = () => {
       onClick={() => window.scrollTo(0, 0)}
     >
       <img 
-        src="/images/wyshAI-Logo-Dark-June-2025.svg" 
+        src={logoImage} 
         alt="wyshAI Logo" 
         className="h-10 w-auto" 
       />

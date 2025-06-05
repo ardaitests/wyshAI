@@ -2,9 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.jsx"; // Assuming accordion is created
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.jsx";
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import { Mail, MessageSquare, HelpCircle } from 'lucide-react';
+import officePortraitImage from '@/assets/Office-Portrait-with-Depth.png';
 
 // Create Accordion component if it doesn't exist
 // For now, I'll assume it will be created or use a simplified structure.
@@ -65,7 +66,7 @@ const ContactSection = () => {
               className="order-2 md:order-1"
             >
               <img 
-                src="/images/Office-Portrait-with-Depth.png" 
+                src={officePortraitImage} 
                 alt="Professional office setting" 
                 className="rounded-lg shadow-xl w-full h-auto max-w-lg mx-auto"
                 onError={(e) => {

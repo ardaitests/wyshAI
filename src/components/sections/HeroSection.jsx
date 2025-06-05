@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { ArrowRight } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import cafeImage from '@/assets/20250604-1120-Cafe Owner-Digital-Bliss.png';
 
 const HeroSection = () => {
   const { openChat } = useChatbot();
@@ -78,7 +79,7 @@ const HeroSection = () => {
             <img 
               className="w-full h-full object-cover"
               alt="Cafe owner using a laptop with AI technology"
-              src="/images/20250604-1120-Cafe Owner-Digital-Bliss.png" 
+              src={cafeImage} 
             />
           </div>
         </motion.div>
