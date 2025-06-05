@@ -20,16 +20,17 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="bg-swiss-coffee-lightest text-foreground section-padding" id="about">
+    <section className="bg-swiss-coffee-lightest text-foreground py-24 md:py-32" id="about">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center justify-items-center">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
+            className="w-full max-w-xl"
           >
-            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-6 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-6 text-foreground">
             Let AI work for you.
             </h2>
             <h2 className="text-2xl md:text-2xl font-montserrat font-medium mb-6 text-foreground">
@@ -65,7 +66,17 @@ const AboutSection = () => {
               <img 
                 className="w-full h-full object-cover"
                 alt="Team collaborating in a modern office environment"
-                src="/images/Office-Collaboration in-Color.png" />
+                src="/images/office-collab.png"
+                onError={(e) => { 
+                  console.error('Failed to load image:', {
+                    src: e.target.src,
+                    complete: e.target.complete,
+                    naturalWidth: e.target.naturalWidth,
+                    naturalHeight: e.target.naturalHeight,
+                    error: e.nativeEvent?.message || 'Unknown error'
+                  });
+                  e.target.style.display = 'none';
+                }} />
             </div>
           </motion.div>
         </div>

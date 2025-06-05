@@ -207,7 +207,7 @@ const AboutPage = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4 text-foreground">
               What Sets Us Apart
             </h2>
             <p className="text-lg text-muted-foreground-darker max-w-2xl mx-auto">
@@ -336,7 +336,7 @@ const AboutPage = () => {
       >
         <div className="container mx-auto px-4 text-center">
           <Users className="h-12 w-12 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4">
             Let's Build Something Amazing Together
           </h2>
           <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">

@@ -28,6 +28,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         'swiss-coffee-lightest': "hsl(var(--swiss-coffee-lightest))",
         'muted-foreground-darker': "hsl(var(--muted-foreground-darker))",
+        'foreground-darker': "hsl(var(--foreground-darker))",
         'white': "hsl(var(--swiss-coffee-lightest))",  /* Override white with Swiss Coffee Lightest */
         primary: {
           DEFAULT: "hsl(var(--primary))",

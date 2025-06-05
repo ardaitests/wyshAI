@@ -139,7 +139,7 @@ const ServicesPage = () => {
               <div className="md:w-1/2">
                 <div className="mb-3 flex items-center gap-3">
                   {service.icon}
-                  <h2 className="text-2xl md:text-3xl font-montserrat font-bold text-foreground">{service.title}</h2>
+                  <h2 className="text-2xl md:text-3xl font-montserrat font-semibold text-foreground">{service.title}</h2>
                 </div>
                 <p className="text-md text-muted-foreground-darker mb-3">{service.shortDescription}</p>
                 <p className="text-sm text-muted-foreground mb-5">{service.detailedDescription}</p>
@@ -171,7 +171,7 @@ const ServicesPage = () => {
       >
         <div className="container mx-auto text-center px-4">
           <Target className="h-12 w-12 text-primary mx-auto mb-5" />
-          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4 text-foreground">
             Ready to Elevate Your Business with AI?
           </h2>
           <p className="text-lg text-muted-foreground-darker max-w-xl mx-auto mb-8">

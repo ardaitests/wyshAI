@@ -69,28 +69,41 @@ const Navbar = () => {
         <Logo />
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-4">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
               to={link.path}
               className={({ isActive }) =>
-                `text-sm font-montserrat font-medium transition-colors ${
-                  isActive ? 'text-white font-semibold' : 'text-white/90 hover:text-white'
-                }`
+                `group relative px-4 py-2 rounded-md text-sm font-montserrat font-medium transition-colors bg-transparent text-primary-foreground/90 hover:bg-white/10 hover:text-primary-foreground`
               }
               data-analytics-id={link.analyticsId}
               onClick={handleNavLinkClick}
             >
               {link.name}
+              <motion.div className="absolute bottom-0 left-0 w-full flex justify-center">
+                <motion.span 
+                  className="h-0.5 bg-primary-light w-1/4"
+                  initial={false}
+                  animate={{
+                    scaleX: (useLocation().pathname === link.path || (link.path === '/' && useLocation().pathname === '/')) ? 1 : 0,
+                    transformOrigin: 'center',
+                  }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 25,
+                  }}
+                />
+              </motion.div>
             </NavLink>
           ))}
           <Button 
-            variant="secondary"
+            variant="default"
             size="sm" 
             onClick={handleJoinClick}
             data-analytics-id="navbar-cta-contact"
-            className="bg-[hsl(4_96%_100%)] text-primary hover:bg-card font-montserrat"
+            className="bg-primary-medium text-primary-foreground hover:bg-white/10 font-montserrat font-medium"
           >
             Contact us
           </Button>

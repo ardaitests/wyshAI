@@ -44,30 +44,61 @@ const ContactSection = () => {
   return (
     <>
       {/* CTA Section */}
-      <section className="section-padding bg-footer-background text-white">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4">
-              Unlock Your AI Potential
-            </h2>
-            <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
-              Discover how wyshAI can transform your business. Get in touch or request a demo today!
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-              <Button size="lg" onClick={handleContact} className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100">
-                Contact Us
-              </Button>
-              <Button size="lg" variant="outline" onClick={handleDemo} className="border-white text-white hover:bg-swiss-coffee-lightest/10">
-                Request a Demo
-              </Button>
-            </div>
-          </motion.div>
+      <section 
+        className="py-24 md:py-32 text-white relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(-40deg, hsl(24 4% 30%) 0%, hsl(24 4% 25%) 50%, hsl(24 4% 15%) 100%)',
+          backgroundSize: '200% 200%',
+          animation: 'gradient 15s ease infinite'
+        }}
+      >
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-foreground-darker/30 via-foreground-darker/10 to-foreground-darker/30 mix-blend-overlay"></div>
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            {/* Image on the left */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="order-2 md:order-1"
+            >
+              <img 
+                src="/images/Office-Portrait-with-Depth.png" 
+                alt="Professional office setting" 
+                className="rounded-lg shadow-xl w-full h-auto max-w-lg mx-auto"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://placehold.co/600x400/1a1a2e/e6e6e6?text=Professional+Office';
+                }}
+              />
+            </motion.div>
+
+            {/* Text content on the right */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="order-1 md:order-2 text-center md:text-left"
+            >
+              <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-6 text-white">
+                Unlock Your AI Potential
+              </h2>
+              <p className="text-lg text-slate-300 max-w-xl mx-auto md:mx-0 mb-8">
+                Discover how wyshAI can transform your business. Get in touch or request a demo today!
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-3 sm:space-y-0 sm:space-x-4">
+                <Button size="lg" onClick={handleContact} className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100">
+                  Contact Us
+                </Button>
+                <Button size="lg" variant="outline" onClick={handleDemo} className="border-white text-white hover:bg-swiss-coffee-lightest/10">
+                  Request a Demo
+                </Button>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -81,7 +112,7 @@ const ContactSection = () => {
             transition={{ duration: 0.7 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-3 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-3 text-foreground">
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground-darker max-w-xl mx-auto">

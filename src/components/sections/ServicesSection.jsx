@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card.jsx';
-import { BrainCircuit, Settings2, Zap, ArrowRight } from 'lucide-react';
+import { BrainCircuit, Bot, Zap, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button.jsx';
 import { Link } from 'react-router-dom';
 
@@ -10,19 +10,19 @@ const servicesOverview = [
   {
     icon: <BrainCircuit className="h-8 w-8 text-primary mb-3" />,
     title: "Task Automation",
-    description: "Eliminate repetitive and manual tasks with AI-powered automated workflows.",
+    description: "Eliminate repetitive and manual tasks with AI-powered automated workflows designed to optimize your time.",
     link: "/services#ai-task-automation" 
   },
   {
-    icon: <Settings2 className="h-8 w-8 text-primary mb-3" />,
+    icon: <Bot className="h-8 w-8 text-primary mb-3" />,
     title: "AI Agents",
-    description: "Enable AI agents to handle customer inquiries, schedule appointments, and process orders.",
+    description: "Magically manage customer questions, new appointments, and orders with helpful AI agents.",
     link: "/services#ai-agents"
   },
   {
     icon: <Zap className="h-8 w-8 text-primary mb-3" />,
     title: "Seamless Integration",
-    description: "Connect AI workflows and tools with your current data and tech stack.",
+    description: "Easily and securely connect new AI tools and agents with your existing data and software.",
     link: "/services#data-system-integration"
   },
 ];
@@ -51,11 +51,11 @@ const ServicesSection = () => {
           transition={{ duration: 0.7 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-montserrat font-bold mb-4 text-foreground">
-            Unlock AI Insights for Smarter Business Decisions
+          <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4 text-foreground">
+            How does AI work to help my business?
           </h2>
           <p className="text-lg text-muted-foreground-darker max-w-2xl mx-auto">
-            Explore how our AI-driven solutions can simplify complexities and enhance your decision-making process.
+          Think of AI as your new team of smart assistants that never sleep — handling busywork, delighting customers, and keeping your business running smoothly 24/7.
           </p>
         </motion.div>
 
@@ -75,12 +75,12 @@ const ServicesSection = () => {
                   {service.icon}
                   <CardTitle className="text-xl font-montserrat font-semibold text-foreground">{service.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow pb-2">
+                <CardContent className="flex-grow pb-4">
                   <CardDescription className="text-foreground-darker text-sm">
                     {service.description}
                   </CardDescription>
                 </CardContent>
-                <div className="p-4 pt-0">
+                <div className="px-4 pb-4 pt-2">
                   <Link to={service.link || '/services'} className="text-sm font-medium text-primary hover:text-primary/80 flex items-center justify-center">
                     Learn More <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>

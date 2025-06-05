@@ -63,7 +63,7 @@ const ChatbotUI = ({
                     }`}>
                       {msg.sender === 'bot' && <img src="/images/wyshAI-Icon-Light-June-2025.svg" alt="wyshAI" className="h-6 w-6 mr-2 self-start flex-shrink-0" />}
                       <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
-                      {msg.sender === 'user' && <User className="h-6 w-6 ml-2 self-start flex-shrink-0 text-primary-foreground/80" />}
+                      {msg.sender === 'user' && <img src="/images/wyshAI-Icon-Light-June-2025.svg" alt="wyshAI" className="h-6 w-6 mr-2 self-start flex-shrink-0" />}
                     </div>
                   </motion.div>
                 ))}
