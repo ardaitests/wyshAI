@@ -25,39 +25,57 @@ const Footer = () => {
   ];
 
   const socialMedia = [
-    { icon: <Facebook size={20} />, name: 'Facebook', path: 'https://facebook.com/wyshai', analyticsId: 'footer-social-facebook' },
-    { icon: <Twitter size={20} />, name: 'Twitter', path: 'https://twitter.com/wyshai', analyticsId: 'footer-social-twitter' },
-    { icon: <Instagram size={20} />, name: 'Instagram', path: 'https://instagram.com/wyshai', analyticsId: 'footer-social-instagram' },
-    { icon: <Linkedin size={20} />, name: 'LinkedIn', path: 'https://linkedin.com/company/wyshai', analyticsId: 'footer-social-linkedin' },
+    { icon: <Linkedin size={20} />, name: 'LinkedIn', path: 'https://www.linkedin.com/company/wyshai', analyticsId: 'footer-social-linkedin' },
   ];
 
   return (
     <footer className="bg-[hsl(256,56%,24%)] text-footer-foreground pt-16 pb-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
-          {/* Logo and Company */}
+          {/* Logo, Company, and Social */}
           <div className="col-span-2 lg:col-span-2">
-            <Link to="/" className="block mb-3" data-analytics-id="footer-logo-wyshAI">
-              <img 
-                src={logoImage} 
-                alt="wyshAI Logo" 
-                className="h-10 w-auto" 
-              />
-            </Link>
-            <p className="text-sm text-footer-foreground/80">
-              Want to use AI for your business? <span className="italic">Just wysh for it.</span>
-            </p>
+            <div className="flex flex-col">
+              <Link to="/" className="block mb-3" data-analytics-id="footer-logo-wyshAI">
+                <img 
+                  src={logoImage} 
+                  alt="wyshAI Logo" 
+                  className="h-10 w-auto" 
+                />
+              </Link>
+              <p className="text-sm text-footer-foreground/80 mb-4">
+                Want to use AI for your business?<br />
+                <span className="italic">Just wysh for it.</span>
+              </p>
+              <div className="flex space-x-4">
+                {socialMedia.map(social => (
+                  <a 
+                    key={social.name} 
+                    href={social.path} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    aria-label={social.name} 
+                    className="hover:text-primary-lighter transition-colors"
+                    data-analytics-id={social.analyticsId}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
+          {/* Empty column to push Quick Links to the right */}
+          <div className="hidden md:block"></div>
+
           {/* Quick Links */}
-          <div>
+          <div className="md:col-start-4 lg:col-start-5">
             <p className="font-semibold text-white mb-3">Quick Links</p>
             <ul className="space-y-2">
               {quickLinks.map(link => (
                 <li key={link.name}>
                   <Link 
                     to={link.path} 
-                    className="hover:text-primary transition-colors text-sm"
+                    className="hover:text-primary-lighter transition-colors text-sm"
                     data-analytics-id={link.analyticsId}
                   >
                     {link.name}
@@ -76,7 +94,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link 
                     to={link.path} 
-                    className="hover:text-primary transition-colors text-sm"
+                    className="hover:text-primary-lighter transition-colors text-sm"
                     data-analytics-id={link.analyticsId}
                   >
                     {link.name}
@@ -112,36 +130,23 @@ const Footer = () => {
 
         </div>
 
-        <div className="border-t border-footer-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-footer-foreground/70 mb-4 md:mb-0">
-            &copy; {currentYear} wyshAI. All rights reserved.
-          </p>
-          <div className="flex space-x-4 mb-4 md:mb-0">
-            {legalLinks.map(link => (
-              <Link 
-                key={link.name} 
-                to={link.path} 
-                className="text-xs hover:text-primary transition-colors"
-                data-analytics-id={link.analyticsId}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-          <div className="flex space-x-4">
-            {socialMedia.map(social => (
-              <a 
-                key={social.name} 
-                href={social.path} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                aria-label={social.name} 
-                className="hover:text-primary transition-colors"
-                data-analytics-id={social.analyticsId}
-              >
-                {social.icon}
-              </a>
-            ))}
+        <div className="border-t border-footer-foreground/20 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-xs text-footer-foreground/70 mb-4 md:mb-0">
+              &copy; {currentYear} wyshAI. All rights reserved.
+            </p>
+            <div className="flex space-x-6">
+              {legalLinks.map(link => (
+                <Link 
+                  key={link.name} 
+                  to={link.path} 
+                  className="text-xs text-footer-foreground/70 hover:text-primary-lighter transition-colors"
+                  data-analytics-id={link.analyticsId}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

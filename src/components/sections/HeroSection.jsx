@@ -18,7 +18,7 @@ const HeroSection = () => {
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: 'smooth' });
     } else {
-      openChat({ initialMessage: "I'd like to learn more about wyshAI's capabilities.", initialStep: 'getMoreInfo' });
+      openChat({ initialMessage: "I'd like to learn more about Wysh AI's capabilities.", initialStep: 'getMoreInfo' });
     }
   };
 
@@ -55,7 +55,7 @@ const HeroSection = () => {
               Drive business growth and efficiency while improving customer satisfaction with AI.
             </p>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 text-primary-foreground/80">
-              Wysh AI partners with small business owners to design and build custom AI tools and agents.
+              Wysh AI partners with small businesses to design and build custom AI tools and agents.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">

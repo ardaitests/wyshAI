@@ -3,6 +3,8 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from '@/pages/HomePage.jsx';
 import ServicesPage from '@/pages/ServicesPage.jsx';
 import AboutPage from '@/pages/AboutPage.jsx';
+import PrivacyPolicy from '@/pages/PrivacyPolicy.jsx';
+import TermsOfService from '@/pages/TermsOfService.jsx';
 import Layout from '@/components/layout/Layout.jsx';
 import { Toaster } from '@/components/ui/toaster.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,6 +24,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
           </Routes>
         </AnimatePresence>
       </Layout>

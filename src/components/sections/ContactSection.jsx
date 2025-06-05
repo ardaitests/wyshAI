@@ -41,12 +41,14 @@ const faqsData = [
 const ContactSection = () => {
   const { openChat } = useChatbot();
 
-  const handleContact = () => {
+  const handleContact = (e) => {
+    e.preventDefault();
     openChat({ initialMessage: "I'd like to discuss my project or get a demo.", initialStep: 'getContactDetails' });
   };
   
-  const handleDemo = () => {
-    openChat({ initialMessage: "I'm interested in a demo of Wysh AI.", initialStep: 'scheduleDemo' });
+  const handleDemo = (e) => {
+    e.preventDefault();
+    openChat({ initialMessage: "I'm interested in a demo of how Wysh AI can help me.", initialStep: 'scheduleDemo' });
   };
 
   return (
@@ -60,8 +62,8 @@ const ContactSection = () => {
           animation: 'gradient 15s ease infinite'
         }}
       >
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-foreground-darker/30 via-foreground-darker/10 to-foreground-darker/30 mix-blend-overlay"></div>
+        {/* Animated gradient overlay - pointer-events-none allows clicks to pass through */}
+        <div className="absolute inset-0 bg-gradient-to-br from-foreground-darker/30 via-foreground-darker/10 to-foreground-darker/30 mix-blend-overlay pointer-events-none"></div>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Image on the left */}
@@ -95,7 +97,7 @@ const ContactSection = () => {
                 Don't wait to get started.
               </h2>
               <p className="text-lg text-slate-300 max-w-xl mx-auto md:mx-0 mb-8">
-                Get in touch or request a demo to see how quickly and easily you can have AI working for you!
+                Get in touch or request a demo to see how quickly and easily AI can begin working for you!
               </p>
               <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-3 sm:space-y-0 sm:space-x-4">
                 <Button size="lg" onClick={handleContact} className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100">

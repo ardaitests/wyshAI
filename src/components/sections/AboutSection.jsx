@@ -21,7 +21,11 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="bg-swiss-coffee-lightest text-foreground py-24 md:py-32" id="about">
+    <section 
+      className="relative text-foreground py-24 md:py-32 overflow-hidden bg-gradient-to-br from-swiss-coffee-lightest via-swiss-coffee-lighter to-swiss-coffee-lightest bg-[length:200%_200%] animate-gradient"
+      id="about"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-foreground/5 via-foreground/5 to-foreground/10 mix-blend-overlay pointer-events-none"></div>
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center justify-items-center">
           {/* Text Content */}
