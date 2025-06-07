@@ -2,8 +2,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
-import { BrainCircuit, Zap, MessageCircle, Settings2, BarChart3, Users, ArrowRight, CheckCircle, Lightbulb, Target } from 'lucide-react';
+import { BrainCircuit, Zap, MessageCircle, MessagesSquare, Settings2, BarChart3, Users, ArrowRight, Check, Lightbulb, Target, Code, Rocket, ThumbsUp, Megaphone, Cable, Bot } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import warmOfficeImg from '@/assets/Warm-Office-Collaboration-2.png';
+import mechanicOnPhoneImg from '@/assets/Mechanic-on-Phone-2.png';
+import aiChatOnPhoneImg from '@/assets/AI-Chat-on-iPhone-1.png';
+import landscaperTechMomentImg from '@/assets/Landscaper-Tech-Moment.png';
+import dentalOfficeTeamImg from '@/assets/Dental-Office-Team.png';
+import donutShopMonitoringImg from '@/assets/Donut-Shop-Monitoring.png';
+import gymOwnerInteractionImg from '@/assets/Gym-Owner-Interaction.png';
+import martialArtsBondingImg from '@/assets/Martial-Arts-Bonding.png';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -21,55 +29,73 @@ const servicesData = [
     id: "ai-task-automation",
     icon: <BrainCircuit className="h-10 w-10 text-primary" />,
     title: "AI Task Automation",
-    shortDescription: "Streamline your operations by automating repetitive tasks and complex workflows.",
-    detailedDescription: "Our AI agents can handle data entry, scheduling, report generation, and much more, freeing up your team to focus on high-value activities that drive business growth. We analyze your current processes to identify automation opportunities and build custom solutions that integrate seamlessly.",
-    benefits: ["Increased efficiency and productivity", "Reduced operational costs", "Minimized human error", "Improved employee satisfaction"],
-    imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="AI Task Automation" src="https://images.unsplash.com/photo-1697564265161-647d73c3fdf9" />
+    shortDescription: "Automate the manual. Focus on the meaningful.",
+    detailedDescription: "We streamline your operations by automating repetitive tasks and complex workflows. From data entry and scheduling to reporting and notifications, our automation solutions free up your team to focus on what drives your business forward.",
+    benefits: ["Increased efficiency and productivity", "Reduced operational costs", "Fewer errors and less admin overhead", "Happier, more focused teams"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="AI Task Automation" src={gymOwnerInteractionImg} />
   },
   {
-    id: "data-system-integration",
-    icon: <Settings2 className="h-10 w-10 text-primary" />,
-    title: "Data & System Integration",
-    shortDescription: "Unify your data sources and systems for a holistic view of your business.",
-    detailedDescription: "wyshAI connects your disparate software, databases, and platforms (CRMs, ERPs, marketing tools) into a cohesive ecosystem. This enables real-time data flow, comprehensive analytics, and eliminates data silos, providing you with actionable insights.",
-    benefits: ["Single source of truth for data", "Enhanced decision-making capabilities", "Streamlined cross-departmental workflows", "Improved data accuracy and consistency"],
-    imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Data & System Integration" src="https://images.unsplash.com/photo-1697564265161-647d73c3fdf9" />
+    id: "ai-agent-design",
+    icon: <Bot className="h-10 w-10 text-primary" />,
+    title: "AI Agent Design",
+    shortDescription: "Your always-on digital team.",
+    detailedDescription: "We design and deploy intelligent AI agents that handle follow-ups, customer service, appointment scheduling, product guidance, and more. These agents work around the clock to improve operations and customer interactions — no code required.",
+    benefits: ["24/7 responsiveness", "Personalized, consistent communication", "Scalable support without adding headcount", "Increased lead conversion and retention"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="AI Agent Design" src={aiChatOnPhoneImg} />
+  },
+  {
+    id: "software-data-integration",
+    icon: <Cable className="h-10 w-10 text-primary" />,
+    title: "Software & Data Integration",
+    shortDescription: "Connect tools to gain new insights and a holistic view.",
+    detailedDescription: "We can bring your systems together — accounting, customer relationship management (CRM), project management, invoicing and billing, and more — into one cohesive, connected ecosystem. This enables real-time data flow, smarter decisions, and eliminates data silos across your business.",
+    benefits: ["A single source of truth for business data", "Streamlined internal workflows", "Improved data accuracy", "Enhanced decision-making capabilities"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Software & Data Integration" src={donutShopMonitoringImg} />
   },
   {
     id: "marketing-content-generation",
-    icon: <Zap className="h-10 w-10 text-primary" />,
+    icon: <Megaphone className="h-10 w-10 text-primary" />,
     title: "Marketing Content Generation",
-    shortDescription: "Create compelling, high-quality marketing content at scale with AI.",
-    detailedDescription: "From blog posts and social media updates to email campaigns and product descriptions, our AI agents can generate creative and engaging content tailored to your brand voice and target audience. Speed up your content pipeline and maintain a consistent online presence.",
-    benefits: ["Faster content creation cycles", "Consistent brand messaging", "Increased engagement and reach", "SEO-optimized content"],
-    imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Marketing Content Generation" src="https://images.unsplash.com/photo-1623641695192-6415ad0f8ae1" />
+    shortDescription: "Create compelling content smarter, faster, and on-brand.",
+    detailedDescription: "Our AI tools help you generate high-quality content at scale — from social posts and blog articles to product descriptions and email campaigns — all tailored to your brand voice and customer segments.",
+    benefits: ["Faster content production cycles", "Consistent brand messaging", "SEO-optimized and engaging content", "Expanded reach and engagement"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Marketing Content Generation" src={landscaperTechMomentImg} />
   },
   {
     id: "enhanced-customer-service",
-    icon: <MessageCircle className="h-10 w-10 text-primary" />,
+    icon: <MessagesSquare className="h-10 w-10 text-primary" />,
     title: "Enhanced Customer Service",
-    shortDescription: "Deliver exceptional customer support 24/7 with intelligent AI chatbots.",
-    detailedDescription: "Our AI-powered chatbots can handle a large volume of customer inquiries, provide instant answers to common questions, guide users through processes, and escalate complex issues to human agents when necessary. Improve customer satisfaction and reduce support costs.",
+    shortDescription: "Support that never sleeps.",
+    detailedDescription: "Deliver exceptional support with AI-powered chatbots and agents that answer questions, resolve issues, and guide customers 24/7. We also help you create smart escalation flows when human intervention is needed.",
     benefits: ["24/7 customer availability", "Instant response times", "Reduced support agent workload", "Personalized customer interactions"],
-    imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Enhanced Customer Service" src="https://images.unsplash.com/photo-1675023035272-3426884896f8" />
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Enhanced Customer Service" src={mechanicOnPhoneImg} />
   },
   {
     id: "personalized-customer-experiences",
-    icon: <Users className="h-10 w-10 text-primary" />,
+    icon: <ThumbsUp className="h-10 w-10 text-primary" />,
     title: "Personalized Customer Experiences",
-    shortDescription: "Tailor interactions and offerings to individual customer needs and preferences.",
+    shortDescription: "Give every customer what they actually want.",
     detailedDescription: "By analyzing customer data and behavior, our AI agents help you understand your customers on a deeper level. This allows for personalized product recommendations, targeted marketing messages, and customized user journeys, leading to increased loyalty and conversions.",
-    benefits: ["Higher customer engagement and retention", "Increased conversion rates", "Improved customer lifetime value", "Deeper understanding of customer segments"],
-    imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Personalized Customer Experiences" src="https://images.unsplash.com/photo-1634243785116-ea16f4dfc744" />
+    benefits: ["Increased conversion and retention rates", "More valuable touchpoints and customer interactions", "Improved customer lifetime value", "Stronger brand relationships"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Personalized Customer Experiences" src={martialArtsBondingImg} />
+  },
+  {
+    id: "web-app-development",
+    icon: <Code className="h-10 w-10 text-primary" />,
+    title: "Web & App Development",
+    shortDescription: "Custom-built, AI-powered digital experiences.",
+    detailedDescription: "We design and develop modern, responsive websites and web applications tailored to your business goals and your customers' needs. We bring together great UX, smart AI features, and the latest technology platforms to take your business to the next level.",
+    benefits: ["Fast, user-friendly, mobile-ready web experiences", "Integrated AI features like chatbots, automation, and personalization", "Scalable platforms built with future growth in mind", "Improved engagement and customer satisfaction through human-centered design"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Web & App Development" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" />
   },
   {
     id: "business-process-optimization",
     icon: <BarChart3 className="h-10 w-10 text-primary" />,
     title: "Business Process Optimization",
-    shortDescription: "Leverage AI-driven analytics to identify inefficiencies and optimize your core business processes.",
-    detailedDescription: "wyshAI helps you analyze your existing workflows, identify bottlenecks, and implement AI solutions to streamline operations. From supply chain management to internal communications, we find ways to make your business run smoother and more efficiently.",
-    benefits: ["Data-driven process improvements", "Reduced waste and inefficiencies", "Enhanced operational agility", "Better resource allocation"],
-    imageElement: <img  className="w-full h-full object-cover rounded-lg" alt="Business Process Optimization" src="https://images.unsplash.com/photo-1634864481356-f7db7e601075" />
+    shortDescription: "Work smarter at every level.",
+    detailedDescription: "Our AI-driven analysis identifies inefficiencies across your workflows — then we implement automation or agent-based solutions to improve speed, accuracy, and performance across operations.",
+    benefits: ["Reduced waste and delays", "Data-backed decision-making", "Better use of time and talent", "Greater operational agility"],
+    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Business Process Optimization" src={dentalOfficeTeamImg} />
   },
 ];
 
@@ -92,90 +118,136 @@ const ServicesPage = () => {
       className="bg-swiss-coffee-lightest text-foreground"
     >
       {/* Hero Section */}
-      <motion.section
-        variants={itemVariants}
-        className="relative pt-32 pb-20 md:pt-40 md:pb-28 text-center bg-primary-light overflow-hidden"
+      <motion.section 
+        className="relative py-40 md:py-48 lg:py-56 flex items-center justify-center overflow-hidden bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${warmOfficeImg})`,
+        }}
+        variants={pageVariants}
+        initial="initial"
+        animate="in"
+        exit="out"
       >
-        <div className="relative z-10 container mx-auto px-4">
-          <Lightbulb className="h-14 w-14 text-primary mx-auto mb-5" />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
-            Our AI Services
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-foreground/60 z-0" />
+        {/* Gradient overlay */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/30 to-primary/10 z-0"
+        />
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-8 text-primary-foreground">
+            Our Services
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-primary-foreground/80">
-            Empowering your business with bespoke AI solutions designed for growth, efficiency, and innovation.
-          </p>
-          <Button
-            size="lg"
-            variant="default"
-            className="shadow-lg"
-            onClick={handleConsultationClick}
-          >
-            Discuss Your Project <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
         </div>
       </motion.section>
 
+      {/* Intro Section */}
+      <section className="relative py-20 md:py-28 text-foreground bg-swiss-coffee-dark overflow-hidden">
+        {/* Dark gradient overlay with animation */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-foreground/10 via-foreground/15 to-foreground/10 bg-[length:200%_200%] animate-gradient z-0"
+        />
+        <div className="relative z-10 container mx-auto px-4 max-w-4xl">
+          <div className="prose mx-auto text-center">
+            <p className="text-lg md:text-xl leading-relaxed text-foreground">
+              Wysh AI helps small and medium-sized businesses harness the power of AI — not through one-size-fits-all software, but through custom-built tools and agents tailored to how your business actually works.
+            </p>
+            <br />
+            <p className="text-lg md:text-xl leading-relaxed text-foreground">
+              Our services make it easy to adopt AI with confidence, unlock meaningful time savings, reduce costs, and deliver standout experiences to your customers.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Services Details Section */}
-      <section className="section-padding bg-swiss-coffee-lightest">
+      <section className="relative pt-16 pb-24 md:py-32 bg-swiss-coffee-lightest">
         <div className="container mx-auto px-4">
-          {servicesData.map((service, index) => (
-            <motion.div
-              id={service.id}
-              key={service.title}
-              variants={itemVariants}
-              className={`flex flex-col md:flex-row items-center gap-10 lg:gap-16 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''} mb-16 md:mb-24`}
-            >
-              <motion.div 
-                className="md:w-1/2 w-full"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6 }}
+          {servicesData.map((service, index) => {
+            const isEven = index % 2 === 0;
+            const textOrder = isEven ? 'md:order-1' : 'md:order-2';
+            const imageOrder = isEven ? 'md:order-2' : 'md:order-1';
+            const textX = isEven ? -50 : 50;
+            const imageX = isEven ? 50 : -50;
+            
+            return (
+              <motion.div
+                id={service.id}
+                key={service.title}
+                variants={itemVariants}
+                className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center justify-items-center ${index > 0 ? 'mt-24 md:mt-32' : ''}`}
               >
-                <div className="aspect-video rounded-lg shadow-xl overflow-hidden border border-gray-200">
-                  {service.imageElement}
-                </div>
-              </motion.div>
-              <div className="md:w-1/2">
-                <div className="mb-3 flex items-center gap-3">
-                  {service.icon}
-                  <h2 className="text-2xl md:text-3xl font-montserrat font-semibold text-foreground">{service.title}</h2>
-                </div>
-                <p className="text-md text-muted-foreground-darker mb-3">{service.shortDescription}</p>
-                <p className="text-sm text-muted-foreground mb-5">{service.detailedDescription}</p>
-                <h4 className="text-lg font-montserrat font-semibold mb-2 text-primary">Key Benefits:</h4>
-                <ul className="space-y-1.5 mb-5">
-                  {service.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-foreground">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button 
-                  variant="outline"
-                  onClick={handleConsultationClick}
+                {/* Text Content */}
+                <motion.div 
+                  className={`w-full max-w-xl ${textOrder}`}
+                  initial={{ opacity: 0, x: textX }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                  Learn More & Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
+                  <div className="mb-3 flex items-center gap-3">
+                    {service.icon}
+                    <h2 className="text-2xl md:text-3xl font-montserrat font-semibold text-foreground">
+                      {service.title}
+                    </h2>
+                  </div>
+                  <p className="text-md text-muted-foreground-darker font-semibold mb-3">
+                    {service.shortDescription}
+                  </p>
+                  <p className="text-foreground mb-5">
+                    {service.detailedDescription}
+                  </p>
+                  <h4 className="text-lg font-montserrat font-semibold mb-2 text-primary">
+                    Key Benefits:
+                  </h4>
+                  <ul className="space-y-1.5 mb-5">
+                    {service.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-center">
+                        <Check className="h-4 w-4 text-primary-light mr-2 flex-shrink-0" />
+                        <span className="text-foreground">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    variant="outline"
+                    onClick={handleConsultationClick}
+                    className="mt-4"
+                  >
+                    Learn More & Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </motion.div>
+                
+                {/* Image */}
+                <motion.div 
+                  className={`w-full max-w-xl ${imageOrder}`}
+                  initial={{ opacity: 0, x: imageX }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                >
+                  <div className="aspect-video rounded-lg shadow-xl overflow-hidden border border-gray-200">
+                    {service.imageElement}
+                  </div>
+                </motion.div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
       {/* Call to Action Section */}
       <motion.section
         variants={itemVariants}
-        className="section-padding bg-gray-50"
+        className="py-24 md:py-32 relative overflow-hidden"
       >
-        <div className="container mx-auto text-center px-4">
-          <Target className="h-12 w-12 text-primary mx-auto mb-5" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-lighter to-primary-lightest animate-gradient bg-[length:200%_200%]" />
+        <div className="container mx-auto text-center px-4 relative z-10">
+          <Rocket className="h-12 w-12 text-primary-medium mx-auto mb-5" />
           <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4 text-foreground">
             Ready to Elevate Your Business with AI?
           </h2>
-          <p className="text-lg text-muted-foreground-darker max-w-xl mx-auto mb-8">
-            Partner with wyshAI to unlock the full potential of artificial intelligence. Let's build custom solutions that drive real results for your business.
+          <p className="text-lg text-foreground/90 max-w-2xl mx-auto mb-8">
+            Partner with Wysh AI to unlock the full potential of artificial intelligence — without the technical headaches. Let's work together on custom solutions that drive real results.
           </p>
           <Button
             size="lg"

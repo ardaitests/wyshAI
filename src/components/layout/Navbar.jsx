@@ -31,8 +31,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/', analyticsId: 'navbar-nav-home' },
-    { name: 'About Us', path: '/about', analyticsId: 'navbar-nav-about' },
     { name: 'Services', path: '/services', analyticsId: 'navbar-nav-services' },
+    { name: 'About Us', path: '/about', analyticsId: 'navbar-nav-about' },
     // { name: 'Resources', path: '#', analyticsId: 'navbar-nav-resources' }, // Example for dropdown
     // { name: 'Blog', path: '/blog', analyticsId: 'navbar-nav-blog' }, // Example for blog
   ];
