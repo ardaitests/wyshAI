@@ -13,9 +13,11 @@ import {
   ArrowRight,
   Heart,
   Zap,
-  Shield
+  Shield,
+  HeartHandshake
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import designTeamImg from '@/assets/Design-Team-Collaboration.png';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -74,17 +76,11 @@ const AboutPage = () => {
 
   const handleGetStarted = () => {
     openChat({ 
-      initialMessage: "I'd like to learn more about working with wyshAI!", 
+      initialMessage: "I'd like to learn more about working with Wysh AI!", 
       initialStep: 'getName' 
     });
   };
 
-  const handlePartnership = () => {
-    openChat({ 
-      initialMessage: "I'm interested in partnering with wyshAI for my business needs.", 
-      initialStep: 'getPartnershipDetails' 
-    });
-  };
 
   return (
     <motion.div
@@ -92,30 +88,28 @@ const AboutPage = () => {
       initial="initial"
       animate="in"
       exit="out"
-      className="bg-swiss-coffee-lightest text-foreground"
+      className="bg-swiss-coffee-lightest text-foreground max-w-[100vw] overflow-x-hidden"
     >
       {/* Hero Section */}
       <motion.section
         variants={itemVariants}
-        className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-primary-light overflow-hidden"
+        className="relative py-40 md:py-48 lg:py-56 flex items-center justify-center overflow-hidden bg-cover bg-center bg-primary-light"
       >
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+        <div className="absolute inset-0 bg-foreground/60 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/30 to-primary/10 z-0" />
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
-              About wyshAI
+              About Wysh AI
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-primary-foreground/80">
-              Innovating with purpose, driven by experience
-            </p>
-            <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto">
-              wyshAI was founded on a simple yet powerful idea: technology should empower businesses, not complicate them. 
-              We bridge the gap between technical innovation and real-world application, helping organizations unlock new opportunities.
+              AI made practical, personal, and powerful — for every small business.
             </p>
           </div>
         </div>
       </motion.section>
 
-      {/* Stats Section */}
+      {/* Stats Section - Hidden but keeping the code for potential future use
       <section className="section-padding bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
@@ -146,10 +140,11 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+      */}
 
       {/* Story Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-4">
+      <section className="py-20 md:py-28 bg-gray-50">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Image Content */}
             <motion.div
@@ -175,21 +170,17 @@ const AboutPage = () => {
               transition={{ duration: 0.7 }}
             >
               <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-6 text-gray-800">
-                Our Journey & Mission
+                Our Mission
               </h2>
               <div className="space-y-4 text-gray-600">
                 <p className="text-lg">
-                  What started as a one-person mission has grown into a dynamic team of problem-solvers, 
-                  united by a shared vision: to create meaningful, impactful solutions that make a tangible difference.
+                At Wysh AI, our mission is to make advanced AI simple, accessible, and valuable for small and medium-sized businesses. We help you go beyond the hype by building intelligent tools and agents that actually do the work — from automating tasks and generating content to improving customer service and integrating your systems.
+                </p>
+                <p> 
+                We believe AI should empower you, not overwhelm you. That’s why we use human-centered design to create custom solutions that fit the way you already work — no coding, no complexity.
                 </p>
                 <p>
-                  At wyshAI, we understand that businesses don't need technology for technology's sake—they need 
-                  tools and strategies that address their unique challenges and deliver measurable results.
-                </p>
-                <p>
-                  Our team combines deep expertise in AI and low-code technologies with a commitment to practical 
-                  problem-solving. Whether we're automating workflows, designing intelligent applications, or building 
-                  seamless integrations, every solution we craft is tailored to fit your business and drive sustainable growth.
+                Whether you're ready to follow up with leads automatically, personalize your customer experience, or connect data across your business, we make it effortless to get started. When you're ready to unlock the power of AI, just Wysh for it.
                 </p>
               </div>
             </motion.div>
@@ -197,55 +188,9 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="section-padding bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-12 md:mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4 text-foreground">
-              What Sets Us Apart
-            </h2>
-            <p className="text-lg text-muted-foreground-darker max-w-2xl mx-auto">
-              Our approach combines innovation with practicality, ensuring every solution we deliver 
-              is both cutting-edge and immediately valuable to your business.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {valuesData.map((value, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                initial="initial"
-                whileInView="in"
-                viewport={{ once: true, amount: 0.2 }}
-                className="flex items-start space-x-4"
-              >
-                <div className="flex-shrink-0 mt-1">
-                  {value.icon}
-                </div>
-                <div>
-                  <h3 className="text-xl font-montserrat font-semibold mb-2 text-foreground">
-                    {value.title}
-                  </h3>
-                  <p className="text-muted-foreground-darker">
-                    {value.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Approach Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-4">
+      {/* Story Section */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Text Content */}
             <motion.div
@@ -253,60 +198,263 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7 }}
+              className="order-2 md:order-1"
             >
               <h2 className="text-3xl md:text-4xl font-archivo font-bold mb-6 text-gray-800">
-                Our Collaborative Approach
+                Our Story
               </h2>
               <div className="space-y-4 text-gray-600">
-                <p className="text-lg">
-                  We pride ourselves on being both innovative and approachable, cutting through complexity 
-                  to deliver solutions that are simple, scalable, and effective.
+                <p>
+                  We started Wysh AI with a clear purpose: to make powerful AI accessible to the businesses that need it most — not just tech giants or startups with engineering teams, but everyday small business owners.
                 </p>
                 <p>
-                  Collaboration is at the heart of what we do—we listen, we adapt, and we work alongside 
-                  you as trusted partners. We take the time to understand your organisation's goals, 
-                  ensuring that our work isn't just functional but transformative.
+                  After years working in digital experience design and product innovation, we saw a growing gap: while AI tools were rapidly evolving, most small businesses were left behind — overwhelmed by complexity, unsure where to start, and underserved by off-the-shelf solutions.
+                </p>
+                <p>
+                  We founded Wysh AI to close that gap — blending human-centered design, automation, and intelligent workflows to deliver AI that actually helps real businesses grow. No buzzwords. No black boxes. Just practical tools that save time, reduce busywork, and create better experiences for your customers.
+                </p>
+                <p>
+                  Because we believe that when small businesses have access to the same intelligent tools as big ones, they can do amazing things. And we're here to make sure they can — one Wysh at a time.
                 </p>
               </div>
-              
-              <div className="mt-8 space-y-3">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                  <span className="text-foreground">Deep understanding of your business goals</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                  <span className="text-foreground">Tailored solutions that drive sustainable growth</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-700">Ongoing partnership and support</span>
-                </div>
-              </div>
             </motion.div>
-
+            
             {/* Image Content */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7 }}
-              className="relative flex justify-center md:justify-end"
+              className="order-1 md:order-2 relative flex justify-center md:justify-end"
             >
               <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
-                <img  
+                <img 
+                  src={designTeamImg} 
+                  alt="Wysh AI team collaborating on a project"
                   className="w-full h-full object-cover"
-                  alt="Business consultation meeting with AI technology discussion"
-                 src="https://images.unsplash.com/photo-1703270070919-7c91aac8c335" />
+                />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Future Vision Section */}
-      <section className="section-padding bg-white">
-        <div className="container mx-auto px-4 text-center">
+      {/* Values Section */}
+      <section className="py-20 md:py-28 bg-gray-50">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-6 text-foreground">
+              Our Approach
+            </h2>
+            <p className="text-xl text-muted-foreground-darker max-w-3xl mx-auto leading-relaxed">
+              How we're different from the rest
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Value 1 */}
+            <motion.div 
+              className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                  <path d="M12 2v4"></path>
+                  <path d="m16.24 7.76 2.83-2.83"></path>
+                  <path d="M18 12h4"></path>
+                  <path d="m18 18 2.8 2.8"></path>
+                  <path d="M12 18v4"></path>
+                  <path d="M4.9 19.1 7.69 16.3"></path>
+                  <path d="M2 12h4"></path>
+                  <path d="M7.7 7.7 4.9 4.9"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
+                We build real tools that do real work
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                While others talk about future potential, we focus on what AI can do for you right now — automating follow-ups, improving customer experiences, and saving hours of manual work each week.
+              </p>
+            </motion.div>
+
+            {/* Value 2 */}
+            <motion.div 
+              className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
+                We design around people, not platforms
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                We don't just "add AI" — we design thoughtful, easy-to-use tools that work the way you work. Every solution is tailored, intuitive, and grounded in human-centered design.
+              </p>
+            </motion.div>
+
+            {/* Value 3 */}
+            <motion.div 
+              className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                  <path d="M17 6.1H3"></path>
+                  <path d="M21 12.1H3"></path>
+                  <path d="M15.1 18H3"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
+                We speak your language
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                No buzzwords, no jargon. Just honest conversations about how we can help your business grow using simple, powerful AI solutions — no coding required.
+              </p>
+            </motion.div>
+
+            {/* Value 4 */}
+            <motion.div 
+              className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
+                We're with you every step
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                From first meeting to launch and beyond, we partner closely with you. We train, support, and adapt your solution as your business evolves — because your success is our success.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4 text-foreground">
+              How We Work
+            </h2>
+            <p className="text-xl text-muted-foreground-darker max-w-3xl mx-auto">
+              Our proven process for delivering real results
+            </p>
+          </motion.div>
+
+          <div className="space-y-16">
+            {/* Step 1 */}
+            <motion.div 
+              className="grid md:grid-cols-12 gap-8 items-center"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="md:col-span-4 lg:col-span-3">
+                <div className="bg-primary/10 text-primary h-20 w-20 rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto md:mx-0">
+                  1
+                </div>
+              </div>
+              <div className="md:col-span-8 lg:col-span-9">
+                <h3 className="text-2xl font-montserrat font-bold mb-3 text-foreground">
+                  Discover
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <span className="block font-medium text-foreground mb-2">We start with you.</span>
+                  We take time to understand your business, goals, and where AI can make the biggest impact. It's about solving the right problems — not adding tech for tech's sake.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Step 2 */}
+            <motion.div 
+              className="grid md:grid-cols-12 gap-8 items-center"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="md:col-span-4 lg:col-span-3">
+                <div className="bg-primary/10 text-primary h-20 w-20 rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto md:mx-0">
+                  2
+                </div>
+              </div>
+              <div className="md:col-span-8 lg:col-span-9">
+                <h3 className="text-2xl font-montserrat font-bold mb-3 text-foreground">
+                  Design
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <span className="block font-medium text-foreground mb-2">Tailored, human-centered solutions.</span>
+                  We co-create AI tools, agents, and workflows designed around your customers, operations, and needs — using no-code platforms and the latest generative AI.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Step 3 */}
+            <motion.div 
+              className="grid md:grid-cols-12 gap-8 items-center"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="md:col-span-4 lg:col-span-3">
+                <div className="bg-primary/10 text-primary h-20 w-20 rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto md:mx-0">
+                  3
+                </div>
+              </div>
+              <div className="md:col-span-8 lg:col-span-9">
+                <h3 className="text-2xl font-montserrat font-bold mb-3 text-foreground">
+                  Deliver
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  <span className="block font-medium text-foreground mb-2">Seamless setup and support.</span>
+                  We integrate everything with your existing systems, train your team, and provide ongoing support to ensure you feel confident using your new AI tools.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Future Vision Section - Hidden but keeping the code for potential future use
+      <section className="py-20 md:py-28 bg-white">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -328,40 +476,32 @@ const AboutPage = () => {
           </motion.div>
         </div>
       </section>
+      */}
 
       {/* CTA Section */}
       <motion.section
         variants={itemVariants}
-        className="section-padding bg-footer-background text-white"
+        className="py-20 md:py-28 relative overflow-hidden bg-gradient-to-r from-primary-light to-primary/80 text-white"
       >
-        <div className="container mx-auto px-4 text-center">
-          <Users className="h-12 w-12 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-4">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-light to-primary/80 animate-gradient bg-[length:200%_200%]" />
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <HeartHandshake className="h-12 w-12 text-white mx-auto mb-6" />
+          <h2 className="text-3xl md:text-4xl font-montserrat font-light mb-4 text-white">
             Let's Build Something Amazing Together
           </h2>
-          <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
-            Join the growing number of businesses that trust wyshAI to deliver intelligent solutions 
-            that make a real difference. Let's discuss how we can help your business thrive.
+          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
+            The time to adopt AI is now, and Wysh AI is your trusted partner in getting started. 
+            Let's discuss how we can help your business thrive.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-            <Button 
-              size="lg" 
-              onClick={handleGetStarted}
-              className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100"
-              data-analytics-id="about-cta-get-started"
-            >
-              Get Started Today <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              onClick={handlePartnership}
-              className="border-white text-white hover:bg-swiss-coffee-lightest/10"
-              data-analytics-id="about-cta-discuss-partnership"
-            >
-              Discuss Partnership
-            </Button>
-          </div>
+          <Button
+            size="lg"
+            variant="default"
+            className="bg-white text-primary hover:bg-gray-50 shadow-lg mx-auto"
+            onClick={handleGetStarted}
+            data-analytics-id="about-cta-get-started"
+          >
+            Get Started Today <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
         </div>
       </motion.section>
     </motion.div>
