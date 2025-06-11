@@ -135,18 +135,16 @@ const ServicesPage = () => {
           className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/30 to-primary/10 z-0"
         />
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-8 text-primary-foreground">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold mb-8 text-primary-foreground">
             Our Services
           </h1>
         </div>
       </motion.section>
 
       {/* Intro Section */}
-      <section className="relative py-20 md:py-28 text-foreground bg-swiss-coffee-dark overflow-hidden">
-        {/* Dark gradient overlay with animation */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-foreground/10 via-foreground/15 to-foreground/10 bg-[length:200%_200%] animate-gradient z-0"
-        />
+      <section className="relative py-20 md:py-28 text-foreground overflow-hidden bg-swiss-coffee-light">
+        {/* Subtle gradient animation */}
+        <div className="absolute inset-0 bg-gradient-to-br from-swiss-coffee-lighter/80 via-swiss-coffee-light/80 to-swiss-coffee-lighter/80 bg-[length:200%_200%] animate-gradient z-0" />
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="prose mx-auto text-center">
             <p className="text-lg md:text-xl leading-relaxed text-foreground">

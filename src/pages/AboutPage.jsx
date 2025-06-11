@@ -17,6 +17,7 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3.png';
 import designTeamImg from '@/assets/Design-Team-Collaboration.png';
 
 const pageVariants = {
@@ -91,26 +92,29 @@ const AboutPage = () => {
       className="bg-swiss-coffee-lightest text-foreground max-w-[100vw] overflow-x-hidden"
     >
       {/* Hero Section */}
-      <motion.section
-        variants={itemVariants}
-        className="relative py-40 md:py-48 lg:py-56 flex items-center justify-center overflow-hidden bg-cover bg-center bg-primary-light"
+      <motion.section 
+        variants={pageVariants}
+        initial="initial"
+        animate="in"
+        exit="out"
+        className="relative py-32 md:py-40 lg:py-48 flex items-center justify-center overflow-hidden bg-cover bg-center"
       >
-        <div className="absolute inset-0 bg-foreground/60 z-0" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/30 to-primary/10 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-br from-swiss-coffee-dark via-swiss-coffee-darker to-swiss-coffee-dark bg-[length:200%_200%] animate-gradient z-0" />
+        <div className="absolute inset-0 bg-foreground/30 z-0" />
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-extrabold mb-6 text-primary-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold mb-6 text-primary-foreground">
               About Wysh AI
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-primary-foreground/80">
-              AI made practical, personal, and powerful — for every small business.
+              AI made practical, personal, and powerful — <br className="hidden sm:block" />for small businesses that want real results, fast.
             </p>
           </div>
         </div>
       </motion.section>
 
       {/* Stats Section - Hidden but keeping the code for potential future use
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-swiss-coffee-lightest">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             {statsData.map((stat, index) => (
@@ -122,7 +126,7 @@ const AboutPage = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 className="text-center"
               >
-                <Card className="bg-gray-50 border-none h-full">
+                <Card className="bg-swiss-coffee-lightest border-none h-full">
                   <CardHeader className="items-center pt-8 pb-4">
                     <div className="mb-4">{stat.icon}</div>
                     <CardTitle className="text-xl font-montserrat font-bold text-foreground">
@@ -143,7 +147,7 @@ const AboutPage = () => {
       */}
 
       {/* Story Section */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      <section className="py-20 md:py-28 bg-swiss-coffee-lighter">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Image Content */}
@@ -157,8 +161,14 @@ const AboutPage = () => {
               <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
                 <img  
                   className="w-full h-full object-cover"
-                  alt="Professional team working on AI solutions in modern office"
-                 src="https://images.unsplash.com/photo-1651009188116-bb5f80eaf6aa" />
+                  alt="Vintage shop collaboration showing teamwork and creativity"
+                  src={vintageShopImage}
+                  onError={(e) => {
+                    console.error('Vintage shop image failed to load, using fallback');
+                    e.target.onerror = null;
+                    e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Team+Collaboration';
+                    e.target.alt = 'Placeholder image for team collaboration';
+                  }} />
               </div>
             </motion.div>
 
@@ -189,7 +199,7 @@ const AboutPage = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-20 md:py-28 bg-swiss-coffee-lightest">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Text Content */}
@@ -240,7 +250,7 @@ const AboutPage = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      <section className="py-20 md:py-28 bg-swiss-coffee-lighter">
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: -20 }}

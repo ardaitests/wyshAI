@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from '@/pages/HomePage.jsx';
 import ServicesPage from '@/pages/ServicesPage.jsx';
@@ -10,11 +10,38 @@ import { Toaster } from '@/components/ui/toaster.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import Chatbot from '@/components/chatbot/Chatbot.jsx';
 import { ChatbotProvider } from '@/contexts/ChatbotContext.jsx';
+import { initSmoothScrolling, scrollToElement } from '@/utils/smoothScroll';
 
 function App() {
   // Removed document.documentElement.classList.add('dark'); to default to light theme
-
   const location = useLocation();
+
+  // Initialize smooth scrolling
+  useEffect(() => {
+    // Initialize smooth scrolling for anchor links
+    const cleanup = initSmoothScrolling();
+    
+    // Cleanup event listeners on unmount
+    return () => {
+      if (cleanup) cleanup();
+    };
+  }, []);
+
+  // Handle route changes and scroll to top
+  useEffect(() => {
+    // Scroll to top on route change
+    window.scrollTo(0, 0);
+    
+    // If there's a hash in the URL, scroll to that element
+    if (location.hash) {
+      // Small delay to ensure the page has rendered
+      const timer = setTimeout(() => {
+        scrollToElement(location.hash);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   return (
     <ChatbotProvider>

@@ -72,7 +72,12 @@ const AboutSection = () => {
                 className="w-full h-auto rounded-xl shadow-xl"
                 alt="Team collaborating in a modern office environment"
                 src={aboutImage}
-                onError={(e) => console.error('About image failed to load', e)}
+                onError={(e) => {
+                  console.error('About image failed to load, using fallback');
+                  e.target.onerror = null;
+                  e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Team+Collaboration';
+                  e.target.alt = 'Placeholder image for team collaboration';
+                }}
               />
             </div>
           </motion.div>

@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e8e0db]">
+    <div className="min-h-screen bg-swiss-coffee-light">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="prose prose-lg max-w-none dark:prose-invert"
           >
-            <div className="bg-[#f5f1ee] rounded-2xl p-6 md:p-8 shadow-sm">
+            <div className="bg-swiss-coffee-lighter rounded-2xl p-6 md:p-8 shadow-sm">
               <p className="text-muted-foreground mb-6">
                 At Wysh AI, we take your privacy seriously. This Privacy Policy explains how we collect, 
                 use, disclose, and safeguard your information when you visit our website or use our services.

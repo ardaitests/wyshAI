@@ -22,8 +22,13 @@
 @layer base {
   :root {
     --background: 4 96% 100%; /* Swiss Coffee Lighter - Almost White */
-    --foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */
+    --foreground: 20 2% 24%; /* Dark warm gray for text */
     --swiss-coffee-lightest: 0 0% 96%; /* Swiss Coffee Lightest */
+    --swiss-coffee-lighter: 24 12% 92%; /* Very light warm beige */
+    --swiss-coffee-light: 24 12% 88%; /* Light warm beige */
+    --swiss-coffee-medium: 20 8% 80%; /* Medium warm beige */
+    --swiss-coffee-dark: 24 4% 60%; /* Medium warm gray */
+    --swiss-coffee-darker: 20 2% 32%; /* Dark warm gray */
 
     --card: var(--swiss-coffee-lightest); /* Swiss Coffee Lightest */
     --card-foreground: 20 2% 24%; /* Swiss Coffee Darkest for text */

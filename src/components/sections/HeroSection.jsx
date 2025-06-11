@@ -1,9 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
-import { ArrowRight } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
-import cafeImage from '@/assets/20250604-1120-Cafe Owner-Digital-Bliss.png';
+import { scrollToElement } from '@/utils/smoothScroll';
+import cafeImage from '@/assets/20250604-1120-cafe-owner-digital-bliss.png';
 
 const HeroSection = () => {
   const { openChat } = useChatbot();
@@ -13,12 +14,15 @@ const HeroSection = () => {
   };
 
   const handleLearnMore = () => {
-     // Could scroll to a section or open chat with specific context
-    const servicesSection = document.getElementById('services-overview'); // Assuming ServicesSection has this ID
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      openChat({ initialMessage: "I'd like to learn more about Wysh AI's capabilities.", initialStep: 'getMoreInfo' });
+    // Use the smooth scroll utility to scroll to services section
+    const scrolled = scrollToElement('#services-overview');
+    
+    // If the element wasn't found, open the chat
+    if (!scrolled) {
+      openChat({ 
+        initialMessage: "I'd like to learn more about Wysh AI's capabilities.", 
+        initialStep: 'getMoreInfo' 
+      });
     }
   };
 
@@ -51,18 +55,18 @@ const HeroSection = () => {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
             className="flex flex-col justify-center pl-0 md:pl-4"
           >
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 text-primary-foreground/80">
-              Drive business growth and efficiency while improving customer satisfaction with AI.
+            <p className="text-lg md:text-xl text-primary-foreground mb-4">
+              Wysh AI works with small businesses to design and build custom AI tools and agents for real results, fast.
             </p>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 text-primary-foreground/80">
-              Wysh AI partners with small businesses to design and build custom AI tools and agents.
+            <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
+              Save time, delight customers, and reduce costs with artificial intelligence.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">
                 Get Started 
               </Button>
               <Button size="lg" variant="outline" onClick={handleLearnMore} className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                Learn More <ArrowDown className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </motion.div>
@@ -78,8 +82,13 @@ const HeroSection = () => {
           <div className="w-full aspect-video rounded-xl shadow-2xl overflow-hidden">
             <img 
               className="w-full h-full object-cover"
-              alt="Cafe owner using a laptop with AI technology"
-              src={cafeImage} 
+              alt="Cafe owner using AI technology"
+              src={cafeImage}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://placehold.co/1200x675/1a1a2e/e6e6e6?text=AI+Business+Solutions';
+                e.target.alt = 'Placeholder image for business solutions';
+              }}
             />
           </div>
         </motion.div>

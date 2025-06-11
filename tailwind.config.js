@@ -27,6 +27,11 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         'swiss-coffee-lightest': "hsl(var(--swiss-coffee-lightest))",
+        'swiss-coffee-lighter': "hsl(var(--swiss-coffee-lighter))",
+        'swiss-coffee-light': "hsl(var(--swiss-coffee-light))",
+        'swiss-coffee-medium': "hsl(var(--swiss-coffee-medium))",
+        'swiss-coffee-dark': "hsl(var(--swiss-coffee-dark))",
+        'swiss-coffee-darker': "hsl(var(--swiss-coffee-darker))",
         'muted-foreground-darker': "hsl(var(--muted-foreground-darker))",
         'foreground-darker': "hsl(var(--foreground-darker))",
         'white': "hsl(var(--swiss-coffee-lightest))",  /* Override white with Swiss Coffee Lightest */
