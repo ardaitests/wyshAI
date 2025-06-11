@@ -38,8 +38,16 @@ const Footer = () => {
               <Link to="/" className="block mb-3" data-analytics-id="footer-logo-wyshAI">
                 <img 
                   src={logoImage} 
-                  alt="wyshAI Logo" 
-                  className="h-10 w-auto" 
+                  alt="Wysh AI - AI Solutions for Business Growth" 
+                  className="h-10 w-auto"
+                  width="140"
+                  height="40"
+                  onError={(e) => {
+                    console.error('Footer logo failed to load');
+                    e.target.onerror = null;
+                    e.target.src = 'https://placehold.co/140x40/ffffff/1a1a2e?text=Wysh+AI';
+                    e.target.alt = 'Wysh AI Logo - Placeholder';
+                  }}
                 />
               </Link>
               <p className="text-sm text-footer-foreground/80 mb-4">

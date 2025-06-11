@@ -52,8 +52,16 @@ const Navbar = () => {
     >
       <img 
         src={logoImage} 
-        alt="wyshAI Logo" 
+        alt="Wysh AI - AI-Powered Business Solutions" 
         className="h-10 w-auto" 
+        width="120"
+        height="40"
+        onError={(e) => {
+          console.error('Logo image failed to load');
+          e.target.onerror = null;
+          e.target.src = 'https://placehold.co/120x40/1a1a2e/e6e6e6?text=WyshAI';
+          e.target.alt = 'Wysh AI Logo - Placeholder';
+        }}
       />
     </Link>
   );

@@ -82,12 +82,15 @@ const HeroSection = () => {
           <div className="w-full aspect-video rounded-xl shadow-2xl overflow-hidden">
             <img 
               className="w-full h-full object-cover"
-              alt="Cafe owner using AI technology"
+              alt="Cafe owner using a tablet to manage orders with AI assistance, showcasing modern business technology in action"
               src={cafeImage}
+              aria-label="Cafe owner utilizing AI technology for business operations"
               onError={(e) => {
+                console.error('Hero image failed to load, using fallback');
                 e.target.onerror = null;
                 e.target.src = 'https://placehold.co/1200x675/1a1a2e/e6e6e6?text=AI+Business+Solutions';
-                e.target.alt = 'Placeholder image for business solutions';
+                e.target.alt = 'Placeholder image showing AI business solutions in action';
+                e.target.setAttribute('aria-label', 'Placeholder for hero image showing business technology');
               }}
             />
           </div>

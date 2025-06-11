@@ -44,7 +44,16 @@ const ChatbotUI = ({
             <DialogContent className="sm:max-w-[450px] h-[70vh] flex flex-col p-0 glassmorphic-card border-primary/50">
               <DialogHeader className="p-4 border-b border-border/50">
                 <DialogTitle className="flex items-center text-xl font-montserrat">
-                  <img src={logoIcon} alt="wyshAI" className="h-7 w-7 mr-2" /> Wysh AI Assistant
+                  <img 
+                    src={logoIcon} 
+                    alt="Wysh AI Logo" 
+                    className="h-7 w-7 mr-2" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6Ii8+PC9zdmc+';
+                      e.target.alt = 'Wysh AI Logo - Placeholder';
+                    }}
+                  /> Wysh AI Assistant
                 </DialogTitle>
               </DialogHeader>
               
@@ -62,7 +71,18 @@ const ChatbotUI = ({
                         ? 'bg-primary text-primary-foreground rounded-br-none' 
                         : 'bg-secondary text-secondary-foreground rounded-bl-none'
                     }`}>
-                      {msg.sender === 'bot' && <img src={logoIcon} alt="Wysh AI" className="h-6 w-6 mr-2 self-start flex-shrink-0" />}
+                      {msg.sender === 'bot' && (
+                        <img 
+                          src={logoIcon} 
+                          alt="" 
+                          className="h-6 w-6 mr-2 self-start flex-shrink-0"
+                          aria-hidden="true"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6Ii8+PC9zdmc+';
+                          }}
+                        />
+                      )}
                       <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
                       {msg.sender === 'user' && <User className="h-6 w-6 ml-2 self-start flex-shrink-0 text-primary-foreground/80" />}
                     </div>

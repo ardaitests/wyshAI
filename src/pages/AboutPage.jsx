@@ -161,13 +161,15 @@ const AboutPage = () => {
               <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
                 <img  
                   className="w-full h-full object-cover"
-                  alt="Vintage shop collaboration showing teamwork and creativity"
+                  alt="Team members collaborating in a vintage shop setting, discussing business strategy"
                   src={vintageShopImage}
+                  aria-label="Team collaboration in vintage shop"
                   onError={(e) => {
                     console.error('Vintage shop image failed to load, using fallback');
                     e.target.onerror = null;
                     e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Team+Collaboration';
-                    e.target.alt = 'Placeholder image for team collaboration';
+                    e.target.alt = 'Placeholder image showing team collaboration';
+                    e.target.setAttribute('aria-label', 'Placeholder for team collaboration');
                   }} />
               </div>
             </motion.div>
@@ -240,8 +242,16 @@ const AboutPage = () => {
               <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
                 <img 
                   src={designTeamImg} 
-                  alt="Wysh AI team collaborating on a project"
+                  alt="Diverse team of Wysh AI professionals working together around a table, discussing and planning a project"
+                  aria-label="Wysh AI design team in a collaborative meeting"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    console.error('Design team image failed to load, using fallback');
+                    e.target.onerror = null;
+                    e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Design+Team';
+                    e.target.alt = 'Placeholder image of a design team meeting';
+                    e.target.setAttribute('aria-label', 'Placeholder for design team collaboration');
+                  }}
                 />
               </div>
             </motion.div>
@@ -369,8 +379,8 @@ const AboutPage = () => {
       </section>
 
       {/* Process Section */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-white flex justify-center">
+        <div className="w-full max-w-5xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -386,24 +396,29 @@ const AboutPage = () => {
             </p>
           </motion.div>
 
-          <div className="space-y-16">
+          <div className="space-y-12 max-w-5xl mx-auto">
             {/* Step 1 */}
             <motion.div 
-              className="grid md:grid-cols-12 gap-8 items-center"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="grid md:grid-cols-12 gap-6 items-start"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="md:col-span-4 lg:col-span-3">
-                <div className="bg-primary/10 text-primary h-20 w-20 rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto md:mx-0">
-                  1
+              {/* Left side - Number and Title */}
+              <div className="md:col-span-3">
+                <div className="flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary h-14 w-14 rounded-full flex-shrink-0 flex items-center justify-center text-xl font-bold">
+                    1
+                  </div>
+                  <h3 className="text-xl font-montserrat font-bold text-foreground">
+                    Discover
+                  </h3>
                 </div>
               </div>
-              <div className="md:col-span-8 lg:col-span-9">
-                <h3 className="text-2xl font-montserrat font-bold mb-3 text-foreground">
-                  Discover
-                </h3>
+              
+              {/* Right side - Description */}
+              <div className="md:col-span-9 max-w-2xl">
                 <p className="text-gray-700 leading-relaxed">
                   <span className="block font-medium text-foreground mb-2">We start with you.</span>
                   We take time to understand your business, goals, and where AI can make the biggest impact. It's about solving the right problems — not adding tech for tech's sake.
@@ -413,21 +428,26 @@ const AboutPage = () => {
 
             {/* Step 2 */}
             <motion.div 
-              className="grid md:grid-cols-12 gap-8 items-center"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="grid md:grid-cols-12 gap-6 items-start"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="md:col-span-4 lg:col-span-3">
-                <div className="bg-primary/10 text-primary h-20 w-20 rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto md:mx-0">
-                  2
+              {/* Left side - Number and Title */}
+              <div className="md:col-span-3">
+                <div className="flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary h-14 w-14 rounded-full flex-shrink-0 flex items-center justify-center text-xl font-bold">
+                    2
+                  </div>
+                  <h3 className="text-xl font-montserrat font-bold text-foreground">
+                    Design
+                  </h3>
                 </div>
               </div>
-              <div className="md:col-span-8 lg:col-span-9">
-                <h3 className="text-2xl font-montserrat font-bold mb-3 text-foreground">
-                  Design
-                </h3>
+              
+              {/* Right side - Description */}
+              <div className="md:col-span-9 max-w-2xl">
                 <p className="text-gray-700 leading-relaxed">
                   <span className="block font-medium text-foreground mb-2">Tailored, human-centered solutions.</span>
                   We co-create AI tools, agents, and workflows designed around your customers, operations, and needs — using no-code platforms and the latest generative AI.
@@ -437,24 +457,29 @@ const AboutPage = () => {
 
             {/* Step 3 */}
             <motion.div 
-              className="grid md:grid-cols-12 gap-8 items-center"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="grid md:grid-cols-12 gap-6 items-start"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="md:col-span-4 lg:col-span-3">
-                <div className="bg-primary/10 text-primary h-20 w-20 rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto md:mx-0">
-                  3
+              {/* Left side - Number and Title */}
+              <div className="md:col-span-3">
+                <div className="flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary h-14 w-14 rounded-full flex-shrink-0 flex items-center justify-center text-xl font-bold">
+                    3
+                  </div>
+                  <h3 className="text-xl font-montserrat font-bold text-foreground">
+                    Deliver
+                  </h3>
                 </div>
               </div>
-              <div className="md:col-span-8 lg:col-span-9">
-                <h3 className="text-2xl font-montserrat font-bold mb-3 text-foreground">
-                  Deliver
-                </h3>
+              
+              {/* Right side - Description */}
+              <div className="md:col-span-9 max-w-2xl">
                 <p className="text-gray-700 leading-relaxed">
-                  <span className="block font-medium text-foreground mb-2">Seamless setup and support.</span>
-                  We integrate everything with your existing systems, train your team, and provide ongoing support to ensure you feel confident using your new AI tools.
+                  <span className="block font-medium text-foreground mb-2">Real results, delivered.</span>
+                  We implement the solution, train your team, and provide ongoing support to ensure you're getting the most value from your AI tools. We measure success by your success.
                 </p>
               </div>
             </motion.div>

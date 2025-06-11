@@ -76,13 +76,15 @@ const ContactSection = () => {
             >
               <img 
                 src={officePortraitImage} 
-                alt="Professional office setting" 
+                alt="Modern professional office space with clean design, workstations, and meeting areas" 
+                aria-label="Professional office environment with modern workspace design"
                 className="rounded-lg shadow-xl w-full h-auto max-w-lg mx-auto"
                 onError={(e) => {
                   console.error('Office portrait image failed to load, using fallback');
                   e.target.onerror = null;
                   e.target.src = 'https://placehold.co/600x400/1a1a2e/e6e6e6?text=Professional+Office';
-                  e.target.alt = 'Placeholder image of a professional office';
+                  e.target.alt = 'Placeholder image of a professional office workspace';
+                  e.target.setAttribute('aria-label', 'Placeholder for professional office environment');
                 }}
               />
             </motion.div>

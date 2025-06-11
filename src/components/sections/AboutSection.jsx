@@ -70,13 +70,15 @@ const AboutSection = () => {
             <div className="w-full max-w-md lg:max-w-lg">
               <img 
                 className="w-full h-auto rounded-xl shadow-xl"
-                alt="Team collaborating in a modern office environment"
+                alt="Diverse team of professionals collaborating around a table in a modern office, discussing a project with digital devices and documents"
                 src={aboutImage}
+                aria-label="Team collaboration in a professional office setting"
                 onError={(e) => {
                   console.error('About image failed to load, using fallback');
                   e.target.onerror = null;
                   e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Team+Collaboration';
-                  e.target.alt = 'Placeholder image for team collaboration';
+                  e.target.alt = 'Placeholder image showing a team collaborating in an office';
+                  e.target.setAttribute('aria-label', 'Placeholder for team collaboration image');
                 }}
               />
             </div>

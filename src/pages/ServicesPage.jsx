@@ -32,7 +32,17 @@ const servicesData = [
     shortDescription: "Automate the manual. Focus on the meaningful.",
     detailedDescription: "We streamline your operations by automating repetitive tasks and complex workflows. From data entry and scheduling to reporting and notifications, our automation solutions free up your team to focus on what drives your business forward.",
     benefits: ["Increased efficiency and productivity", "Reduced operational costs", "Fewer errors and less admin overhead", "Happier, more focused teams"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="AI Task Automation" src={gymOwnerInteractionImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Gym owner interacting with a client while AI manages backend operations" 
+      src={gymOwnerInteractionImg} 
+      aria-label="AI managing gym operations in the background"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=AI+Task+Automation';
+        e.target.alt = 'Placeholder for AI Task Automation';
+      }}
+    />
   },
   {
     id: "ai-agent-design",
@@ -41,7 +51,17 @@ const servicesData = [
     shortDescription: "Your always-on digital team.",
     detailedDescription: "We design and deploy intelligent AI agents that handle follow-ups, customer service, appointment scheduling, product guidance, and more. These agents work around the clock to improve operations and customer interactions — no code required.",
     benefits: ["24/7 responsiveness", "Personalized, consistent communication", "Scalable support without adding headcount", "Increased lead conversion and retention"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="AI Agent Design" src={aiChatOnPhoneImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Smartphone displaying an AI chatbot interface with conversation bubbles" 
+      src={aiChatOnPhoneImg} 
+      aria-label="AI chatbot interface on mobile device"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=AI+Agent+Design';
+        e.target.alt = 'Placeholder for AI Agent Design';
+      }}
+    />
   },
   {
     id: "software-data-integration",
@@ -50,7 +70,17 @@ const servicesData = [
     shortDescription: "Connect tools to gain new insights and a holistic view.",
     detailedDescription: "We can bring your systems together — accounting, customer relationship management (CRM), project management, invoicing and billing, and more — into one cohesive, connected ecosystem. This enables real-time data flow, smarter decisions, and eliminates data silos across your business.",
     benefits: ["A single source of truth for business data", "Streamlined internal workflows", "Improved data accuracy", "Enhanced decision-making capabilities"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Software & Data Integration" src={donutShopMonitoringImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Donut shop owner monitoring multiple data dashboards on a tablet" 
+      src={donutShopMonitoringImg} 
+      aria-label="Business owner analyzing integrated data visualizations"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Data+Integration';
+        e.target.alt = 'Placeholder for Software & Data Integration';
+      }}
+    />
   },
   {
     id: "marketing-content-generation",
@@ -59,7 +89,17 @@ const servicesData = [
     shortDescription: "Create compelling content smarter, faster, and on-brand.",
     detailedDescription: "Our AI tools help you generate high-quality content at scale — from social posts and blog articles to product descriptions and email campaigns — all tailored to your brand voice and customer segments.",
     benefits: ["Faster content production cycles", "Consistent brand messaging", "SEO-optimized and engaging content", "Expanded reach and engagement"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Marketing Content Generation" src={landscaperTechMomentImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Landscaper using a tablet to create digital content in the field" 
+      src={landscaperTechMomentImg} 
+      aria-label="Professional creating marketing content with mobile technology"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Marketing+Content';
+        e.target.alt = 'Placeholder for Marketing Content Generation';
+      }}
+    />
   },
   {
     id: "enhanced-customer-service",
@@ -68,7 +108,17 @@ const servicesData = [
     shortDescription: "Support that never sleeps.",
     detailedDescription: "Deliver exceptional support with AI-powered chatbots and agents that answer questions, resolve issues, and guide customers 24/7. We also help you create smart escalation flows when human intervention is needed.",
     benefits: ["24/7 customer availability", "Instant response times", "Reduced support agent workload", "Personalized customer interactions"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Enhanced Customer Service" src={mechanicOnPhoneImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Mechanic providing excellent customer service while on a phone call" 
+      src={mechanicOnPhoneImg} 
+      aria-label="Professional offering customer support via phone"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Customer+Service';
+        e.target.alt = 'Placeholder for Enhanced Customer Service';
+      }}
+    />
   },
   {
     id: "personalized-customer-experiences",
@@ -77,7 +127,17 @@ const servicesData = [
     shortDescription: "Give every customer what they actually want.",
     detailedDescription: "By analyzing customer data and behavior, our AI agents help you understand your customers on a deeper level. This allows for personalized product recommendations, targeted marketing messages, and customized user journeys, leading to increased loyalty and conversions.",
     benefits: ["Increased conversion and retention rates", "More valuable touchpoints and customer interactions", "Improved customer lifetime value", "Stronger brand relationships"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Personalized Customer Experiences" src={martialArtsBondingImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Martial arts instructor bonding with students in a personalized training session" 
+      src={martialArtsBondingImg} 
+      aria-label="Instructor creating personalized experiences for students"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Personalized+Experience';
+        e.target.alt = 'Placeholder for Personalized Customer Experiences';
+      }}
+    />
   },
   {
     id: "web-app-development",
@@ -86,7 +146,17 @@ const servicesData = [
     shortDescription: "Custom-built, AI-powered digital experiences.",
     detailedDescription: "We design and develop modern, responsive websites and web applications tailored to your business goals and your customers' needs. We bring together great UX, smart AI features, and the latest technology platforms to take your business to the next level.",
     benefits: ["Fast, user-friendly, mobile-ready web experiences", "Integrated AI features like chatbots, automation, and personalization", "Scalable platforms built with future growth in mind", "Improved engagement and customer satisfaction through human-centered design"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Web & App Development" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Developers collaborating on a modern web application with clean code" 
+      src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" 
+      aria-label="Development team working on web application"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Web+Development';
+        e.target.alt = 'Placeholder for Web & App Development';
+      }}
+    />
   },
   {
     id: "business-process-optimization",
@@ -95,7 +165,17 @@ const servicesData = [
     shortDescription: "Work smarter at every level.",
     detailedDescription: "Our AI-driven analysis identifies inefficiencies across your workflows — then we implement automation or agent-based solutions to improve speed, accuracy, and performance across operations.",
     benefits: ["Reduced waste and delays", "Data-backed decision-making", "Better use of time and talent", "Greater operational agility"],
-    imageElement: <img className="w-full h-full object-cover rounded-lg" alt="Business Process Optimization" src={dentalOfficeTeamImg} />
+    imageElement: <img 
+      className="w-full h-full object-cover rounded-lg" 
+      alt="Dental office team analyzing workflow processes and optimization opportunities" 
+      src={dentalOfficeTeamImg} 
+      aria-label="Healthcare professionals reviewing business processes"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Process+Optimization';
+        e.target.alt = 'Placeholder for Business Process Optimization';
+      }}
+    />
   },
 ];
 
