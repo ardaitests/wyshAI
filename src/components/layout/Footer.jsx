@@ -51,8 +51,8 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-sm text-footer-foreground/80 mb-4">
-                Want to use AI for your business?<br />
-                <span className="italic">Just wysh for it.</span>
+                Want AI to work for your business?<br />
+                <span className="font-bold">Just wysh for it.</span>
               </p>
               <div className="flex space-x-4">
                 {socialMedia.map(social => (
