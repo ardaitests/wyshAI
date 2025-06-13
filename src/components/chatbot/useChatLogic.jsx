@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useToast } from '@/components/ui/use-toast.jsx';
-import { supabase } from '@/lib/supabaseClient.jsx';
+// Supabase operations are now handled by n8n
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 
 const useChatLogic = () => {
@@ -70,99 +70,89 @@ const useChatLogic = () => {
     setInputValue(e.target.value);
   };
 
-  const saveLeadToSupabase = async (leadData) => {
-    setIsSubmitting(true);
-    try {
-      const { data, error } = await supabase
-        .from('customer_leads')
-        .insert([leadData]);
-
-      if (error) {
-        throw error;
-      }
-      
-      toast({
-        title: "Information Saved!",
-        description: "Your details have been successfully recorded.",
-        variant: "default",
-      });
-      return data;
-
-    } catch (error) {
-      console.error('Error saving lead to Supabase:', error);
-      toast({
-        title: "Submission Error",
-        description: "Could not save your information. Please try again later.",
-        variant: "destructive",
-      });
-      addBotMessage("I encountered an issue trying to save your information. Please try again in a bit, or contact us directly if the problem persists.");
-      return null;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  // Database operations are now handled by n8n workflow
 
   const processUserInput = useCallback(async (input) => {
-    switch (chatStep) {
-      case 'getName':
-        setUserData(prev => ({ ...prev, name: input }));
-        addBotMessage(`Nice to meet you, ${input}! What's your email address?`);
-        setChatStep('getEmail');
-        break;
-      case 'getEmail':
-        if (!/^\S+@\S+\.\S+$/.test(input)) {
-          addBotMessage("That doesn't look like a valid email. Could you please try again?");
-          return;
-        }
-        setUserData(prev => ({ ...prev, email: input }));
-        addBotMessage("Great! And briefly, how can wyshAI help you or your business today?");
-        setChatStep('getQuery');
-        break;
-      case 'getQuery':
-        const currentQuery = input;
-        const currentName = userData.name || "there"; 
-        const currentEmail = userData.email;
+    // Add user message to chat
+    addUserMessage(input);
+    
+    // Show typing indicator
+    const typingMessageId = Date.now();
+    setMessages(prev => [...prev, { 
+      text: '...', 
+      sender: 'bot', 
+      id: typingMessageId,
+      isTyping: true 
+    }]);
 
-        setUserData(prev => ({ ...prev, query: currentQuery }));
-        addBotMessage(`Thanks, ${currentName}! We've received your information. Someone from our team will review your query: "${currentQuery}" and get back to you at ${currentEmail} soon. Saving your details...`);
+    try {
+      // Get or create conversation ID
+      let conversationId = localStorage.getItem('wysh_conversation_id');
+      if (!conversationId) {
+        conversationId = `conv_${Date.now()}`;
+        localStorage.setItem('wysh_conversation_id', conversationId);
+      }
+
+      // Send to n8n webhook
+      const response = await fetch('https://areed.app.n8n.cloud/webhook/chat-webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: input,
+          conversationId: conversationId,
+          metadata: {
+            pageUrl: window.location.href,
+            userAgent: navigator.userAgent,
+            chatStep: chatStep,
+            userData: userData
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      
+      // Remove typing indicator
+      setMessages(prev => prev.filter(msg => msg.id !== typingMessageId));
+      
+      // Add bot's response to chat
+      if (data.output) {
+        addBotMessage(data.output);
         
-        const leadData = {
-          name: currentName,
-          email: currentEmail,
-          query: currentQuery,
-        };
+        // Update chat step based on response if needed
+        if (data.chatStep) {
+          setChatStep(data.chatStep);
+        }
         
-        const success = await saveLeadToSupabase(leadData);
-        if (success) {
-          addBotMessage("Your information has been saved. Is there anything else I can help with for now? (Yes/No)");
-          setChatStep('completed');
-        } else {
-           addBotMessage("I wasn't able to save your information. Please try telling me your query again, or contact us through other channels.");
+        // Update user data if provided
+        if (data.userData) {
+          setUserData(prev => ({
+            ...prev,
+            ...data.userData
+          }));
         }
-        break;
-      case 'completed':
-        if (input.toLowerCase().startsWith('yes')) {
-            addBotMessage("Okay, what else can I assist you with?");
-            setChatStep('getQuery'); 
-        } else {
-            addBotMessage("Alright! Have a great day. Feel free to reach out if anything else comes up.");
-            // Optionally clear local storage here or set a flag to clear on next open
-            localStorage.removeItem('wyshAI_chatMessages');
-            localStorage.removeItem('wyshAI_userData');
-            localStorage.removeItem('wyshAI_chatStep');
-        }
-        break;
-      default:
-        addBotMessage("I'm not sure how to handle that right now. Can you rephrase?");
+      } else {
+        addBotMessage("I'm not sure how to respond to that. Could you rephrase?");
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      // Remove typing indicator
+      setMessages(prev => prev.filter(msg => msg.id !== typingMessageId));
+      // Show error message
+      addBotMessage("Sorry, I'm having trouble connecting to the server. Please try again later.");
     }
-  }, [chatStep, addBotMessage, userData.name, userData.email, toast]);
+  }, [chatStep, userData, addBotMessage, addUserMessage]);
 
   const handleSendMessage = useCallback(() => {
     if (inputValue.trim() === '' || isSubmitting) return;
-    addUserMessage(inputValue);
     processUserInput(inputValue);
     setInputValue('');
-  }, [inputValue, isSubmitting, addUserMessage, processUserInput]);
+  }, [inputValue, isSubmitting, processUserInput]);
 
   return {
     isOpen: isChatOpen,
