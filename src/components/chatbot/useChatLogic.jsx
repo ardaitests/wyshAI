@@ -70,6 +70,7 @@ const useChatLogic = () => {
     setInputValue(e.target.value);
   };
 
+  // Database operations are handled by n8n workflow
   const processUserInput = useCallback(async (input) => {
     // Add user message to chat
     addUserMessage(input);
@@ -148,10 +149,9 @@ const useChatLogic = () => {
 
   const handleSendMessage = useCallback(() => {
     if (inputValue.trim() === '' || isSubmitting) return;
-    addUserMessage(inputValue);
     processUserInput(inputValue);
     setInputValue('');
-  }, [inputValue, isSubmitting, addUserMessage, processUserInput]);
+  }, [inputValue, isSubmitting, processUserInput]);
 
   return {
     isOpen: isChatOpen,
