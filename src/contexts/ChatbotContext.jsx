@@ -12,19 +12,19 @@ export const useChatbot = () => {
 
 export const ChatbotProvider = ({ children }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatInitialMessage, setChatInitialMessage] = useState("Hello! I'm the Wysh AI assistant. I can help you get started. What's your name?");
-  const [chatInitialStep, setChatInitialStep] = useState('getName');
+  const [chatInitialMessage, setChatInitialMessage] = useState("Hello! I'm the Wysh AI assistant. How can we make AI work for you?");
+  const [chatInitialStep, setChatInitialStep] = useState('initial');
 
   const openChat = useCallback((options = {}) => {
     if (options.initialMessage) {
       setChatInitialMessage(options.initialMessage);
     } else {
-      setChatInitialMessage("Hello! I'm the Wysh AI assistant. I can help you get started. What's your name?");
+      setChatInitialMessage("Hello! I'm the Wysh AI assistant. How can we make AI work for you?");
     }
     if (options.initialStep) {
       setChatInitialStep(options.initialStep);
     } else {
-      setChatInitialStep('getName');
+      setChatInitialStep('initial');
     }
     setIsChatOpen(true);
   }, []);
