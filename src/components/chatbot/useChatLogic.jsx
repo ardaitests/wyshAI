@@ -13,11 +13,31 @@ const useChatLogic = () => {
   const messagesEndRef = useRef(null);
   const { toast } = useToast();
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = useCallback((behavior = 'smooth') => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ 
+        behavior,
+        block: 'end',
+        inline: 'nearest'
+      });
+    }, 0);
   }, []);
 
-  useEffect(scrollToBottom, [messages, scrollToBottom]);
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      scrollToBottom('auto');
+    }
+  }, [messages, scrollToBottom]);
+  
+  // Smooth scroll to bottom when the chat is opened
+  useEffect(() => {
+    if (isChatOpen) {
+      setTimeout(() => {
+        scrollToBottom('smooth');
+      }, 100);
+    }
+  }, [isChatOpen, scrollToBottom]);
 
   const addMessage = useCallback((text, sender) => {
     setMessages(prev => [...prev, { text, sender, id: Date.now() }]);
@@ -73,15 +93,24 @@ const useChatLogic = () => {
   // Database operations are handled by n8n workflow
   const processUserInput = useCallback(async (input) => {
     // Add user message to chat
-    addUserMessage(input);
+    const userMessage = {
+      text: input,
+      sender: 'user',
+      id: `user-${Date.now()}`,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Update messages with user message
+    setMessages(prev => [...prev, userMessage]);
     
     // Show typing indicator
-    const typingMessageId = Date.now();
+    const typingMessageId = `typing-${Date.now()}`;
     setMessages(prev => [...prev, { 
       text: '...', 
       sender: 'bot', 
       id: typingMessageId,
-      isTyping: true 
+      isTyping: true,
+      timestamp: new Date().toISOString()
     }]);
 
     try {
@@ -116,26 +145,35 @@ const useChatLogic = () => {
 
       const data = await response.json();
       
-      // Remove typing indicator
-      setMessages(prev => prev.filter(msg => msg.id !== typingMessageId));
+      // Remove typing indicator and add bot's response
+      setMessages(prev => {
+        const newMessages = prev.filter(msg => msg.id !== typingMessageId);
+        if (data.output) {
+          return [...newMessages, {
+            text: data.output,
+            sender: 'bot',
+            id: `bot-${Date.now()}`,
+            timestamp: new Date().toISOString()
+          }];
+        }
+        return newMessages;
+      });
       
-      // Add bot's response to chat
-      if (data.output) {
-        addBotMessage(data.output);
-        
-        // Update chat step based on response if needed
-        if (data.chatStep) {
-          setChatStep(data.chatStep);
-        }
-        
-        // Update user data if provided
-        if (data.userData) {
-          setUserData(prev => ({
-            ...prev,
-            ...data.userData
-          }));
-        }
-      } else {
+      // Update chat step based on response if needed
+      if (data.chatStep) {
+        setChatStep(data.chatStep);
+      }
+      
+      // Update user data if provided
+      if (data.userData) {
+        setUserData(prev => ({
+          ...prev,
+          ...data.userData
+        }));
+      }
+      
+      // If no output, add a default message
+      if (!data.output) {
         addBotMessage("I'm not sure how to respond to that. Could you rephrase?");
       }
     } catch (error) {

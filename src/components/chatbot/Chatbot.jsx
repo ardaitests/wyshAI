@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatbotUI from '@/components/chatbot/ChatbotUI.jsx';
+import ChatbotUI from '@/components/chatbot/ChatbotUI.minimal.jsx';
 import useChatLogic from '@/components/chatbot/useChatLogic.jsx';
 
 const Chatbot = () => {

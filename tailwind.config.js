@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -104,5 +106,21 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          /* For Firefox */
+          'scrollbar-width': 'none',
+          /* For IE and Edge */
+          '-ms-overflow-style': 'none',
+          /* For WebKit (Chrome, Safari) */
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      });
+    }),
+  ],
 }

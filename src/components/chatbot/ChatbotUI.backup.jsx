@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
@@ -18,46 +18,15 @@ const ChatbotUI = ({
   messagesEndRef,
   openChat
 }) => {
-  const inputRef = useRef(null);
-  const [isIOS, setIsIOS] = useState(false);
-
-  useEffect(() => {
-    // Check if the device is iOS
-    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    setIsIOS(iOS);
-  }, []);
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  // Auto-focus input when dialog opens
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
-  }, [isOpen]);
-
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isSubmitting, messagesEndRef]);
+  // Debug log to check chat step and input state
+  console.log('Chat Step:', chatStep, 'Input Disabled:', isSubmitting || (chatStep !== 'initial' && chatStep !== 'getName' && chatStep !== 'getEmail' && chatStep !== 'getQuery' && chatStep !== 'completed'));
 
   return (
     <>
       <motion.div
-        className="fixed bottom-6 right-6 z-40"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
+        className="fixed bottom-6 right-6 z-50"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1, duration: 0.5, type: 'spring', stiffness: 260, damping: 20 }}
       >
         <Button
@@ -72,17 +41,21 @@ const ChatbotUI = ({
       <AnimatePresence>
         {isOpen && (
           <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent 
-              className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-[450px] max-h-[90vh] flex flex-col p-0 glassmorphic-card border-0 rounded-2xl overflow-hidden ${
-                isIOS ? 'bottom-0 top-auto -translate-y-0' : ''
-              }`}
-              style={{
-                height: isIOS ? '90%' : '70vh',
-                maxHeight: '90vh',
-                margin: 0
-              }}
-            >
-              <DialogHeader className="relative p-4 pr-12 border-b border-border/20 bg-background/90 backdrop-blur-sm z-10">
+            <div className="fixed inset-0 flex items-end justify-center sm:items-center z-50 pointer-events-none">
+              <DialogContent 
+                className="w-full sm:max-w-[450px] h-[90vh] max-h-[90vh] mx-0 sm:mx-4 flex flex-col p-0 glassmorphic-card border-0 rounded-t-2xl sm:rounded-2xl overflow-hidden pointer-events-auto"
+                style={{
+                  height: 'calc(100% - env(safe-area-inset-bottom, 0))',
+                  maxHeight: 'none',
+                  ...(window.innerWidth >= 640 ? {
+                    height: '70vh',
+                    maxHeight: '90vh',
+                    margin: '0 auto',
+                    borderRadius: '0.5rem'
+                  } : {})
+                }}
+              >
+              <DialogHeader className="relative p-4 pr-12 border-b border-border/20 sticky top-0 bg-background/90 backdrop-blur-sm z-10">
                 <DialogTitle className="flex items-center text-xl font-montserrat">
                   <img 
                     src={logoIcon} 
@@ -107,11 +80,13 @@ const ChatbotUI = ({
               </DialogHeader>
               
               <div 
+                ref={chatContainerRef}
                 className="flex-grow overflow-y-auto p-4 space-y-4 bg-background/10 pb-0" 
                 style={{
-                  maxHeight: 'calc(100vh - 200px)',
+                  maxHeight: isIOS ? 'none' : 'calc(100vh - 200px)',
+                  height: isIOS ? 'auto' : undefined,
                   WebkitOverflowScrolling: 'touch',
-                  paddingBottom: 'env(safe-area-inset-bottom, 0)'
+                  paddingBottom: `calc(1rem + ${isIOS ? keyboardHeight : 0}px + env(safe-area-inset-bottom, 0))`
                 }}
               >
                 {messages.map((msg) => (
@@ -144,7 +119,7 @@ const ChatbotUI = ({
                     </div>
                   </motion.div>
                 ))}
-                {isSubmitting && (
+                 {isSubmitting && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -163,10 +138,15 @@ const ChatbotUI = ({
                 <div ref={messagesEndRef} />
               </div>
 
-              <div 
+               <div 
                 className="sticky bottom-0 p-4 border-t border-border/20 bg-background/90 backdrop-blur-sm pt-3" 
                 style={{
-                  paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0))'
+                  paddingBottom: `calc(1rem + ${isIOS ? keyboardHeight : 0}px + env(safe-area-inset-bottom, 0))`,
+                  position: isIOS ? 'fixed' : 'sticky',
+                  bottom: isIOS ? '0' : 'auto',
+                  left: '0',
+                  right: '0',
+                  zIndex: 50
                 }}
               >
                 <div className="flex w-full items-center space-x-2">
@@ -175,11 +155,14 @@ const ChatbotUI = ({
                     placeholder={isSubmitting ? "Processing..." : "Type your message..."}
                     value={inputValue}
                     onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                     className="flex-grow bg-input/70 focus:ring-primary"
                     disabled={isSubmitting}
                     autoFocus
-                    ref={inputRef}
+                    ref={(node) => {
+                      inputRef.current = node;
+                      if (isOpen && node) node.focus();
+                    }}
                   />
                   <Button 
                     type="submit" 
@@ -192,7 +175,7 @@ const ChatbotUI = ({
                   </Button>
                 </div>
               </div>
-            </DialogContent>
+              </DialogContent>
           </Dialog>
         )}
       </AnimatePresence>
