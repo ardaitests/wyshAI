@@ -73,6 +73,38 @@ const ChatbotUI = ({
     };
   }, [isMobile]);
 
+  // Auto-scroll to bottom when messages change or chat opens
+  useEffect(() => {
+    if (!chatContainerRef.current) return;
+    
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTo({
+          top: chatContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Scroll after a small delay to ensure content is rendered
+    const timer = setTimeout(scrollToBottom, 100);
+    
+    // Also scroll when the keyboard appears
+    if (isMobile) {
+      const handleResize = () => {
+        scrollToBottom();
+      };
+      
+      window.addEventListener('resize', handleResize);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+    
+    return () => clearTimeout(timer);
+  }, [messages, isOpen, isMobile]);
+
   // Handle input focus on mobile
   const handleInputFocus = useCallback(() => {
     if (!isMobile) return;
@@ -80,10 +112,12 @@ const ChatbotUI = ({
     // Small delay to ensure keyboard is shown
     setTimeout(() => {
       if (chatContainerRef.current) {
-        // Scroll to bottom when input is focused
-        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        chatContainerRef.current.scrollTo({
+          top: chatContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
       }
-    }, 100);
+    }, 300);
   }, [isMobile]);
 
   const handleKeyDown = (e) => {
@@ -93,12 +127,17 @@ const ChatbotUI = ({
     }
   };
 
+  // Initial scroll to bottom when chat opens
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      // Don't auto-focus the input when dialog opens
-      // This prevents the keyboard from automatically appearing
-      // Users will need to tap the input field to start typing
-      // setTimeout(() => inputRef.current?.focus(), 100);
+    if (isOpen && chatContainerRef.current) {
+      // Small delay to ensure content is rendered
+      const timer = setTimeout(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -162,7 +201,9 @@ const ChatbotUI = ({
               overscrollBehavior: 'contain',
               scrollBehavior: 'smooth',
               scrollPaddingBottom: '1rem',
-              WebkitTransform: 'translateZ(0)' // Hardware acceleration
+              WebkitTransform: 'translateZ(0)', // Hardware acceleration
+              position: 'relative',
+              overflowAnchor: 'none' // Prevent browser's auto-scrolling
             }}
           >
             {messages.map((msg, i) => (
