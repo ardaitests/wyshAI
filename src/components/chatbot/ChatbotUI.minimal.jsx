@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog.jsx';
-import { MessageSquare, Send, User, X, Loader2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx';
+import { MessageSquare, Send, User, Loader2 } from 'lucide-react';
 import logoIcon from '@/assets/wyshAI-Icon-Light-June-2025.svg';
 
 const ChatbotUI = ({
@@ -18,12 +18,72 @@ const ChatbotUI = ({
 }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const [isIOS, setIsIOS] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const chatContainerRef = useRef(null);
+  const inputContainerRef = useRef(null);
 
+  // Detect mobile devices
   useEffect(() => {
-    setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) || 
-             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
-  }, []);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    setIsMobile(isIOS || isAndroid);
+
+    // Prevent zooming on input focus on mobile
+    const viewportMeta = document.querySelector('meta[name=viewport]');
+    if (viewportMeta && isMobile) {
+      const originalContent = viewportMeta.getAttribute('content');
+      viewportMeta.setAttribute('content', `${originalContent}, maximum-scale=1.0, user-scalable=no`);
+      
+      return () => {
+        if (originalContent) {
+          viewportMeta.setAttribute('content', originalContent);
+        }
+      };
+    }
+  }, [isMobile]);
+
+  // Handle keyboard show/hide
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleResize = () => {
+      // Calculate keyboard height based on viewport changes
+      const visualViewport = window.visualViewport;
+      if (visualViewport) {
+        const newKeyboardHeight = Math.max(0, window.innerHeight - visualViewport.height);
+        setKeyboardHeight(newKeyboardHeight);
+        
+        // Scroll to bottom when keyboard appears
+        if (newKeyboardHeight > 0 && chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+    };
+  }, [isMobile]);
+
+  // Focus management
+  const handleInputFocus = useCallback(() => {
+    if (!isMobile) return;
+    
+    // Small delay to ensure keyboard is shown
+    setTimeout(() => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    }, 300);
+  }, [isMobile]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -57,10 +117,19 @@ const ChatbotUI = ({
 
       <Dialog open={isOpen} onOpenChange={onOpenChange}>
         <DialogContent 
-          className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-[450px] h-[70vh] max-h-[90vh] flex flex-col p-0 rounded-2xl overflow-hidden glassmorphic-card border-0"
+          className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-1rem)] max-w-[450px] ${
+            isMobile ? 'h-[90vh] bottom-0 top-auto -translate-y-0' : 'h-[70vh] max-h-[90vh]'
+          } flex flex-col p-0 rounded-2xl overflow-hidden glassmorphic-card border-0`}
           style={{
             '--tw-bg-opacity': 0.8,
-            '--tw-backdrop-blur': 'blur(20px)'
+            '--tw-backdrop-blur': 'blur(20px)',
+            ...(isMobile && {
+              transform: 'translateX(-50%)',
+              bottom: '0.5rem',
+              top: 'auto',
+              height: `calc(100% - ${keyboardHeight}px - 1rem)`,
+              maxHeight: 'none'
+            })
           }}
         >
           <DialogHeader className="p-4 pr-12 border-b border-border/20 bg-background/90 backdrop-blur-sm">
@@ -79,22 +148,15 @@ const ChatbotUI = ({
           </DialogHeader>
           
           <div 
+            ref={chatContainerRef}
             className="flex-1 overflow-y-auto p-4 space-y-4 bg-background/10 scrollbar-hide"
             style={{
               WebkitOverflowScrolling: 'touch',
               paddingBottom: 'env(safe-area-inset-bottom, 1rem)',
               overscrollBehavior: 'contain',
               scrollBehavior: 'smooth',
-              scrollPaddingBottom: '1rem'
-            }}
-            ref={(el) => {
-              // This helps ensure we're scrolling the right container
-              if (el) {
-                // Small delay to ensure the message is rendered
-                setTimeout(() => {
-                  el.scrollTop = el.scrollHeight;
-                }, 50);
-              }
+              scrollPaddingBottom: '1rem',
+              WebkitTransform: 'translateZ(0)' // Hardware acceleration
             }}
           >
             {messages.map((msg, i) => (
@@ -147,16 +209,42 @@ const ChatbotUI = ({
             />
           </div>
 
-          <div className="p-4 border-t border-border/20 bg-background/90 backdrop-blur-sm">
+          <div 
+            ref={inputContainerRef}
+            className="sticky bottom-0 p-4 border-t border-border/20 bg-background/90 backdrop-blur-sm"
+            style={{
+              paddingBottom: `calc(1rem + env(safe-area-inset-bottom, 0))`,
+              ...(isMobile && {
+                paddingBottom: `calc(1rem + env(safe-area-inset-bottom, 1rem))`,
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 10
+              })
+            }}
+          >
             <div className="flex gap-2">
               <Input
                 ref={inputRef}
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                onFocus={handleInputFocus}
+                inputMode={isMobile ? 'text' : undefined}
+                enterKeyHint="send"
+                autoComplete="off"
+                autoCorrect="on"
+                autoCapitalize="sentences"
+                spellCheck={true}
                 placeholder={isSubmitting ? 'Please wait...' : 'Type your message...'}
                 disabled={isSubmitting}
-                className="flex-1 bg-background/70 border-border/50 focus-visible:ring-1 focus-visible:ring-ring"
+                className="flex-1 bg-background/70 border-border/50 focus-visible:ring-1 focus-visible:ring-ring text-base"
+                style={{
+                  WebkitAppearance: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  fontSize: '1rem',
+                  lineHeight: '1.5rem',
+                  minHeight: '2.5rem'
+                }}
               />
               <Button 
                 size="icon"
