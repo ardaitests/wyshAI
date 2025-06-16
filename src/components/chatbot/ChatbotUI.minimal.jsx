@@ -122,18 +122,19 @@ const ChatbotUI = ({
       <Dialog open={isOpen} onOpenChange={onOpenChange}>
         <DialogContent 
           className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] max-w-[450px] ${
-            isMobile ? 'top-4 h-[calc(100%-2rem)]' : 'top-1/2 -translate-y-1/2 h-[70vh] max-h-[90vh]'
+            isMobile ? 'top-4 h-[50vh]' : 'top-1/2 -translate-y-1/2 h-[70vh] max-h-[90vh]'
           } flex flex-col p-0 rounded-2xl overflow-hidden border-0 transition-all duration-200 bg-background`}
           style={{
             '--tw-bg-opacity': 1,
             '--tw-backdrop-blur': 'blur(20px)',
             ...(isMobile && {
               transform: 'translateX(-50%)',
-              height: 'calc(100% - 2rem)',
+              height: '50vh',
               maxHeight: 'none',
               top: '1rem',
               bottom: 'auto',
-              position: 'fixed'
+              position: 'fixed',
+              transform: 'translateX(-50%)'
             })
           }}
         >
