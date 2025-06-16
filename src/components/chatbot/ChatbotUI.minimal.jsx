@@ -73,7 +73,7 @@ const ChatbotUI = ({
     };
   }, [isMobile]);
 
-  // Focus management
+  // Handle input focus on mobile
   const handleInputFocus = useCallback(() => {
     if (!isMobile) return;
     
@@ -83,12 +83,7 @@ const ChatbotUI = ({
         // Scroll to bottom when input is focused
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
-      
-      // Ensure dialog stays in view
-      if (inputContainerRef.current) {
-        inputContainerRef.current.scrollIntoViewIfNeeded(true);
-      }
-    }, 300);
+    }, 100);
   }, [isMobile]);
 
   const handleKeyDown = (e) => {
@@ -100,7 +95,10 @@ const ChatbotUI = ({
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      // Don't auto-focus the input when dialog opens
+      // This prevents the keyboard from automatically appearing
+      // Users will need to tap the input field to start typing
+      // setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [isOpen]);
 
@@ -124,19 +122,18 @@ const ChatbotUI = ({
       <Dialog open={isOpen} onOpenChange={onOpenChange}>
         <DialogContent 
           className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] max-w-[450px] ${
-            isMobile ? 'top-4 bottom-auto' : 'top-1/2 -translate-y-1/2 h-[70vh] max-h-[90vh]'
-          } flex flex-col p-0 rounded-2xl overflow-hidden glassmorphic-card border-0 transition-all duration-200`}
+            isMobile ? 'top-4 h-[calc(100%-2rem)]' : 'top-1/2 -translate-y-1/2 h-[70vh] max-h-[90vh]'
+          } flex flex-col p-0 rounded-2xl overflow-hidden border-0 transition-all duration-200 bg-background`}
           style={{
-            '--tw-bg-opacity': 0.8,
+            '--tw-bg-opacity': 1,
             '--tw-backdrop-blur': 'blur(20px)',
             ...(isMobile && {
               transform: 'translateX(-50%)',
-              height: keyboardHeight > 0 
-                ? `calc(100% - ${keyboardHeight}px - 1rem)` 
-                : 'calc(100% - 2rem)',
+              height: 'calc(100% - 2rem)',
               maxHeight: 'none',
               top: '1rem',
-              bottom: 'auto'
+              bottom: 'auto',
+              position: 'fixed'
             })
           }}
         >
@@ -258,7 +255,7 @@ const ChatbotUI = ({
                 size="icon"
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isSubmitting}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="bg-purple-600 hover:bg-purple-700 text-white"
               >
                 {isSubmitting ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -269,6 +266,12 @@ const ChatbotUI = ({
             </div>
           </div>
         </DialogContent>
+      <style jsx global>{`
+        [data-radix-dialog-overlay] {
+          background-color: rgba(30, 10, 60, 0.8) !important;
+          backdrop-filter: blur(4px);
+        }
+      `}</style>
       </Dialog>
     </>
   );
