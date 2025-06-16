@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog.jsx';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog.jsx';
 import { MessageSquare, Send, User, X, Loader2 } from 'lucide-react';
 import logoIcon from '@/assets/wyshAI-Icon-Light-June-2025.svg';
 
@@ -41,11 +41,20 @@ const ChatbotUI = ({
       <AnimatePresence>
         {isOpen && (
           <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="fixed sm:max-w-[450px] w-full h-[var(--chat-height)] sm:h-[70vh] max-h-[90vh] bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex flex-col p-0 glassmorphic-card border-0 rounded-none sm:rounded-2xl overflow-hidden" style={{
-              '--chat-height': 'calc(100% - env(safe-area-inset-bottom, 0) - 2rem)',
-              '--keyboard-inset-height': 'calc(100% - var(--keyboard-height, 0px))',
-              maxHeight: 'var(--keyboard-inset-height, 90vh)'
-            }}>
+            <div className="fixed inset-0 flex items-end justify-center sm:items-center z-50 pointer-events-none">
+              <DialogContent 
+                className="w-full sm:max-w-[450px] h-[90vh] max-h-[90vh] mx-0 sm:mx-4 flex flex-col p-0 glassmorphic-card border-0 rounded-t-2xl sm:rounded-2xl overflow-hidden pointer-events-auto"
+                style={{
+                  height: 'calc(100% - env(safe-area-inset-bottom, 0))',
+                  maxHeight: 'none',
+                  ...(window.innerWidth >= 640 ? {
+                    height: '70vh',
+                    maxHeight: '90vh',
+                    margin: '0 auto',
+                    borderRadius: '0.5rem'
+                  } : {})
+                }}
+              >
               <DialogHeader className="relative p-4 pr-12 border-b border-border/20 sticky top-0 bg-background/90 backdrop-blur-sm z-10">
                 <DialogTitle className="flex items-center text-xl font-montserrat">
                   <img 
@@ -71,8 +80,9 @@ const ChatbotUI = ({
               </DialogHeader>
               
               <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-background/10 pb-0" style={{
-                maxHeight: 'calc(100vh - 200px - env(safe-area-inset-bottom, 0))',
-                WebkitOverflowScrolling: 'touch'
+                maxHeight: 'calc(100vh - 200px)',
+                WebkitOverflowScrolling: 'touch',
+                paddingBottom: 'env(safe-area-inset-bottom, 0)'
               }}>
                 {messages.map((msg) => (
                   <motion.div
@@ -123,7 +133,9 @@ const ChatbotUI = ({
                 <div ref={messagesEndRef} />
               </div>
 
-               <div className="sticky bottom-0 p-4 border-t border-border/20 bg-background/90 backdrop-blur-sm pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
+               <div className="sticky bottom-0 p-4 border-t border-border/20 bg-background/90 backdrop-blur-sm pt-3" style={{
+                  paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0))'
+                }}>
                 <div className="flex w-full items-center space-x-2">
                   <Input
                     type="text"
@@ -147,7 +159,8 @@ const ChatbotUI = ({
                   </Button>
                 </div>
               </div>
-            </DialogContent>
+              </DialogContent>
+            </div>
           </Dialog>
         )}
       </AnimatePresence>
