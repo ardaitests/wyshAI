@@ -41,7 +41,11 @@ const ChatbotUI = ({
       <AnimatePresence>
         {isOpen && (
           <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="fixed sm:max-w-[450px] w-full h-[calc(100%-2rem)] sm:h-[70vh] max-h-[90vh] bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex flex-col p-0 glassmorphic-card border-0 rounded-none sm:rounded-2xl overflow-hidden">
+            <DialogContent className="fixed sm:max-w-[450px] w-full h-[var(--chat-height)] sm:h-[70vh] max-h-[90vh] bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex flex-col p-0 glassmorphic-card border-0 rounded-none sm:rounded-2xl overflow-hidden" style={{
+              '--chat-height': 'calc(100% - env(safe-area-inset-bottom, 0) - 2rem)',
+              '--keyboard-inset-height': 'calc(100% - var(--keyboard-height, 0px))',
+              maxHeight: 'var(--keyboard-inset-height, 90vh)'
+            }}>
               <DialogHeader className="relative p-4 pr-12 border-b border-border/20 sticky top-0 bg-background/90 backdrop-blur-sm z-10">
                 <DialogTitle className="flex items-center text-xl font-montserrat">
                   <img 
@@ -66,7 +70,10 @@ const ChatbotUI = ({
                 </DialogClose>
               </DialogHeader>
               
-              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-background/10 pb-0">
+              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-background/10 pb-0" style={{
+                maxHeight: 'calc(100vh - 200px - env(safe-area-inset-bottom, 0))',
+                WebkitOverflowScrolling: 'touch'
+              }}>
                 {messages.map((msg) => (
                   <motion.div
                     key={msg.id}
