@@ -80,7 +80,13 @@ const ChatbotUI = ({
     // Small delay to ensure keyboard is shown
     setTimeout(() => {
       if (chatContainerRef.current) {
+        // Scroll to bottom when input is focused
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+      
+      // Ensure dialog stays in view
+      if (inputContainerRef.current) {
+        inputContainerRef.current.scrollIntoViewIfNeeded(true);
       }
     }, 300);
   }, [isMobile]);
@@ -117,18 +123,20 @@ const ChatbotUI = ({
 
       <Dialog open={isOpen} onOpenChange={onOpenChange}>
         <DialogContent 
-          className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-1rem)] max-w-[450px] ${
-            isMobile ? 'h-[90vh] bottom-0 top-auto -translate-y-0' : 'h-[70vh] max-h-[90vh]'
-          } flex flex-col p-0 rounded-2xl overflow-hidden glassmorphic-card border-0`}
+          className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] max-w-[450px] ${
+            isMobile ? 'top-4 bottom-auto' : 'top-1/2 -translate-y-1/2 h-[70vh] max-h-[90vh]'
+          } flex flex-col p-0 rounded-2xl overflow-hidden glassmorphic-card border-0 transition-all duration-200`}
           style={{
             '--tw-bg-opacity': 0.8,
             '--tw-backdrop-blur': 'blur(20px)',
             ...(isMobile && {
               transform: 'translateX(-50%)',
-              bottom: '0.5rem',
-              top: 'auto',
-              height: `calc(100% - ${keyboardHeight}px - 1rem)`,
-              maxHeight: 'none'
+              height: keyboardHeight > 0 
+                ? `calc(100% - ${keyboardHeight}px - 1rem)` 
+                : 'calc(100% - 2rem)',
+              maxHeight: 'none',
+              top: '1rem',
+              bottom: 'auto'
             })
           }}
         >
