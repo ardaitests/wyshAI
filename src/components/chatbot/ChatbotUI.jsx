@@ -41,8 +41,8 @@ const ChatbotUI = ({
       <AnimatePresence>
         {isOpen && (
           <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[450px] h-[70vh] flex flex-col p-0 glassmorphic-card border-primary/50">
-              <DialogHeader className="p-4 border-b border-border/50">
+            <DialogContent className="fixed sm:max-w-[450px] w-full h-[calc(100%-2rem)] sm:h-[70vh] max-h-[90vh] bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex flex-col p-0 glassmorphic-card border-0 rounded-none sm:rounded-2xl overflow-hidden">
+              <DialogHeader className="relative p-4 pr-12 border-b border-border/20 sticky top-0 bg-background/90 backdrop-blur-sm z-10">
                 <DialogTitle className="flex items-center text-xl font-montserrat">
                   <img 
                     src={logoIcon} 
@@ -55,9 +55,18 @@ const ChatbotUI = ({
                     }}
                   /> Wysh AI Assistant
                 </DialogTitle>
+                <DialogClose asChild>
+                  <button 
+                    className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+                    onClick={() => onOpenChange(false)}
+                  >
+                    <X className="h-5 w-5" />
+                    <span className="sr-only">Close</span>
+                  </button>
+                </DialogClose>
               </DialogHeader>
               
-              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-background/30">
+              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-background/10 pb-0">
                 {messages.map((msg) => (
                   <motion.div
                     key={msg.id}
@@ -107,7 +116,7 @@ const ChatbotUI = ({
                 <div ref={messagesEndRef} />
               </div>
 
-               <DialogFooter className="p-4 border-t border-border/50 bg-background/50">
+               <div className="sticky bottom-0 p-4 border-t border-border/20 bg-background/90 backdrop-blur-sm pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
                 <div className="flex w-full items-center space-x-2">
                   <Input
                     type="text"
@@ -117,6 +126,8 @@ const ChatbotUI = ({
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                     className="flex-grow bg-input/70 focus:ring-primary"
                     disabled={isSubmitting}
+                    autoFocus
+                    ref={(input) => isOpen && input?.focus()}
                   />
                   <Button 
                     type="submit" 
@@ -128,7 +139,7 @@ const ChatbotUI = ({
                     {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
                   </Button>
                 </div>
-              </DialogFooter>
+              </div>
             </DialogContent>
           </Dialog>
         )}
