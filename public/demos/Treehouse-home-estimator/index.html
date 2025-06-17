@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ardaitests/wyshAI/refs/heads/main/public/demos/images/Icon-wyshAI-dark.png">
   <style>
     /* Chat widget button styles */
     .n8n-chat-widget-button {
@@ -334,166 +335,56 @@
 
   <!-- Chat Widget Configuration -->
   <script>
+    // Configure the chat widget with Treehouse Financial branding
     window.ChatWidgetConfig = {
       webhook: {
         url: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
-        route: 'general',
-        autoOpen: true
+        route: 'general'
       },
       branding: {
         logo: 'https://raw.githubusercontent.com/ardaitests/wyshAI/refs/heads/main/public/demos/images/Icon-wyshAI-dark.png',
         name: 'Treehouse Financial',
-        welcomeText: 'Hi 👋, let\'s find out how much your house is worth.',
-        responseTimeText: 'Begin by typing a message or entering your address.'
+        welcomeText: 'Hi there! Let\'s find out how much your house is worth.',
+        responseTimeText: 'We\'ll get back to you as soon as possible.',
+        poweredBy: {
+          text: 'Powered by wyshAI',
+          link: 'https://wyshai.com'
+        }
       },
       style: {
         primaryColor: '#4f46e5',
-        secondaryColor: '#7c3aed',
+        secondaryColor: '#4338ca',
         position: 'right',
         backgroundColor: '#ffffff',
-        fontColor: '#333333',
-        buttonIcon: 'fas fa-comment-dots',
-        buttonText: 'Estimate My Home',
-        buttonPosition: 'right',
-        buttonDistanceFromBottom: '30px',
-        buttonDistanceFromSide: '30px',
-        chatWindow: {
-          width: '380px',
-          height: '600px',
-          headerColor: '#4f46e5',
-          headerTextColor: '#ffffff'
-        }
+        fontColor: '#333333'
+      }
+    };
+    
+    // Simple function to open the chat
+    window.openChatWidget = function() {
+      console.log('Opening chat widget...');
+      if (window.ChatWidget && typeof window.ChatWidget.open === 'function') {
+        window.ChatWidget.open();
+      } else {
+        console.error('Chat widget not initialized yet');
+        // Try again after a short delay if not initialized
+        setTimeout(() => window.openChatWidget(), 500);
       }
     };
   </script>
-
-  <!-- Chat Widget Script -->
-  <script src="https://wyshai.com/demos/treehouse-home-estimator/chat-widget.js"></script>
   
+  <!-- Load Geist font for the chat widget -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/style.css">
+  
+  <!-- Load the original chat widget script -->
+  <script src="chat-widget-original.js"></script>
+  
+  <!-- Set up chat buttons -->
   <script>
-    // Function to debug the chat button
-    function debugChatButton() {
-      console.log('Debugging chat button...');
-      
-      // Find all potential chat buttons
-      const potentialButtons = document.querySelectorAll('button, a, [role="button"], [onclick]');
-      let chatButton = null;
-      
-      // Look for the chat button by various means
-      potentialButtons.forEach(btn => {
-        // Check if this looks like the chat button
-        const btnText = (btn.textContent || '').toLowerCase();
-        const btnClass = (btn.className || '').toLowerCase();
-        const btnId = (btn.id || '').toLowerCase();
-        
-        if (
-          btnText.includes('chat') || 
-          btnClass.includes('chat') || 
-          btnId.includes('chat') ||
-          (btn.getAttribute('aria-label') || '').toLowerCase().includes('chat')
-        ) {
-          console.log('Found potential chat button:', btn);
-          console.log('Button properties:', {
-            id: btn.id,
-            class: btn.className,
-            text: btn.textContent.trim(),
-            styles: window.getComputedStyle(btn),
-            attributes: Array.from(btn.attributes).map(attr => ({
-              name: attr.name,
-              value: attr.value
-            }))
-          });
-          
-          // If we find the floating chat button, store it
-          if (window.getComputedStyle(btn).position === 'fixed' && 
-              (window.getComputedStyle(btn).bottom || '').includes('px')) {
-            chatButton = btn;
-          }
-        }
-      });
-      
-      return chatButton;
-    }
-    
-    // Function to open the chat widget by any means necessary
-    function openChatWidget() {
-      console.log('Attempting to open chat widget...');
-      
-      // Method 0: Try to find and use the actual chat button
-      const chatButton = debugChatButton();
-      if (chatButton) {
-        console.log('Found main chat button, clicking it');
-        const clickEvent = new MouseEvent('click', {
-          view: window,
-          bubbles: true,
-          cancelable: true
-        });
-        chatButton.dispatchEvent(clickEvent);
-        return true;
-      }
-      
-      // Method 1: Try to find the chat widget's iframe and focus it
-      const chatIframe = document.querySelector('iframe[src*="chat-widget"], iframe[src*="chat"], iframe[data-chat-widget]');
-      if (chatIframe && chatIframe.contentWindow) {
-        console.log('Found chat iframe, focusing it');
-        chatIframe.style.display = 'block';
-        chatIframe.style.visibility = 'visible';
-        chatIframe.style.opacity = '1';
-        chatIframe.style.zIndex = '9999';
-        chatIframe.focus();
-        return true;
-      }
-      
-      console.warn('Could not open chat widget - no methods worked');
-      return false;
-    }
-    
-    // Set up button click handlers
-    function setupChatButtons() {
+    document.addEventListener('DOMContentLoaded', function() {
       console.log('Setting up chat buttons...');
       
-      function setupButton(buttonId) {
-        const button = document.getElementById(buttonId);
-        if (button) {
-          button.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log(buttonId, 'clicked');
-            openChatWidget();
-          });
-          console.log('Set up click handler for', buttonId);
-        } else {
-          console.warn('Button not found:', buttonId);
-        }
-      }
-      
-      // Set up both buttons
-      setupButton('startChat');
-      setupButton('startChatBottom');
-    }
-    
-    // Initialize when the page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM fully loaded, setting up chat...');
-      
-      // Set up the buttons immediately
-      setupChatButtons();
-      
-      // Only set up the chat widget when needed (on button click)
-      function setupChatOnDemand() {
-        console.log('Initializing chat widget on demand...');
-        // First try to find and click the chat button directly
-        const chatButton = document.querySelector('.n8n-chat-widget-button, [data-chat-widget-button]');
-        if (chatButton) {
-          console.log('Found chat button, clicking it');
-          chatButton.click();
-        } else {
-          console.log('Chat button not found, trying fallback');
-          openChatWidget();
-        }
-        window.chatWidgetInitialized = true;
-      }
-      
-      // Update button click handlers to initialize on first click
+      // Set up click handlers for all chat buttons
       document.querySelectorAll('#startChat, #startChatBottom').forEach(btn => {
         if (btn) {
           // Remove any existing click handlers to prevent duplicates
@@ -502,34 +393,22 @@
           
           newBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Chat button clicked, initializing chat...');
-            setupChatOnDemand();
+            console.log('Chat button clicked');
+            window.openChatWidget();
             return false;
           });
         }
       });
       
-      // Set up a mutation observer to watch for the chat button
-      const observer = new MutationObserver((mutations) => {
-        const chatButton = document.querySelector('.n8n-chat-widget-button, [data-chat-widget-button]');
-        if (chatButton && !window.chatButtonObserverSet) {
-          console.log('Chat button found, setting up observer');
-          chatButton.addEventListener('click', () => {
-            console.log('Chat button clicked, marking as initialized');
-            window.chatWidgetInitialized = true;
-          });
-          window.chatButtonObserverSet = true;
+      // Add click handler for the chat toggle button once it's created
+      const checkForChatButton = setInterval(() => {
+        const chatToggle = document.querySelector('.n8n-chat-toggle');
+        if (chatToggle) {
+          clearInterval(checkForChatButton);
+          console.log('Found chat toggle button');
         }
-      });
-      
-      // Start observing the document with the configured parameters
-      observer.observe(document.body, { childList: true, subtree: true });
+      }, 500);
     });
-    
-    // Also set up buttons if the page is already loaded
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      setupChatButtons();
-    }
   </script>
 </body>
 </html>
