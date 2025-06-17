@@ -6,18 +6,9 @@
   <title>Treehouse Home Estimator | AI-Powered Home Valuation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 400;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
   <style>
     /* Chat widget button styles */
     .n8n-chat-widget-button {
@@ -59,7 +50,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Inter", sans-serif;
     }
 
     body {
@@ -287,7 +277,7 @@
   <section class="features">
     <div class="container">
       <h2 class="section-title">How It Works</h2>
-      <p class="lead" style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Get your home valuation in just a few simple steps</p>
+      <p class="lead" style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Get your home valuation in just a few simple steps.</p>
       
       <div class="features-grid">
         <div class="feature-card">
@@ -378,7 +368,7 @@
   </script>
 
   <!-- Chat Widget Script -->
-  <script src="https://wyshai.com/demos/treehousehomeestimator/chat-widget.js"></script>
+  <script src="https://wyshai.com/demos/treehouse-home-estimator/chat-widget.js"></script>
   
   <script>
     // Function to debug the chat button
@@ -488,27 +478,34 @@
       // Set up the buttons immediately
       setupChatButtons();
       
-      // Set up a flag to track if we should auto-open
-      let shouldAutoOpen = false;
-      
       // Only set up the chat widget when needed (on button click)
       function setupChatOnDemand() {
-        if (!window.chatWidgetInitialized) {
-          console.log('Initializing chat widget on demand...');
+        console.log('Initializing chat widget on demand...');
+        // First try to find and click the chat button directly
+        const chatButton = document.querySelector('.n8n-chat-widget-button, [data-chat-widget-button]');
+        if (chatButton) {
+          console.log('Found chat button, clicking it');
+          chatButton.click();
+        } else {
+          console.log('Chat button not found, trying fallback');
           openChatWidget();
-          window.chatWidgetInitialized = true;
         }
+        window.chatWidgetInitialized = true;
       }
       
       // Update button click handlers to initialize on first click
       document.querySelectorAll('#startChat, #startChatBottom').forEach(btn => {
         if (btn) {
-          const originalHandler = btn.onclick;
-          btn.onclick = function(e) {
+          // Remove any existing click handlers to prevent duplicates
+          const newBtn = btn.cloneNode(true);
+          btn.parentNode.replaceChild(newBtn, btn);
+          
+          newBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Chat button clicked, initializing chat...');
             setupChatOnDemand();
-            if (originalHandler) originalHandler.call(this, e);
-          };
+            return false;
+          });
         }
       });
       
