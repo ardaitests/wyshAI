@@ -205,16 +205,14 @@ export default defineConfig({
 	server: {
 		cors: true,
 		headers: {
-			'Cross-Origin-Embedder-Policy': 'credentialless',
+			'Cross-Origin-Embedder-Policy': 'require-corp',
+			'Cross-Origin-Opener-Policy': 'same-origin',
+			'Cross-Origin-Resource-Policy': 'cross-origin',
 		},
 		allowedHosts: true,
 	},
-	resolve: {
-		extensions: ['.jsx', '.js', '.tsx', '.ts', '.json', ],
-		alias: {
-			'@': path.resolve(__dirname, './src'),
-		},
-	},
+	// Remove duplicate resolve block
+	// resolve is already defined above with the same configuration
 	build: {
 		rollupOptions: {
 			external: [

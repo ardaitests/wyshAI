@@ -5,6 +5,7 @@ import ServicesPage from '@/pages/ServicesPage.jsx';
 import AboutPage from '@/pages/AboutPage.jsx';
 import PrivacyPolicy from '@/pages/PrivacyPolicy.jsx';
 import TermsOfService from '@/pages/TermsOfService.jsx';
+import DemosPage from '@/pages/DemosPage.jsx';
 import Layout from '@/components/layout/Layout.jsx';
 import { Toaster } from '@/components/ui/toaster.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -53,6 +54,7 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/demos" element={<DemosPage />} />
           </Routes>
         </AnimatePresence>
       </Layout>

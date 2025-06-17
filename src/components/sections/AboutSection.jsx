@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingDown, CheckCircle, ThumbsUp } from 'lucide-react';
-import aboutImage from '@/assets/about-image.png';
+import officeCollabImage from '@/assets/office-collaboration-in-color.png';
 
 const AboutSection = () => {
   const features = [
@@ -71,7 +71,7 @@ const AboutSection = () => {
               <img 
                 className="w-full h-auto rounded-xl shadow-xl"
                 alt="Diverse team of professionals collaborating around a table in a modern office, discussing a project with digital devices and documents"
-                src={aboutImage}
+                src={officeCollabImage}
                 aria-label="Team collaboration in a professional office setting"
                 onError={(e) => {
                   console.error('About image failed to load, using fallback');

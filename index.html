@@ -6,6 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="generator" content="Hostinger Horizons" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="visual-edit" content="false" />
     <title>Wysh AI - Custom AI Agents for Businesses</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,5 +15,31 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Block visual editor injection
+      Object.defineProperty(window, 'visualEditorConfig', {
+        get() { return null; },
+        set() {}
+      });
+      
+      // Prevent visual editor scripts from loading
+      const originalCreateElement = document.createElement;
+      document.createElement = function(tagName) {
+        if (tagName === 'script') {
+          const script = originalCreateElement.call(document, tagName);
+          Object.defineProperty(script, 'src', {
+            set(value) {
+              if (value && value.includes('visual-editor')) {
+                console.log('Blocked visual editor script:', value);
+                return;
+              }
+              originalCreateElement.call(script, 'setAttribute', 'src', value);
+            }
+          });
+          return script;
+        }
+        return originalCreateElement.call(document, tagName);
+      };
+    </script>
   </body>
 </html>
