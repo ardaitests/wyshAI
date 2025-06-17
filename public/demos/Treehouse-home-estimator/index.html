@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treehouse Home Estimator | AI-Powered Home Valuation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  <style>
+    /* Chat widget button styles */
+    .n8n-chat-widget-button {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      z-index: 9999 !important;
+      position: fixed !important;
+      bottom: 30px !important;
+      right: 30px !important;
+      background-color: #4f46e5 !important;
+      color: white !important;
+      border-radius: 50% !important;
+      width: 60px !important;
+      height: 60px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .n8n-chat-widget-button:hover {
+      transform: scale(1.1) !important;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary: #10b981;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --gray: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      overflow-x: hidden;
+      background-color: #f8fafc;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 60vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                  url('https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80') no-repeat center center/cover;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 4rem 0;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      z-index: 1;
+      padding: 2rem;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+
+    .lead {
+      font-size: 1.25rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      max-width: 700px;
+    }
+
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin: 0.5rem;
+    }
+
+    .cta-button:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .cta-button.secondary {
+      background-color: transparent;
+      border: 2px solid white;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 6rem 2rem;
+      background-color: white;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.25rem;
+      margin-bottom: 2rem;
+      color: var(--dark);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .feature-text {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+
+    /* CTA Section */
+    .cta {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.9;
+    }
+
+    .cta .cta-button {
+      background: white;
+      color: var(--primary);
+      padding: 0.875rem 2rem;
+      font-size: 1.125rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    /* Testimonial Section */
+    .testimonial {
+      background-color: #f8fafc;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .testimonial-content {
+      font-size: 1.25rem;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      color: #4b5563;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+      
+      .hero {
+        min-height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body style="overflow-x: hidden;">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="logo">
+        <i class="fas fa-home"></i>
+        <span>Treehouse Financial</span>
+      </div>
+      <h1>Discover Your Home's True Value with AI</h1>
+      <p class="lead">Get an instant, accurate home valuation by chatting with our AI assistant. No sign-up required!</p>
+      <button class="cta-button" id="startChat">Chat Now for Free Estimate</button>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <p class="lead" style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Get your home valuation in just a few simple steps</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-comment-dots"></i>
+          </div>
+          <h3>1. Start Chatting</h3>
+          <p>Click the chat button and our AI assistant will greet you and ask about your property.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-home"></i>
+          </div>
+          <h3>2. Share Details</h3>
+          <p>Provide information about your home to get the most accurate valuation possible.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>3. Get Your Estimate</h3>
+          <p>Receive an instant home valuation based on current market data and your inputs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Discover Your Home's Value?</h2>
+      <p>Chat with our AI assistant now for a free, no-obligation home valuation.</p>
+      <button class="cta-button" id="startChatBottom">Start Chat Now</button>
+    </div>
+  </section>
+
+  <!-- Testimonial Section (Commented Out)
+  <section class="testimonial">
+    <div class="container">
+      <p class="testimonial-content">"The AI home estimator provided a valuation that was within 2% of what a professional appraiser later confirmed. Unbelievably accurate and saved us thousands in appraisal fees!"</p>
+      <p class="testimonial-author">— Sarah Johnson, Homeowner</p>
+    </div>
+  </section>
+  -->
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Treehouse Financial. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Chat Widget Configuration -->
+  <script>
+    window.ChatWidgetConfig = {
+      webhook: {
+        url: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+        route: 'general',
+        autoOpen: true
+      },
+      branding: {
+        logo: 'https://raw.githubusercontent.com/ardaitests/wyshAI/refs/heads/main/public/demos/images/Icon-wyshAI-dark.png',
+        name: 'Treehouse Financial',
+        welcomeText: 'Hi 👋, let\'s find out how much your house is worth.',
+        responseTimeText: 'Begin by typing a message or entering your address.'
+      },
+      style: {
+        primaryColor: '#4f46e5',
+        secondaryColor: '#7c3aed',
+        position: 'right',
+        backgroundColor: '#ffffff',
+        fontColor: '#333333',
+        buttonIcon: 'fas fa-comment-dots',
+        buttonText: 'Estimate My Home',
+        buttonPosition: 'right',
+        buttonDistanceFromBottom: '30px',
+        buttonDistanceFromSide: '30px',
+        chatWindow: {
+          width: '380px',
+          height: '600px',
+          headerColor: '#4f46e5',
+          headerTextColor: '#ffffff'
+        }
+      }
+    };
+  </script>
+
+  <!-- Chat Widget Script -->
+  <script src="https://wyshai.com/demos/treehousehomeestimator/chat-widget.js"></script>
+  
+  <script>
+    // Function to debug the chat button
+    function debugChatButton() {
+      console.log('Debugging chat button...');
+      
+      // Find all potential chat buttons
+      const potentialButtons = document.querySelectorAll('button, a, [role="button"], [onclick]');
+      let chatButton = null;
+      
+      // Look for the chat button by various means
+      potentialButtons.forEach(btn => {
+        // Check if this looks like the chat button
+        const btnText = (btn.textContent || '').toLowerCase();
+        const btnClass = (btn.className || '').toLowerCase();
+        const btnId = (btn.id || '').toLowerCase();
+        
+        if (
+          btnText.includes('chat') || 
+          btnClass.includes('chat') || 
+          btnId.includes('chat') ||
+          (btn.getAttribute('aria-label') || '').toLowerCase().includes('chat')
+        ) {
+          console.log('Found potential chat button:', btn);
+          console.log('Button properties:', {
+            id: btn.id,
+            class: btn.className,
+            text: btn.textContent.trim(),
+            styles: window.getComputedStyle(btn),
+            attributes: Array.from(btn.attributes).map(attr => ({
+              name: attr.name,
+              value: attr.value
+            }))
+          });
+          
+          // If we find the floating chat button, store it
+          if (window.getComputedStyle(btn).position === 'fixed' && 
+              (window.getComputedStyle(btn).bottom || '').includes('px')) {
+            chatButton = btn;
+          }
+        }
+      });
+      
+      return chatButton;
+    }
+    
+    // Function to open the chat widget by any means necessary
+    function openChatWidget() {
+      console.log('Attempting to open chat widget...');
+      
+      // Method 0: Try to find and use the actual chat button
+      const chatButton = debugChatButton();
+      if (chatButton) {
+        console.log('Found main chat button, clicking it');
+        const clickEvent = new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: true
+        });
+        chatButton.dispatchEvent(clickEvent);
+        return true;
+      }
+      
+      // Method 1: Try to find the chat widget's iframe and focus it
+      const chatIframe = document.querySelector('iframe[src*="chat-widget"], iframe[src*="chat"], iframe[data-chat-widget]');
+      if (chatIframe && chatIframe.contentWindow) {
+        console.log('Found chat iframe, focusing it');
+        chatIframe.style.display = 'block';
+        chatIframe.style.visibility = 'visible';
+        chatIframe.style.opacity = '1';
+        chatIframe.style.zIndex = '9999';
+        chatIframe.focus();
+        return true;
+      }
+      
+      console.warn('Could not open chat widget - no methods worked');
+      return false;
+    }
+    
+    // Set up button click handlers
+    function setupChatButtons() {
+      console.log('Setting up chat buttons...');
+      
+      function setupButton(buttonId) {
+        const button = document.getElementById(buttonId);
+        if (button) {
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log(buttonId, 'clicked');
+            openChatWidget();
+          });
+          console.log('Set up click handler for', buttonId);
+        } else {
+          console.warn('Button not found:', buttonId);
+        }
+      }
+      
+      // Set up both buttons
+      setupButton('startChat');
+      setupButton('startChatBottom');
+    }
+    
+    // Initialize when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM fully loaded, setting up chat...');
+      
+      // Set up the buttons immediately
+      setupChatButtons();
+      
+      // Set up a flag to track if we should auto-open
+      let shouldAutoOpen = false;
+      
+      // Only set up the chat widget when needed (on button click)
+      function setupChatOnDemand() {
+        if (!window.chatWidgetInitialized) {
+          console.log('Initializing chat widget on demand...');
+          openChatWidget();
+          window.chatWidgetInitialized = true;
+        }
+      }
+      
+      // Update button click handlers to initialize on first click
+      document.querySelectorAll('#startChat, #startChatBottom').forEach(btn => {
+        if (btn) {
+          const originalHandler = btn.onclick;
+          btn.onclick = function(e) {
+            e.preventDefault();
+            setupChatOnDemand();
+            if (originalHandler) originalHandler.call(this, e);
+          };
+        }
+      });
+      
+      // Set up a mutation observer to watch for the chat button
+      const observer = new MutationObserver((mutations) => {
+        const chatButton = document.querySelector('.n8n-chat-widget-button, [data-chat-widget-button]');
+        if (chatButton && !window.chatButtonObserverSet) {
+          console.log('Chat button found, setting up observer');
+          chatButton.addEventListener('click', () => {
+            console.log('Chat button clicked, marking as initialized');
+            window.chatWidgetInitialized = true;
+          });
+          window.chatButtonObserverSet = true;
+        }
+      });
+      
+      // Start observing the document with the configured parameters
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+    
+    // Also set up buttons if the page is already loaded
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setupChatButtons();
+    }
+  </script>
+</body>
+</html>
