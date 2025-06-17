@@ -71,7 +71,7 @@
     .hero {
       min-height: 60vh;
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
-                  url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80') no-repeat center center/cover;
+                  url('https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80') no-repeat center center/cover;
       color: white;
       display: flex;
       align-items: center;
@@ -364,7 +364,7 @@
 
   <!-- Chat Widget Configuration -->
   <script>
-    // Configure the chat widget with WyshAI CRM branding
+    // Configure the chat widget with Treehouse Financial branding
     window.ChatWidgetConfig = {
       webhook: {
         url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
@@ -388,28 +388,21 @@
       }
     };
     
-    // Function to open the chat widget
+    // Simple function to open the chat
     window.openChatWidget = function() {
       console.log('Opening chat widget...');
       if (window.ChatWidget && typeof window.ChatWidget.open === 'function') {
         window.ChatWidget.open();
       } else {
-        console.error('Chat widget not initialized yet, retrying...');
+        console.error('Chat widget not initialized yet');
         // Try again after a short delay if not initialized
-        setTimeout(window.openChatWidget, 500);
+        setTimeout(() => window.openChatWidget(), 500);
       }
     };
-    
-    // Function to initialize the chat widget
-    function initChatWidget() {
-      console.log('Initializing chat widget...');
-      // Auto-open the chat widget after a short delay
-      setTimeout(window.openChatWidget, 1000);
-    }
   </script>
   
-  <!-- Load the chat widget script -->
-  <script src="chat-widget-original.js" onload="initChatWidget()"></script>
+  <!-- Load the original chat widget script -->
+  <script src="chat-widget-original.js"></script>
   
   <!-- Set up chat buttons -->
   <script>

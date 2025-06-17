@@ -284,7 +284,7 @@
     // Default configuration
     const defaultConfig = {
         webhook: {
-            url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
+            url: '', // Remove hardcoded URL to ensure it uses the one from config
             route: ''
         },
         branding: {
@@ -317,7 +317,9 @@
     if (window.N8NChatWidgetInitialized) return;
     window.N8NChatWidgetInitialized = true;
 
-    let currentSessionId = '';
+    // Initialize with a new UUID
+    let currentSessionId = generateUUID();
+    console.log('Initial session ID:', currentSessionId);
 
     // Create widget container
     const widgetContainer = document.createElement('div');
@@ -352,11 +354,6 @@
 
     const chatInterfaceHTML = `
         <div class="chat-interface">
-            <div class="brand-header">
-                <img src="${config.branding.logo}" alt="${config.branding.name}">
-                <span>${config.branding.name}</span>
-                <button class="close-button">×</button>
-            </div>
             <div class="chat-messages"></div>
             <div class="chat-input">
                 <textarea placeholder="Type your message here..." rows="1"></textarea>
@@ -369,6 +366,13 @@
     `;
 
     chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
+
+    // Hide the welcome screen and show the chat interface by default
+    const newConversationEl = chatContainer.querySelector('.new-conversation');
+    const chatInterfaceEl = chatContainer.querySelector('.chat-interface');
+    
+    if (newConversationEl) newConversationEl.style.display = 'none';
+    if (chatInterfaceEl) chatInterfaceEl.classList.add('active');
 
     const toggleButton = document.createElement('button');
     toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
@@ -388,52 +392,84 @@
     const sendButton = chatContainer.querySelector('button[type="submit"]');
 
     function generateUUID() {
-        return crypto.randomUUID();
+        // Generate a proper v4 UUID
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 
     async function startNewConversation() {
-        currentSessionId = generateUUID();
-        const data = [{
+        // Only generate a new ID if we don't have one
+        if (!currentSessionId) {
+            currentSessionId = generateUUID();
+            console.log('Starting new conversation with ID:', currentSessionId);
+        } else {
+            console.log('Using existing conversation ID:', currentSessionId);
+        }
+        const requestData = {
             action: "loadPreviousSession",
-            sessionId: currentSessionId,
+            conversationId: currentSessionId,
             route: config.webhook.route,
             metadata: {
-                userId: ""
+                userId: "",
+                timestamp: new Date().toISOString()
             }
-        }];
+        };
+        const data = [requestData];
+        
+        console.log('Sending initial request:', JSON.stringify(data, null, 2));
 
         try {
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
+                mode: 'cors',
+                credentials: 'same-origin',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
 
+            console.log('Response status:', response.status);
             const responseData = await response.json();
+            console.log('Response data:', responseData);
             chatContainer.querySelector('.brand-header').style.display = 'none';
             chatContainer.querySelector('.new-conversation').style.display = 'none';
             chatInterface.classList.add('active');
 
+            const welcomeMessage = config.branding.welcomeText || 'Hello! How can I help you today?';
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
+            botMessageDiv.textContent = welcomeMessage;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            textarea.focus();
+
+            return true;
         } catch (error) {
             console.error('Error:', error);
+            return false;
         }
     }
 
     async function sendMessage(message) {
+        // Ensure we have a valid session ID
+        if (!currentSessionId) {
+            console.warn('No session ID found, generating a new one');
+            currentSessionId = generateUUID();
+        }
+        
         const messageData = {
             action: "sendMessage",
-            sessionId: currentSessionId,
+            conversationId: currentSessionId,
             route: config.webhook.route,
-            chatInput: message,
+            message: message,
             metadata: {
-                userId: ""
+                timestamp: new Date().toISOString()
             }
         };
 
@@ -444,15 +480,32 @@
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
         try {
+            console.log('Sending message:', messageData);
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
+                mode: 'cors',
+                credentials: 'same-origin',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(messageData)
             });
 
-            const data = await response.json();
+            console.log('Response status:', response.status);
+            
+            // Check if response is JSON
+            const contentType = response.headers.get('content-type');
+            let data;
+            
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+                console.log('Response data:', data);
+            } else {
+                const text = await response.text();
+                console.log('Non-JSON response:', text);
+                throw new Error(`Expected JSON response but got: ${contentType}`);
+            }
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
@@ -460,7 +513,12 @@
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error sending message:', error);
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'chat-message bot error';
+            errorMessage.textContent = 'Sorry, I encountered an error. Please try again.';
+            messagesContainer.appendChild(errorMessage);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     }
 
