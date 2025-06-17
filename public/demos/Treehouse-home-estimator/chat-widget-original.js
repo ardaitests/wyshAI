@@ -3,11 +3,11 @@
     // Create and inject styles
     const styles = `
         .n8n-chat-widget {
-            --chat--color-primary: var(--n8n-chat-primary-color, #854fff);
-            --chat--color-secondary: var(--n8n-chat-secondary-color, #6b3fd4);
+            --chat--color-primary: var(--n8n-chat-primary-color, #4f46e5);
+            --chat--color-secondary: var(--n8n-chat-secondary-color, #4338ca);
             --chat--color-background: var(--n8n-chat-background-color, #ffffff);
-            --chat--color-font: var(--n8n-chat-font-color, #333333);
-            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --chat--color-font: var(--n8n-chat-font-color, #1f2937);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         .n8n-chat-widget .chat-container {
@@ -273,11 +273,7 @@
         }
     `;
 
-    // Load Geist font
-    const fontLink = document.createElement('link');
-    fontLink.rel = 'stylesheet';
-    fontLink.href = 'https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/style.css';
-    document.head.appendChild(fontLink);
+    // Using Inter font which is already loaded in the main HTML
 
     // Inject styles
     const styleSheet = document.createElement('style');
@@ -350,7 +346,7 @@
                 </svg>
                 Send a message
             </button>
-            <p class="response-text">${config.branding.responseTimeText}</p>
+            <!-- <p class="response-text">${config.branding.responseTimeText}</p> -->
         </div>
     `;
 
