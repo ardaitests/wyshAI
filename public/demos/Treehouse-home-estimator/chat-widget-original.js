@@ -274,6 +274,7 @@
     `;
 
     // Using Inter font which is already loaded in the main HTML
+    // No need to load any additional fonts
 
     // Inject styles
     const styleSheet = document.createElement('style');
@@ -290,7 +291,6 @@
             logo: 'https://raw.githubusercontent.com/ardaitests/wyshAI/refs/heads/main/public/demos/images/Icon-wyshAI-dark.png',
             name: 'wyshAI Assistant',
             welcomeText: 'Hello! How can I help you today?',
-            responseTimeText: 'We\'ll get back to you as soon as possible',
             poweredBy: {
                 text: 'Powered by wyshAI',
                 link: 'https://wyshai.com'
@@ -525,6 +525,9 @@
             }
         }
     };
+    
+    // Alias for backward compatibility
+    window.openChatWidget = window.ChatWidget.open;
 })();
 
 // Initialize chat widget when document is ready
