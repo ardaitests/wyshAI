@@ -12,10 +12,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Chatbot from '@/components/chatbot/Chatbot.jsx';
 import { ChatbotProvider } from '@/contexts/ChatbotContext.jsx';
 import { initSmoothScrolling, scrollToElement } from '@/utils/smoothScroll';
+import usePageTracking from '@/hooks/usePageTracking';
 
 function App() {
   // Removed document.documentElement.classList.add('dark'); to default to light theme
   const location = useLocation();
+  usePageTracking(); // Add this line to track page views
 
   // Initialize smooth scrolling
   useEffect(() => {
