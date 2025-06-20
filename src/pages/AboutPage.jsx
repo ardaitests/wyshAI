@@ -23,12 +23,12 @@ import creativeOfficeCollab from '@/assets/Creative-Office-Collaboration-2.png';
 import whimsicalPaperSwirl from '@/assets/Whimsical-Paper-Swirl-2.png';
 
 // Optimized Sparkles component with performance enhancements
-const Sparkles = ({ count = 15 }) => {
+const Sparkles = ({ count = 20 }) => {
   // Use React.useMemo to prevent unnecessary re-renders
   const sparkles = React.useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
-      size: Math.random() * 10 + 3, // Slightly larger (3-13px)
+      size: Math.random() * 4 + 1, // Smaller (1-5px)
       posX: Math.random() * 100,
       posY: Math.random() * 100,
       delay: Math.random() * 5,
