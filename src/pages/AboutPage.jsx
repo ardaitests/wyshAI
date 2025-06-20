@@ -17,8 +17,52 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
-import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3.png';
+import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3b.png';
 import designTeamImg from '@/assets/Design-Team-Collaboration.png';
+import creativeOfficeCollab from '@/assets/Creative-Office-Collaboration-2.png';
+import whimsicalPaperSwirl from '@/assets/Whimsical-Paper-Swirl-2.png';
+
+// Optimized Sparkles component with performance enhancements
+const Sparkles = ({ count = 15 }) => {
+  // Use React.useMemo to prevent unnecessary re-renders
+  const sparkles = React.useMemo(() => {
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      size: Math.random() * 10 + 3, // Slightly larger (3-13px)
+      posX: Math.random() * 100,
+      posY: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 2 + Math.random() * 3,
+    }));
+  }, [count]);
+
+  return (
+    <div 
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      style={{ contentVisibility: 'auto' }}
+      aria-hidden="true"
+    >
+      {sparkles.map((sparkle) => (
+        <div
+          key={sparkle.id}
+          className="absolute rounded-full bg-white/80 animate-sparkle will-change-transform"
+          style={{
+            width: `${sparkle.size}px`,
+            height: `${sparkle.size}px`,
+            left: `${sparkle.posX}%`,
+            top: `${sparkle.posY}%`,
+            animationDelay: `${sparkle.delay}s`,
+            animationDuration: `${sparkle.duration}s`,
+            boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.8)',
+            opacity: 0,
+            transform: 'translateZ(0)', // Promote to its own layer
+            backfaceVisibility: 'hidden', // Improve performance on mobile
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -98,20 +142,55 @@ const AboutPage = () => {
         animate="in"
         exit="out"
         className="relative py-32 md:py-40 lg:py-48 flex items-center justify-center overflow-hidden bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${whimsicalPaperSwirl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          '--sparkle-color': 'rgba(255, 255, 255, 0.8)'
+        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-swiss-coffee-dark via-swiss-coffee-darker to-swiss-coffee-dark bg-[length:200%_200%] animate-gradient z-0" />
-        <div className="absolute inset-0 bg-foreground/30 z-0" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-foreground/60 z-0" />
+        {/* Purple gradient overlay with animation */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-primary/40 bg-[length:200%_200%] animate-gradient z-0"
+          style={{
+            animation: 'gradient 15s ease infinite',
+          }}
+        />
+        {/* Sparkles */}
+        <Sparkles count={25} />
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold mb-6 text-primary-foreground">
               About Wysh AI
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-primary-foreground/80">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-primary-foreground/90">
               AI made practical, personal, and powerful — <br className="hidden sm:block" />for small businesses that want real results, fast.
             </p>
           </div>
         </div>
       </motion.section>
+      
+      {/* Sparkle animation keyframes */}
+      <style jsx global>{`
+        @keyframes sparkle {
+          0% {
+            transform: scale(0) translateY(0) rotate(0deg);
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1) translateY(-50px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        .animate-sparkle {
+          animation: sparkle var(--duration, 3s) ease-in-out infinite;
+        }
+      `}</style>
 
       {/* Stats Section - Hidden but keeping the code for potential future use
       <section className="section-padding bg-swiss-coffee-lightest">
@@ -165,11 +244,11 @@ const AboutPage = () => {
                   src={vintageShopImage}
                   aria-label="Team collaboration in vintage shop"
                   onError={(e) => {
-                    console.error('Vintage shop image failed to load, using fallback');
+                    console.error('Vintage shop collaboration image failed to load, using fallback');
                     e.target.onerror = null;
-                    e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Team+Collaboration';
-                    e.target.alt = 'Placeholder image showing team collaboration';
-                    e.target.setAttribute('aria-label', 'Placeholder for team collaboration');
+                    e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Vintage+Shop+Collaboration';
+                    e.target.alt = 'Placeholder image showing vintage shop collaboration';
+                    e.target.setAttribute('aria-label', 'Placeholder for vintage shop collaboration');
                   }} />
               </div>
             </motion.div>
@@ -241,12 +320,12 @@ const AboutPage = () => {
             >
               <div className="w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-xl overflow-hidden">
                 <img 
-                  src={designTeamImg} 
-                  alt="Diverse team of Wysh AI professionals working together around a table, discussing and planning a project"
-                  aria-label="Wysh AI design team in a collaborative meeting"
+                  src={creativeOfficeCollab} 
+                  alt="Creative team collaborating in a modern office environment, discussing and planning a project"
+                  aria-label="Creative office collaboration"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    console.error('Design team image failed to load, using fallback');
+                    console.error('Creative office collaboration image failed to load, using fallback');
                     e.target.onerror = null;
                     e.target.src = 'https://placehold.co/800x600/1a1a2e/e6e6e6?text=Design+Team';
                     e.target.alt = 'Placeholder image of a design team meeting';
