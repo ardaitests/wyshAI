@@ -11,6 +11,277 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="icon" type="image/png" href="/demos/images/Icon-wyshAI-dark.png">
   <style>
+    /* Blueprint Section Styles */
+    .blueprint-section {
+      --grid-color: rgba(109, 59, 247, 0.05);
+      --grid-size: 20px;
+      --grid-line: 1px;
+      background-color: #f9f5ff;
+      background-image: 
+        linear-gradient(var(--grid-color) var(--grid-line), transparent var(--grid-line)),
+        linear-gradient(90deg, var(--grid-color) var(--grid-line), transparent var(--grid-line));
+      background-size: var(--grid-size) var(--grid-size);
+      background-position: calc(var(--grid-size) / 2) calc(var(--grid-size) / 2);
+      padding: 0 0 1px;
+      margin: 0;
+      border-top: 1px solid rgba(109, 59, 247, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blueprint-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(109, 59, 247, 0.02) 0%, rgba(109, 59, 247, 0) 100%);
+      pointer-events: none;
+    }
+
+    .blueprint-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2.5rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: #1F2937;
+      font-size: 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 100px;
+    }
+
+    .blueprint-toggle:hover {
+      background-color: rgba(109, 59, 247, 0.05);
+    }
+
+    .blueprint-toggle i {
+      margin-left: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+
+    .blueprint-toggle.active i {
+      transform: rotate(180deg);
+    }
+
+    .blueprint-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+      background: transparent;
+    }
+
+    .blueprint-content.show {
+      max-height: 2000px;
+      transition: max-height 1s ease-in;
+    }
+
+    .blueprint-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: #1a1a1a;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    /* Features section title - centered */
+    .features .section-title {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      display: block;
+    }
+    
+    /* Blueprint section title - left aligned */
+    .blueprint-section .section-title {
+      text-align: left;
+      margin: 0 0 2rem 0;
+      display: block;
+    }
+
+    /* Underscore for section titles */
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background-color: var(--primary);
+      margin: 1rem 0 0 0;
+    }
+    
+    /* Remove underscore from features section title */
+    .features .section-title::after {
+      display: none;
+    }
+
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      position: relative;
+      padding: 2rem 0;
+      align-items: stretch;
+    }
+
+    .blueprint-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(109, 59, 247, 0.15);
+      box-shadow: 0 4px 12px rgba(109, 59, 247, 0.08);
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Remove hover effects that could affect layout */
+    .blueprint-card:hover {
+      z-index: 2;
+      box-shadow: 0 4px 20px rgba(109, 59, 247, 0.1);
+    }
+
+    .blueprint-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    .blueprint-icon.chatgpt-logo {
+      padding: 8px;
+    }
+
+    .blueprint-icon.chatgpt-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .interface .blueprint-icon { background-color: #6D3BF7; }
+    .ai .blueprint-icon,
+    .data .blueprint-icon { background-color: #ECECF1; }
+    .api .blueprint-icon { background-color: #F59E0B; }
+    .images .blueprint-icon { background-color: #EC4899; }
+
+    .blueprint-card h3 {
+      color: #1F2937;
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .blueprint-card p {
+      color: #6B7280;
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .connection-line {
+      position: absolute;
+      background-color: #E5E7EB;
+      z-index: 0;
+    }
+
+    .connection-line.right {
+      right: -1.5rem;
+      top: 50%;
+      width: 1.5rem;
+      height: 2px;
+    }
+
+    .connection-line.left {
+      left: -1.5rem;
+      top: 50%;
+      width: 1.5rem;
+      height: 2px;
+    }
+
+    .blueprint-notes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0 3rem;
+      align-items: stretch;
+    }
+
+    .sticky-note {
+      padding: 1.5rem;
+      border-radius: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                  0 8px 16px rgba(0, 0, 0, 0.1),
+                  0 12px 24px rgba(0, 0, 0, 0.08),
+                  -1px -1px 2px rgba(255, 255, 255, 0.5) inset;
+      transform: rotate(-0.5deg);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      height: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .sticky-note:hover {
+      transform: rotate(0) translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15),
+                  0 12px 24px rgba(0, 0, 0, 0.15),
+                  0 18px 36px rgba(0, 0, 0, 0.1),
+                  -1px -1px 2px rgba(255, 255, 255, 0.5) inset;
+      z-index: 2;
+    }
+    
+    /* Slightly different rotation for each note */
+    .sticky-note.blue { transform: rotate(0.5deg); }
+    .sticky-note.green { transform: rotate(-1deg); }
+
+    .sticky-note.yellow { background-color: #FEF3C7; }
+    .sticky-note.blue { background-color: #E0F2FE; }
+    .sticky-note.green { background-color: #D1FAE5; }
+
+    .sticky-note h4 {
+      margin: 0 0 0.5rem;
+      color: #1F2937;
+      font-size: 1rem;
+    }
+
+    .sticky-note p {
+      margin: 0;
+      color: #4B5563;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .blueprint-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .connection-line {
+        display: none;
+      }
+      
+      .blueprint-card {
+        margin-bottom: 1.5rem;
+      }
+    }
+
     /* Chat widget button styles */
     .n8n-chat-widget-button {
       display: flex !important;
@@ -277,8 +548,7 @@
   <!-- Features Section -->
   <section class="features">
     <div class="container">
-      <h2 class="section-title">How It Works</h2>
-      <p class="lead" style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Get your home valuation in just a few simple steps.</p>
+      <h2 class="section-title">Get your personalized home valuation in a few simple steps.</h2>
       
       <div class="features-grid">
         <div class="feature-card">
@@ -326,11 +596,85 @@
   </section>
   -->
 
+  <!-- How It Works Blueprint Section -->
+  <section class="blueprint-section">
+    <button id="toggleBlueprint" class="blueprint-toggle">
+      <span>See How This Tool Works</span>
+      <i class="fas fa-chevron-down"></i>
+    </button>
+    <div id="blueprintContent" class="blueprint-content">
+      <div class="blueprint-container">
+        <h2 class="section-title">Key Components</h2>
+        <div class="blueprint-grid">
+          <!-- User Interface -->
+          <div class="blueprint-card interface">
+            <div class="blueprint-icon"><i class="fas fa-comments"></i></div>
+            <h3>Chat Interface</h3>
+            <p>Familiar text-based thread conversation engages home sellers</p>
+            <div class="connection-line right"></div>
+          </div>
+
+          <!-- AI Brain -->
+          <div class="blueprint-card ai">
+            <div class="blueprint-icon chatgpt-logo">
+              <img src="../images/chatgpt-logo.png" alt="ChatGPT Logo">
+            </div>
+            <h3>AI Agent</h3>
+            <p>ChatGPT processes requests and coordinates responses</p>
+            <div class="connection-line left"></div>
+            <div class="connection-line right"></div>
+          </div>
+
+          <!-- Image Processing -->
+          <div class="blueprint-card images">
+            <div class="blueprint-icon"><i class="fas fa-image"></i></div>
+            <h3>Image Analysis</h3>
+            <p>Images are uploaded, stored, and analyzed for valuation purposes</p>
+            <div class="connection-line left"></div>
+          </div>
+
+          <!-- API Connections -->
+          <div class="blueprint-card api">
+            <div class="blueprint-icon"><i class="fas fa-plug"></i></div>
+            <h3>External APIs</h3>
+            <p>Real-time property value data informs personalized valuation</p>
+            <div class="connection-line left"></div>
+          </div>
+
+          <!-- Data Sources -->
+          <div class="blueprint-card data">
+            <div class="blueprint-icon">
+              <img src="../images/sheets_2020q4_48dp.png" alt="Database Icon" style="width: 30px; height: 30px;">
+            </div>
+            <h3>Database storage</h3>
+            <p>User-provided data and contact info stored securely in Google</p>
+            <div class="connection-line left"></div>
+          </div>
+        </div>
+        
+        <h2 class="section-title" style="margin-top: 4rem;">Key Benefits</h2>
+        <div class="blueprint-notes">
+          <div class="sticky-note yellow">
+            <h4>Works like magic</h4>
+            <p>AI understands and responds conversationally to user inputs and focuses the conversation on the task at hand</p>
+          </div>
+          <div class="sticky-note blue">
+            <h4>Accurate, fast, relevant results</h4>
+            <p>Multiple data sources and client-generated algorithms are combined to calculate personalized valuations</p>
+          </div>
+          <div class="sticky-note green">
+            <h4>Customer confidence</h4>
+            <p>In seconds, potential home sellers gain a better understanding of what their home might be worth, increasing chances of conversion</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 Treehouse Financial. All rights reserved.</p>
-      <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;"><a href="https://wyshai.com" target="_blank" style="color: inherit; text-decoration: none;">Powered by wyshAI</a></p>
+      <p>&copy; 2025 <a href="https://wyshai.com" target="_blank" style="color: inherit; text-decoration: none;">wyshAI</a>. All rights reserved.</p>
     </div>
   </footer>
 
@@ -376,6 +720,19 @@
   
   <!-- Load the original chat widget script -->
   <script src="chat-widget-original.js"></script>
+  
+  <script>
+    // Toggle blueprint section
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('toggleBlueprint');
+      const content = document.getElementById('blueprintContent');
+      
+      toggleBtn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        content.classList.toggle('show');
+      });
+    });
+  </script>
   
   <!-- Set up chat buttons -->
   <script>
