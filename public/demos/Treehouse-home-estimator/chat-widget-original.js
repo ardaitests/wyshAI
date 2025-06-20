@@ -288,7 +288,7 @@
             route: ''
         },
         branding: {
-            logo: '/src/assets/demos/Icon-wyshAI-dark.png',
+            logo: '/demos/images/Icon-wyshAI-dark.png',
             name: 'wyshAI Assistant',
             welcomeText: 'Hello! How can I help you today?',
             poweredBy: {
