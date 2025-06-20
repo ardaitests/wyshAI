@@ -26,7 +26,7 @@
           text: 'Powered by wyshAI',
           link: 'https://wyshai.com'
         },
-        logo: 'https://raw.githubusercontent.com/ardaitests/wyshAI/refs/heads/main/public/demos/images/Icon-wyshAI-dark.png'
+        logo: '/src/assets/demos/Icon-wyshAI-dark.png'
       },
       webhookUrl: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat'
     };

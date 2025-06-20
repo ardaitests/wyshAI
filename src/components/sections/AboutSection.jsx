@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingDown, CheckCircle, ThumbsUp } from 'lucide-react';
 import officeCollabImage from '@/assets/office-collaboration-in-color.png';
@@ -8,15 +7,15 @@ const AboutSection = () => {
   const features = [
     {
       icon: <TrendingDown className="h-6 w-6 text-primary" />,
-      text: "Save time and money — streamlining operations and reducing effort.",
+      text: <><strong>Save time and money</strong> — reduce effort and waste by streamlining operations and eliminating tasks.</>,
     },
     {
       icon: <ThumbsUp className="h-6 w-6 text-primary" />,
-      text: "Impress customers — improve customer satisfaction with personalized experiences.",
+      text: <><strong>Accelerate growth</strong> — impress your audiences and improve customer satisfaction with personalized experiences.</>,
     },
     {
       icon: <CheckCircle className="h-6 w-6 text-primary" />,
-      text: "Gain an edge — get ahead and stay ahead of competitors with modern AI solutions.",
+      text: <><strong>Gain an edge</strong> — get ahead and stay ahead of competitors with modern AI-powered solutions.</>,
     },
   ];
 
@@ -51,10 +50,10 @@ const AboutSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 + 0.3, ease: "easeOut" }}
-                  className="flex items-center space-x-4"
+                  className="flex items-start space-x-4"
                 >
-                  <span className="flex-shrink-0">{feature.icon}</span>
-                  <span className="text-foreground">{feature.text}</span>
+                  <span className="flex-shrink-0 mt-1">{feature.icon}</span>
+                  <span className="text-foreground -mt-1">{feature.text}</span>
                 </motion.li>
               ))}
             </ul>
