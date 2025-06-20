@@ -285,7 +285,8 @@
     const defaultConfig = {
         webhook: {
             url: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
-            route: ''
+            route: '',
+            allowFileUpload: true  // Set to true to allow file uploads
         },
         branding: {
             logo: '/demos/images/Icon-wyshAI-dark.png',
