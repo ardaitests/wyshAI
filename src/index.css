@@ -19,6 +19,25 @@
   animation: gradient 10s ease infinite;
 }
 
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.2);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 3s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 @layer base {
   :root {
     --background: 4 96% 100%; /* Swiss Coffee Lighter - Almost White */

@@ -14,7 +14,11 @@ import {
   Heart,
   Zap,
   Shield,
-  HeartHandshake
+  HeartHandshake,
+  Wrench,
+  UserCircle2,
+  MessageCircle,
+  Users2
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3b.png';
@@ -265,13 +269,13 @@ const AboutPage = () => {
               </h2>
               <div className="space-y-4 text-gray-600">
                 <p className="text-lg">
-                At Wysh AI, our mission is to make advanced AI simple, accessible, and valuable for small and medium-sized businesses. We help you go beyond the hype by building intelligent tools and agents that actually do the work — from automating tasks and generating content to improving customer service and integrating your systems.
-                </p>
+                At Wysh AI, our mission is to make powerful AI simple, accessible, and valuable for small and medium-sized businesses.</p>
+                <p>We help you go beyond the hype by building intelligent tools and agents that actually do the work — from automating tasks and generating content to improving customer service and integrating your systems.</p>
                 <p> 
-                We believe AI should empower you, not overwhelm you. That’s why we use human-centered design to create custom solutions that fit the way you already work — no coding, no complexity.
+                We believe AI should empower you, not overwhelm you. That’s why we work closely with you to create custom solutions that fit the way you already work — no coding, no complexity.
                 </p>
                 <p>
-                Whether you're ready to follow up with leads automatically, personalize your customer experience, or connect data across your business, we make it effortless to get started. When you're ready to unlock the power of AI, just Wysh for it.
+                Whether you’re ready to follow up with leads automatically, personalize your customer experiences, or securely connect data across your software and tools, we make it effortless to get started. When you’re ready to unlock the power of AI, just Wysh for it.
                 </p>
               </div>
             </motion.div>
@@ -296,16 +300,13 @@ const AboutPage = () => {
               </h2>
               <div className="space-y-4 text-gray-600">
                 <p>
-                  We started Wysh AI with a clear purpose: to make powerful AI accessible to the businesses that need it most — not just tech giants or startups with engineering teams, but everyday small business owners.
+                  After years working in digital experience design and product innovation, we saw a growing gap: while AI tools were rapidly evolving, most small businesses were left behind — overwhelmed by complexity, unsure where to start, and underserved by expensive off-the-shelf solutions. We founded Wysh AI to close that gap and help every small businesses owner.
                 </p>
                 <p>
-                  After years working in digital experience design and product innovation, we saw a growing gap: while AI tools were rapidly evolving, most small businesses were left behind — overwhelmed by complexity, unsure where to start, and underserved by off-the-shelf solutions.
+                  We are customer obsessed and dedicated to accelerating small businesses success. We blend intuitive software design, business process automation, and AI-powered workflows to deliver simple AI solutions that actually help real businesses grow. No buzzwords. No black boxes. Just practical tools that solve real problems, save time, reduce busywork, and create better experiences for your customers.
                 </p>
                 <p>
-                  We founded Wysh AI to close that gap — blending human-centered design, automation, and intelligent workflows to deliver AI that actually helps real businesses grow. No buzzwords. No black boxes. Just practical tools that save time, reduce busywork, and create better experiences for your customers.
-                </p>
-                <p>
-                  Because we believe that when small businesses have access to the same intelligent tools as big ones, they can do amazing things. And we're here to make sure they can — one Wysh at a time.
+                  Because we believe that when small businesses have the same intelligent capabilities as larger ones, they can do even more amazing things. And we're here to make sure they can — one Wysh at a time.
                 </p>
               </div>
             </motion.div>
@@ -366,22 +367,13 @@ const AboutPage = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-                  <path d="M12 2v4"></path>
-                  <path d="m16.24 7.76 2.83-2.83"></path>
-                  <path d="M18 12h4"></path>
-                  <path d="m18 18 2.8 2.8"></path>
-                  <path d="M12 18v4"></path>
-                  <path d="M4.9 19.1 7.69 16.3"></path>
-                  <path d="M2 12h4"></path>
-                  <path d="M7.7 7.7 4.9 4.9"></path>
-                </svg>
+                <Wrench className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
                 We build real tools that do real work
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                While others talk about future potential, we focus on what AI can do for you right now — automating follow-ups, improving customer experiences, and saving hours of manual work each week.
+                While others talk about future potential, we focus on what AI can do for you right now — automating follow-ups, improving customer experiences, and saving you hours of manual work each week.
               </p>
             </motion.div>
 
@@ -394,10 +386,7 @@ const AboutPage = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-                  <path d="M12 20h9"></path>
-                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                </svg>
+                <UserCircle2 className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
                 We design around people, not platforms
@@ -416,11 +405,7 @@ const AboutPage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-                  <path d="M17 6.1H3"></path>
-                  <path d="M21 12.1H3"></path>
-                  <path d="M15.1 18H3"></path>
-                </svg>
+                <MessageCircle className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
                 We speak your language
@@ -439,12 +424,7 @@ const AboutPage = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <div className="bg-primary/10 text-primary h-14 w-14 rounded-lg flex items-center justify-center text-2xl mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
+                <Users2 className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-montserrat font-bold mb-3 text-foreground">
                 We're with you every step

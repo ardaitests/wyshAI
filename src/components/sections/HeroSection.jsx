@@ -6,6 +6,48 @@ import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import { scrollToElement } from '@/utils/smoothScroll';
 import cafeImage from '@/assets/20250604-1120-cafe-owner-digital-bliss.png';
 
+// Optimized Sparkles component with performance enhancements
+const Sparkles = ({ count = 30 }) => {
+  // Use React.useMemo to prevent unnecessary re-renders
+  const sparkles = React.useMemo(() => {
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      size: Math.random() * 4 + 1, // Smaller (1-5px)
+      posX: Math.random() * 100,
+      posY: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 2 + Math.random() * 3,
+    }));
+  }, [count]);
+
+  return (
+    <div 
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      style={{ contentVisibility: 'auto' }}
+      aria-hidden="true"
+    >
+      {sparkles.map((sparkle) => (
+        <div
+          key={sparkle.id}
+          className="absolute rounded-full bg-white/80 animate-sparkle will-change-transform"
+          style={{
+            width: `${sparkle.size}px`,
+            height: `${sparkle.size}px`,
+            left: `${sparkle.posX}%`,
+            top: `${sparkle.posY}%`,
+            animationDelay: `${sparkle.delay}s`,
+            animationDuration: `${sparkle.duration}s`,
+            boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.8)',
+            opacity: 0,
+            transform: 'translateZ(0)', // Promote to its own layer
+            backfaceVisibility: 'hidden', // Improve performance on mobile
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const HeroSection = () => {
   const { openChat } = useChatbot();
 
@@ -29,12 +71,16 @@ const HeroSection = () => {
 
   return (
     <section 
-      className="text-foreground pt-16 pb-20 md:pt-24 md:pb-28 bg-gradient-to-br from-primary-lighter via-primary-light to-primary-medium bg-[length:200%_200%] animate-gradient"
+      className="text-foreground pt-16 pb-20 md:pt-24 md:pb-28 bg-gradient-to-br from-primary-lighter via-primary-light to-primary-medium bg-[length:200%_200%] animate-gradient relative overflow-hidden"
       style={{
-        backgroundImage: 'linear-gradient(-40deg, hsl(256 92% 92%) 0%, hsl(256 84% 72%) 50%, hsl(256 60% 60%) 100%)'
+        backgroundImage: 'linear-gradient(-40deg, hsl(256 92% 92%) 0%, hsl(256 84% 72%) 50%, hsl(256 60% 60%) 100%)',
+        isolation: 'isolate'
       }}
     >
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="absolute inset-0 z-0">
+        <Sparkles count={40} />
+      </div>
+      <div className="container relative z-10 mx-auto px-4 max-w-6xl">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
           {/* Left Column - Headline */}
           <motion.div
