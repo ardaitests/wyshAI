@@ -11,6 +11,217 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="icon" type="image/png" href="/demos/images/Icon-wyshAI-dark.png">
   <style>
+    /* Blueprint Section Styles */
+    .blueprint-section {
+      --grid-color: rgba(139, 92, 246, 0.05); /* Updated to purple */
+      --grid-size: 20px;
+      --grid-line: 1px;
+      background-color: #f9f5ff;
+      background-image: 
+        linear-gradient(var(--grid-color) var(--grid-line), transparent var(--grid-line)),
+        linear-gradient(90deg, var(--grid-color) var(--grid-line), transparent var(--grid-line));
+      background-size: var(--grid-size) var(--grid-size);
+      background-position: calc(var(--grid-size) / 2) calc(var(--grid-size) / 2);
+      padding: 0 0 1px;
+      margin: 0;
+      border-top: 1px solid rgba(139, 92, 246, 0.1); /* Updated to purple */
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blueprint-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.02) 0%, rgba(139, 92, 246, 0) 100%); /* Updated to purple */
+      pointer-events: none;
+    }
+
+    .blueprint-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2.5rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: #1F2937;
+      font-size: 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 100px;
+    }
+
+    .blueprint-toggle:hover {
+      background-color: rgba(139, 92, 246, 0.05); /* Updated to purple */
+    }
+
+    .blueprint-toggle i {
+      margin-left: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+
+    .blueprint-toggle.active i {
+      transform: rotate(180deg);
+    }
+
+    .blueprint-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+      background: transparent;
+    }
+
+    .blueprint-content.show {
+      max-height: 2000px;
+      transition: max-height 1s ease-in;
+    }
+
+    .blueprint-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: #1a1a1a;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      position: relative;
+      padding: 2rem 0;
+      align-items: stretch;
+    }
+
+    .blueprint-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 12px;
+      padding: 1.75rem 1.5rem;
+      border: 1px solid rgba(139, 92, 246, 0.1); /* Updated to purple */
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.05); /* Updated to purple */
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      box-sizing: border-box;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .blueprint-card:hover {
+      z-index: 2;
+      box-shadow: 0 12px 24px rgba(139, 92, 246, 0.12); /* Updated to purple */
+      transform: translateY(-4px);
+      border-color: rgba(139, 92, 246, 0.2); /* Updated to purple */
+    }
+
+    .blueprint-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      color: white;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    
+    .interface .blueprint-icon { background-color: #0f766e; }
+    .ai .blueprint-icon { background-color: #0d9488; }
+    .data .blueprint-icon { background-color: #0f766e; }
+    .api .blueprint-icon { background-color: #0d9488; }
+
+    .blueprint-card.interface .blueprint-icon { background-color: #3b82f6; }
+    .blueprint-card.ai .blueprint-icon { background-color: #f0f0f0; } /* Light grey background for AI card */
+    .blueprint-card.api .blueprint-icon { background-color: #8b5cf6; }
+    .blueprint-card.data .blueprint-icon { background-color: #ec4899; }
+    .blueprint-card.email .blueprint-icon { background-color: #7c3aed; }
+    
+    .blueprint-icon.chatgpt-logo {
+      padding: 8px;
+      background-color: #f0f0f0 !important; /* Light grey background */
+    }
+
+    .blueprint-icon.chatgpt-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .blueprint-card h3 {
+      color: #1F2937;
+      margin: 0 0 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .blueprint-card p {
+      color: #4B5563;
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .connection-line {
+      position: absolute;
+      background-color: #E5E7EB;
+      z-index: 0;
+    }
+
+    .connection-line.right {
+      right: -1.5rem;
+      top: 50%;
+      width: 1.5rem;
+      height: 2px;
+    }
+
+    .connection-line.left {
+      left: -1.5rem;
+      top: 50%;
+      width: 1.5rem;
+      height: 2px;
+    }
+
+    .connection-line.top {
+      top: -1.5rem;
+      left: 50%;
+      width: 2px;
+      height: 1.5rem;
+    }
+
+    .connection-line.bottom {
+      bottom: -1.5rem;
+      left: 50%;
+      width: 2px;
+      height: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .blueprint-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .connection-line {
+        display: none;
+      }
+    }
+
     /* Chat widget button styles */
     .n8n-chat-widget-button {
       display: flex !important;
@@ -71,7 +282,7 @@
     .hero {
       min-height: 60vh;
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
-                  url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80') no-repeat center center/cover;
+                  url('images/Modern-Office-Workspace-2.png') no-repeat center center/cover;
       color: white;
       display: flex;
       align-items: center;
@@ -145,10 +356,23 @@
     }
 
     .section-title {
-      text-align: center;
       font-size: 2.25rem;
-      margin-bottom: 2rem;
-      color: var(--dark);
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 2.5rem;
+      text-align: left;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #8b5cf6; /* Medium purple from Tailwind */
+      margin: 1.25rem 0 0;
+      border-radius: 2px;
     }
 
     .features-grid {
@@ -229,26 +453,74 @@
       opacity: 0.8;
     }
 
-    /* Testimonial Section */
-    .testimonial {
-      background-color: #f8fafc;
-      padding: 4rem 2rem;
-      text-align: center;
+    /* Sticky Notes Section */
+    .blueprint-notes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0 2rem;
+      align-items: stretch;
     }
 
-    .testimonial-content {
-      font-size: 1.25rem;
-      font-style: italic;
-      max-width: 800px;
-      margin: 0 auto 1.5rem;
-      color: #4b5563;
+    .sticky-note {
+      padding: 1.5rem;
+      border-radius: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                  0 8px 16px rgba(0, 0, 0, 0.1),
+                  0 12px 24px rgba(0, 0, 0, 0.08),
+                  -1px -1px 2px rgba(255, 255, 255, 0.5) inset;
+      transform: rotate(-0.5deg);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      height: 100%;
+      box-sizing: border-box;
+      position: relative;
     }
 
-    .testimonial-author {
-      font-weight: 600;
-      color: #1f2937;
+    .sticky-note:hover {
+      transform: rotate(0) translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15),
+                  0 12px 24px rgba(0, 0, 0, 0.15),
+                  0 18px 36px rgba(0, 0, 0, 0.1),
+                  -1px -1px 2px rgba(255, 255, 255, 0.5) inset;
+      z-index: 2;
+    }
+    
+    /* Slightly different rotation for each note */
+    .sticky-note.blue { transform: rotate(0.5deg); }
+    .sticky-note.green { transform: rotate(-1deg); }
+
+    .sticky-note.yellow { background-color: #FEF3C7; }
+    .sticky-note.blue { background-color: #E0F2FE; }
+    .sticky-note.green { background-color: #D1FAE5; }
+
+    .sticky-note h4 {
+      margin: 0 0 0.5rem;
+      color: #1F2937;
+      font-size: 1.1rem;
     }
 
+    .sticky-note p {
+      margin: 0;
+      color: #4B5563;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .blueprint-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .connection-line {
+        display: none;
+      }
+      
+      .blueprint-card {
+        margin-bottom: 1.5rem;
+      }
+    }
+    
     @media (min-width: 768px) {
       h1 {
         font-size: 3.5rem;
@@ -307,84 +579,128 @@
     </div>
   </section>
 
-  <!-- How It Works Section -->
-  <section class="how-it-works">
-    <div class="container">
-      <h2 class="section-title">How It Works</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Customer Reaches Out</h3>
-          <p>Visitors start a conversation with your AI assistant through the chat widget.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>AI Collects Information</h3>
-          <p>The AI assistant gathers contact details and understands the customer's needs.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Automated Follow-up</h3>
-          <p>Customer gets an immediate confirmation email, and your team is notified of the new lead.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonial Section -->
-  <section class="testimonial">
-    <div class="container">
-      <p class="testimonial-content">"The AI CRM has transformed how we handle leads. We've seen a 40% increase in response rates and our team saves hours every day on manual data entry."</p>
-      <div class="testimonial-author">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
-        <div>
-          <h4>Michael Chen</h4>
-          <p>Sales Director, TechCorp</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- CTA Section -->
   <section class="cta">
     <div class="container">
-      <h2>Ready to Transform Your Customer Experience?</h2>
-      <p>See how our AI-powered CRM can help your business grow.</p>
-      <button class="cta-button" id="startChatBottom">Try Our Demo Now <i class="fas fa-arrow-right"></i></button>
+      <h2>Try the customer lead chat for yourself</h2>
+      <button class="cta-button" id="startChatBottom">Open the AI chat <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- How It Works Blueprint Section -->
+  <section class="blueprint-section">
+    <button id="toggleBlueprint" class="blueprint-toggle">
+      <span>See How This Works</span>
+      <i class="fas fa-chevron-down"></i>
+    </button>
+    <div id="blueprintContent" class="blueprint-content">
+      <div class="blueprint-container">
+        <h2 class="section-title">Key Components</h2>
+        <div class="blueprint-grid">
+          <!-- Chat Interface -->
+          <div class="blueprint-card interface">
+            <div class="blueprint-icon"><i class="fas fa-comments"></i></div>
+            <h3>Chat Interface</h3>
+            <p>Engages visitors with a friendly, conversational experience that feels natural and intuitive.</p>
+            <div class="connection-line right"></div>
+          </div>
+
+          <!-- AI Assistant -->
+          <div class="blueprint-card ai">
+            <div class="blueprint-icon chatgpt-logo">
+              <img src="../images/chatgpt-logo.png" alt="ChatGPT Logo">
+            </div>
+            <h3>AI Assistant</h3>
+            <p>Uses natural language processing to understand and respond to visitor inquiries in real-time.</p>
+            <div class="connection-line left"></div>
+            <div class="connection-line right"></div>
+          </div>
+
+          <!-- CRM Integration -->
+          <div class="blueprint-card data">
+            <div class="blueprint-icon"><i class="fas fa-database"></i></div>
+            <h3>CRM Integration</h3>
+            <p>Seamlessly syncs lead data with your existing CRM system for immediate follow-up.</p>
+            <div class="connection-line left"></div>
+          </div>
+
+          <!-- Email Integration -->
+          <div class="blueprint-card email">
+            <div class="blueprint-icon"><i class="fas fa-envelope"></i></div>
+            <h3>Email Integration</h3>
+            <p>Automatic email notifications for you and new leads with contact details and conversation summaries when information is stored.</p>
+            <div class="connection-line left"></div>
+          </div>
+        </div>
+        
+        <h2 class="section-title" style="margin-top: 4rem;">Key Benefits</h2>
+        <div class="blueprint-notes">
+          <div class="sticky-note yellow">
+            <h4>24/7 Lead Generation</h4>
+            <p>Capture and qualify leads around the clock, even when your team is unavailable. Never miss a sales opportunity again.</p>
+          </div>
+          <div class="sticky-note blue">
+            <h4>Personalized Engagement</h4>
+            <p>Deliver tailored conversations that understand and respond to each visitor's unique needs and questions.</p>
+          </div>
+          <div class="sticky-note green">
+            <h4>Seamless Handoff</h4>
+            <p>Automatically route qualified leads to the right team member with full conversation history and context.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 WyshAI. All rights reserved.</p>
-      <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">AI-Powered CRM Solution</p>
+  <footer class="bg-gray-900 py-6 border-t border-gray-800">
+    <style>
+      footer a {
+        color: #e5e7eb !important;
+      }
+      footer a:hover {
+        color: #ffffff !important;
+      }
+    </style>
+    <div class="container mx-auto px-4">
+      <div class="text-center">
+        <p class="text-gray-300 text-sm">
+          &copy; 2025 <a href="https://wyshai.com" class="font-medium transition-colors">WyshAI</a>. All rights reserved.
+        </p>
+      </div>
     </div>
   </footer>
 
   <!-- Chat Widget Configuration -->
   <script>
-    // Configure the chat widget with WyshAI CRM branding
+    // Chat widget configuration
     window.ChatWidgetConfig = {
       webhook: {
-        url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
-        route: 'general'
+        url: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+        route: 'general' // Using the same route as the main site
       },
       branding: {
-        logo: '/demos/images/Icon-wyshAI-dark.png',
+        logo: 'images/Icon-wyshAI-dark.png',
         name: 'WyshAI CRM Assistant',
-        welcomeText: 'Hello! How can I help you today? I\'m here to assist with any questions about our products or services.',
+        welcomeText: 'Hello! I\'m your AI assistant. How can I help you today?',
         poweredBy: {
           text: 'Powered by WyshAI',
           link: 'https://wyshai.com'
         }
       },
       style: {
-        primaryColor: '#4f46e5',
-        secondaryColor: '#4338ca',
+        primaryColor: '#0f766e', // Teal color to match the CRM theme
+        secondaryColor: '#0d9488',
         position: 'right',
         backgroundColor: '#ffffff',
-        fontColor: '#333333'
+        fontColor: '#1f2937',
+        buttonIcon: 'fas fa-comment-dots',
+        buttonText: 'Chat with us',
+        buttonWidth: 'auto',
+        buttonHeight: '60px',
+        buttonPadding: '0 24px',
+        buttonRadius: '30px',
+        buttonShadow: '0 4px 12px rgba(15, 118, 110, 0.2)'
       }
     };
     
@@ -402,14 +718,27 @@
     
     // Function to initialize the chat widget
     function initChatWidget() {
-      console.log('Initializing chat widget...');
-      // Auto-open the chat widget after a short delay
-      setTimeout(window.openChatWidget, 1000);
+      console.log('Chat widget initialized and ready');
+      // Removed auto-open functionality
     }
+    
+    // Toggle functionality for the blueprint section
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.getElementById('toggleBlueprint');
+      if (toggleButton) {
+        toggleButton.addEventListener('click', function() {
+          this.classList.toggle('active');
+          const content = document.getElementById('blueprintContent');
+          if (content) {
+            content.classList.toggle('show');
+          }
+        });
+      }
+    });
   </script>
   
-  <!-- Load the chat widget script -->
-  <script src="chat-widget-original.js" onload="initChatWidget()"></script>
+  <!-- Load the updated chat widget script -->
+  <script src="chat-widget-updated.js"></script>
   
   <!-- Set up chat buttons -->
   <script>
