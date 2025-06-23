@@ -354,9 +354,24 @@
     function toggleChat() {
         const chatWindow = document.getElementById('chat-widget-window');
         if (chatWindow) {
+            const isOpening = !chatWindow.classList.contains('visible');
             chatWindow.classList.toggle('visible');
-            if (chatWindow.classList.contains('visible')) {
+            if (isOpening) {
                 textarea.focus();
+                // Track chat opened event
+                if (typeof gtag === 'function') {
+                    gtag('event', 'chat_open', {
+                        'event_category': 'engagement',
+                        'event_label': 'Chat Widget',
+                        'non_interaction': false
+                    });
+                } else if (window.dataLayer) {
+                    window.dataLayer.push({
+                        'event': 'chat_open',
+                        'event_category': 'engagement',
+                        'event_label': 'Chat Widget'
+                    });
+                }
             }
         }
     }
@@ -364,9 +379,23 @@
     // Open chat window
     function openChat() {
         const chatWindow = document.getElementById('chat-widget-window');
-        if (chatWindow) {
+        if (chatWindow && !chatWindow.classList.contains('visible')) {
             chatWindow.classList.add('visible');
             textarea.focus();
+            // Track chat opened event
+            if (typeof gtag === 'function') {
+                gtag('event', 'chat_open', {
+                    'event_category': 'engagement',
+                    'event_label': 'Chat Widget',
+                    'non_interaction': false
+                });
+            } else if (window.dataLayer) {
+                window.dataLayer.push({
+                    'event': 'chat_open',
+                    'event_category': 'engagement',
+                    'event_label': 'Chat Widget'
+                });
+            }
         }
     }
     
