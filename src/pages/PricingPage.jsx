@@ -103,7 +103,7 @@ const pricingPlans = [
       'Custom training & onboarding',
     ],
     icon: <Settings className="h-8 w-8 text-primary" />,
-    buttonText: 'Contact Sales',
+    buttonText: 'Contact Us',
     popular: true,
   },
 ];
@@ -115,11 +115,11 @@ const PricingPage = () => {
     let message = '';
     
     if (plan.id === 'personalized-ai') {
-      message = "I'm interested in the Personalized AI Agent plan. How can I get started with setting up my custom AI assistant?";
+      message = "I understand you're interested in our Personalized AI Agent plan. I'd be happy to help you set up your custom AI assistant. Could you tell me a bit about your business needs?";
     } else if (plan.id === 'custom-solution') {
-      message = "I'd like to learn more about your Custom AI Solutions. Can you help me understand what's possible for my business?";
+      message = "Thank you for your interest in our Custom AI Solutions. I'm here to help you explore the possibilities for your business. Could you share more about what challenges you're looking to address?";
     } else {
-      message = `I'm interested in the ${plan.title} plan. Can you tell me more?`;
+      message = `Thank you for your interest in our ${plan.title} plan. I'd be happy to provide more information. What specific aspects of this plan would you like to learn more about?`;
     }
     
     openChat({ 
@@ -227,27 +227,16 @@ const PricingPage = () => {
                 </p>
               )}
               
-              <div className="space-y-2">
-                {plan.id === 'personalized-ai' ? (
-                  <>
-                    <p className="text-xs text-center text-gray-500">
-                      <span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mr-0.2">1</span> Agent types include customer relationship management, data-driven insights, and customer support
-                    </p>
-                    <p className="text-xs text-center text-gray-500">
-                      <span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mr-0.2">2</span> First year of hosting included. $30/month thereafter.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-xs text-center text-gray-500">
-                      <span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mr-0.2">1</span> Includes 3 months of free support. Extended support available.
-                    </p>
-                    <p className="text-xs text-center text-gray-500">
-                      <span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mr-0.2">2</span> Contact us for a custom quote based on your requirements.
-                    </p>
-                  </>
-                )}
-              </div>
+              {plan.id === 'personalized-ai' && (
+                <div className="space-y-2">
+                  <p className="text-xs text-center text-gray-500">
+                    <span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mr-0.2">1</span> Agent types include customer relationship management, data-driven insights, and customer support
+                  </p>
+                  <p className="text-xs text-center text-gray-500">
+                    <span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mr-0.2">2</span> First year of hosting included. $30/month thereafter.
+                  </p>
+                </div>
+              )}
             </div>
           </motion.div>
         ))}
