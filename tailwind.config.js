@@ -18,6 +18,15 @@ module.exports = {
       },
     },
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            h1: {
+              lineHeight: '1.625', /* equivalent to leading-relaxed */
+            },
+          },
+        },
+      },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
