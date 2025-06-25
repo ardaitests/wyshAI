@@ -92,10 +92,11 @@ const Footer = () => {
               ))}
               <li>
                 <a 
-                  href="/WyshAI-1pager-2025-01.pdf" 
-                  download 
+                  href="/resources/WyshAI-1pager-2025-01.pdf" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-primary-lighter transition-colors text-sm"
-                  data-analytics-id="footer-download-test-pdf"
+                  data-analytics-id="footer-view-test-pdf"
                 >
                   Test PDF
                 </a>
