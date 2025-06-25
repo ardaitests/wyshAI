@@ -90,6 +90,7 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
+              {/* Temporarily removed Test PDF link
               <li>
                 <a 
                   href="/resources/WyshAI-1pager-2025-01.pdf" 
@@ -101,6 +102,7 @@ const Footer = () => {
                   Test PDF
                 </a>
               </li>
+              */}
             </ul>
           </div>
 

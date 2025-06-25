@@ -89,8 +89,16 @@ const PricingPage = () => {
     handleContactClick(pricingPlans[0]);
   }, [handleContactClick]);
 
+  // Add smooth transition effect
+  React.useEffect(() => {
+    document.body.classList.add('transition-colors', 'duration-500');
+    return () => {
+      document.body.classList.remove('transition-colors', 'duration-500');
+    };
+  }, []);
+
   return (
-    <>
+    <div className="min-h-screen bg-swiss-coffee-lighter transition-colors duration-500">
       <motion.div
         className="container mx-auto px-4 py-16 md:py-24"
         initial="initial"
@@ -158,7 +166,7 @@ const PricingPage = () => {
           </div>
         </motion.section>
       </div>
-    </>
+    </div>
   );
 };
 

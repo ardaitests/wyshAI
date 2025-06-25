@@ -21,6 +21,7 @@ import {
   Users2
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import FadeInImage from '@/components/ui/FadeInImage';
 import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3b.png';
 import designTeamImg from '@/assets/Design-Team-Collaboration.png';
 import creativeOfficeCollab from '@/assets/Creative-Office-Collaboration-2.png';
@@ -140,19 +141,18 @@ const AboutPage = () => {
       className="bg-swiss-coffee-lightest text-foreground max-w-[100vw] overflow-x-hidden"
     >
       {/* Hero Section */}
-      <motion.section 
-        variants={pageVariants}
-        initial="initial"
-        animate="in"
-        exit="out"
-        className="relative py-32 md:py-40 lg:py-48 flex items-center justify-center overflow-hidden bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${whimsicalPaperSwirl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          '--sparkle-color': 'rgba(255, 255, 255, 0.8)'
-        }}
-      >
+      <section className="relative py-32 md:py-40 lg:py-48 flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <FadeInImage 
+            src={whimsicalPaperSwirl}
+            alt="Whimsical paper swirl background"
+            className="w-full h-full object-cover"
+            style={{
+              '--sparkle-color': 'rgba(255, 255, 255, 0.8)'
+            }}
+          />
+        </div>
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-foreground/60 z-0" />
         {/* Purple gradient overlay with animation */}
@@ -164,7 +164,13 @@ const AboutPage = () => {
         />
         {/* Sparkles */}
         <Sparkles count={25} />
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div 
+          className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+          variants={pageVariants}
+          initial="initial"
+          animate="in"
+          exit="out"
+        >
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold mb-6 text-primary-foreground">
               About Wysh AI
@@ -173,8 +179,8 @@ const AboutPage = () => {
               AI made practical, personal, and powerful — <br className="hidden sm:block" />for small businesses that want real results, fast.
             </p>
           </div>
-        </div>
-      </motion.section>
+        </motion.div>
+      </section>
       
       {/* Sparkle animation keyframes */}
       <style jsx global>{`

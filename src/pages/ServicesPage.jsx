@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
+import FadeInImage from '@/components/ui/FadeInImage';
 import { BrainCircuit, Zap, MessageCircle, MessagesSquare, Settings2, BarChart3, Users, ArrowRight, Check, Lightbulb, Target, Code, Rocket, ThumbsUp, Megaphone, Cable, Bot } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import warmOfficeImg from '@/assets/Warm-Office-Collaboration-2.png';
@@ -198,28 +199,30 @@ const ServicesPage = () => {
       className="bg-swiss-coffee-lightest text-foreground"
     >
       {/* Hero Section */}
-      <motion.section 
-        className="relative py-40 md:py-48 lg:py-56 flex items-center justify-center overflow-hidden bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${warmOfficeImg})`,
-        }}
-        variants={pageVariants}
-        initial="initial"
-        animate="in"
-        exit="out"
-      >
+      <section className="relative py-40 md:py-48 lg:py-56 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <FadeInImage 
+            src={warmOfficeImg}
+            alt="Warm office collaboration setting the scene for our services"
+            className="w-full h-full object-cover"
+          />
+        </div>
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-foreground/60 z-0" />
         {/* Gradient overlay */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/30 to-primary/10 z-0"
-        />
-        <div className="relative z-10 container mx-auto px-4 text-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/30 to-primary/10 z-0" />
+        <motion.div 
+          className="relative z-10 container mx-auto px-4 text-center"
+          variants={pageVariants}
+          initial="initial"
+          animate="in"
+          exit="out"
+        >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold mb-8 text-primary-foreground">
             Our Services
           </h1>
-        </div>
-      </motion.section>
+        </motion.div>
+      </section>
 
       {/* Intro Section */}
       <section className="relative py-20 md:py-28 text-foreground overflow-hidden bg-swiss-coffee-light">
