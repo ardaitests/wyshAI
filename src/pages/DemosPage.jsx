@@ -118,7 +118,7 @@ const DemosPage = () => {
                 </div>
                 <div className="flex-1 flex flex-col justify-center">
                   <div className="mb-6">
-                    <h3 className="text-xl font-montserrat font-semibold mb-3 text-swiss-coffee-lighter">WyshAI Introduction</h3>
+                    <h3 className="text-xl font-montserrat font-semibold mb-3 text-swiss-coffee-lighter">Wysh AI Introduction</h3>
                     <p className="text-swiss-coffee-lighter/90 text-base">Read an overview about our AI solutions and how they can benefit your business.</p>
                   </div>
                   <div>
