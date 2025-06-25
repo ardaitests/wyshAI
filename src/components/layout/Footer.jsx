@@ -8,9 +8,9 @@ const Footer = () => {
 
   const quickLinks = [
     { name: 'Home', path: '/', analyticsId: 'footer-nav-home' },
-    { name: 'About Us', path: '/about', analyticsId: 'footer-nav-about' },
     { name: 'Services', path: '/services', analyticsId: 'footer-nav-services' },
-    // { name: 'Contact', path: '/contact', analyticsId: 'footer-nav-contact' }, // Assuming contact is handled by chatbot for now
+    { name: 'Pricing', path: '/pricing', analyticsId: 'footer-nav-pricing' },
+    { name: 'About Us', path: '/about', analyticsId: 'footer-nav-about' },
   ];
 
   // const resourcesLinks = [
@@ -90,6 +90,16 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a 
+                  href="/WyshAI-1pager-2025-01.pdf" 
+                  download 
+                  className="hover:text-primary-lighter transition-colors text-sm"
+                  data-analytics-id="footer-download-test-pdf"
+                >
+                  Test PDF
+                </a>
+              </li>
             </ul>
           </div>
 
