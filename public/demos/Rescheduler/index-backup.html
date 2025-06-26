@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AI-Powered CRM System | WyshAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="/demos/images/Icon-wyshAI-dark.png">
+  <style>
+    /* Chat widget button styles */
+    .n8n-chat-widget-button {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      z-index: 9999 !important;
+      position: fixed !important;
+      bottom: 30px !important;
+      right: 30px !important;
+      background-color: #4f46e5 !important;
+      color: white !important;
+      border-radius: 50% !important;
+      width: 60px !important;
+      height: 60px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .n8n-chat-widget-button:hover {
+      transform: scale(1.1) !important;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary: #10b981;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --gray: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      overflow-x: hidden;
+      background-color: #f8fafc;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 60vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                  url('https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80') no-repeat center center/cover;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 4rem 0;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      z-index: 1;
+      padding: 2rem;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+
+    .lead {
+      font-size: 1.25rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      max-width: 700px;
+    }
+
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin: 0.5rem;
+    }
+
+    .cta-button:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .cta-button.secondary {
+      background-color: transparent;
+      border: 2px solid white;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 6rem 2rem;
+      background-color: white;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.25rem;
+      margin-bottom: 2rem;
+      color: var(--dark);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .feature-text {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+
+    /* CTA Section */
+    .cta {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.9;
+    }
+
+    .cta .cta-button {
+      background: white;
+      color: var(--primary);
+      padding: 0.875rem 2rem;
+      font-size: 1.125rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    /* Testimonial Section */
+    .testimonial {
+      background-color: #f8fafc;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .testimonial-content {
+      font-size: 1.25rem;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      color: #4b5563;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+      
+      .hero {
+        min-height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body style="overflow-x: hidden;">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Transform Your Customer Relationships with AI</h1>
+      <p class="lead">Capture leads, automate follow-ups, and gain valuable insights with our intelligent CRM system powered by AI.</p>
+      <button class="cta-button" id="startChat">Try Our AI Assistant <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Powerful Features for Modern Businesses</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>AI-Powered Chatbot</h3>
+          <p>Collect and update customer information through an intuitive, mobile-friendly chat interface.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Automated Follow-ups</h3>
+          <p>Customers receive immediate confirmation emails and businesses get instant lead notifications.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Secure Data Storage</h3>
+          <p>Customer information is securely stored with enterprise-grade encryption and redundancy.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-pie"></i>
+          </div>
+          <h3>Intelligent Insights</h3>
+          <p>AI-generated summaries of conversations and daily lead reports keep you informed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Customer Reaches Out</h3>
+          <p>Visitors start a conversation with your AI assistant through the chat widget.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>AI Collects Information</h3>
+          <p>The AI assistant gathers contact details and understands the customer's needs.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Automated Follow-up</h3>
+          <p>Customer gets an immediate confirmation email, and your team is notified of the new lead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="testimonial">
+    <div class="container">
+      <p class="testimonial-content">"The AI CRM has transformed how we handle leads. We've seen a 40% increase in response rates and our team saves hours every day on manual data entry."</p>
+      <div class="testimonial-author">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+        <div>
+          <h4>Michael Chen</h4>
+          <p>Sales Director, TechCorp</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Transform Your Customer Experience?</h2>
+      <p>See how our AI-powered CRM can help your business grow.</p>
+      <button class="cta-button" id="startChatBottom">Try Our Demo Now <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 WyshAI. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">AI-Powered CRM Solution</p>
+    </div>
+  </footer>
+
+  <!-- Chat Widget Configuration -->
+  <script>
+    // Configure the chat widget with Treehouse Financial branding
+    window.ChatWidgetConfig = {
+      webhook: {
+        url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
+        route: 'general'
+      },
+      branding: {
+        logo: '/demos/images/Icon-wyshAI-dark.png',
+        name: 'WyshAI CRM Assistant',
+        welcomeText: 'Hello! How can I help you today? I\'m here to assist with any questions about our products or services.',
+        poweredBy: {
+          text: 'Powered by WyshAI',
+          link: 'https://wyshai.com'
+        }
+      },
+      style: {
+        primaryColor: '#4f46e5',
+        secondaryColor: '#4338ca',
+        position: 'right',
+        backgroundColor: '#ffffff',
+        fontColor: '#333333'
+      }
+    };
+    
+    // Simple function to open the chat
+    window.openChatWidget = function() {
+      console.log('Opening chat widget...');
+      if (window.ChatWidget && typeof window.ChatWidget.open === 'function') {
+        window.ChatWidget.open();
+      } else {
+        console.error('Chat widget not initialized yet');
+        // Try again after a short delay if not initialized
+        setTimeout(() => window.openChatWidget(), 500);
+      }
+    };
+  </script>
+  
+  <!-- Load the original chat widget script -->
+  <script src="chat-widget-original.js"></script>
+  
+  <!-- Set up chat buttons -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Setting up chat buttons...');
+      
+      // Set up click handlers for all chat buttons
+      document.querySelectorAll('#startChat, #startChatBottom').forEach(btn => {
+        if (btn) {
+          // Remove any existing click handlers to prevent duplicates
+          const newBtn = btn.cloneNode(true);
+          btn.parentNode.replaceChild(newBtn, btn);
+          
+          newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Chat button clicked');
+            window.openChatWidget();
+            return false;
+          });
+        }
+      });
+      
+      // Add click handler for the chat toggle button once it's created
+      const checkForChatButton = setInterval(() => {
+        const chatToggle = document.querySelector('.n8n-chat-toggle');
+        if (chatToggle) {
+          clearInterval(checkForChatButton);
+          console.log('Found chat toggle button');
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>
