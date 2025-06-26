@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>AI-Powered CRM System | WyshAI</title>
+  <title>AI Barber Scheduling Assistant | WyshAI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -537,9 +537,12 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Transform Your Customer Relationships with AI</h1>
-      <p class="lead">Capture leads, automate follow-ups, and gain valuable insights with our intelligent CRM system powered by AI.</p>
-      <button class="cta-button" id="startChat">Try Our AI Assistant <i class="fas fa-arrow-right"></i></button>
+      <h1>AI-Powered Barber Scheduling Assistant</h1>
+      <p class="subtitle">Let AI handle your appointment bookings, rescheduling, and customer inquiries 24/7 with natural language understanding.</p>
+      <div class="cta-buttons">
+        <button class="cta-button primary" onclick="openChatWidget()">Try the Booking Demo</button>
+        <a href="#how-it-works" class="cta-button secondary">See How It Works</a>
+      </div>
     </div>
   </section>
 
@@ -589,46 +592,43 @@
   </section>
 
   <!-- How It Works Blueprint Section -->
-  <section class="blueprint-section">
+  <section class="blueprint-section" id="how-it-works">
     <button id="toggleBlueprint" class="blueprint-toggle">
-      <span>See How This Works</span>
+      <span>How the AI Scheduling Assistant Works</span>
       <i class="fas fa-chevron-down"></i>
     </button>
-    <div id="blueprintContent" class="blueprint-content">
+    <div class="blueprint-content" id="blueprintContent">
       <div class="blueprint-container">
-        <h2 class="section-title">Key Components</h2>
+        <h2 class="section-title">AI Scheduling Assistant Features</h2>
         <div class="blueprint-grid">
-          <!-- Chat Interface -->
           <div class="blueprint-card interface">
-            <div class="blueprint-icon"><i class="fas fa-comments"></i></div>
-            <h3>Chat Interface</h3>
-            <p>Engages visitors with a friendly, conversational experience that feels natural and intuitive.</p>
-            <div class="connection-line right"></div>
+            <div class="blueprint-icon">📥</div>
+            <h3>Inbound Message Handling</h3>
+            <p>Webhook endpoint for SMS/chat input that extracts messages, customer names, and phone numbers with ease.</p>
           </div>
 
-          <!-- AI Assistant -->
           <div class="blueprint-card ai">
-            <div class="blueprint-icon chatgpt-logo">
-              <img src="../images/chatgpt-logo.png" alt="ChatGPT Logo">
-            </div>
-            <h3>AI Assistant</h3>
-            <p>Uses natural language processing to understand and respond to visitor inquiries in real-time.</p>
-            <div class="connection-line left"></div>
-            <div class="connection-line right"></div>
+            <div class="blueprint-icon">🧠</div>
+            <h3>Smart Intent Parsing</h3>
+            <p>AI classifies messages (book, reschedule, cancel, inquiry) and extracts key details like name, phone, and time.</p>
           </div>
 
-          <!-- CRM Integration -->
+          <div class="blueprint-card api">
+            <div class="blueprint-icon">📅</div>
+            <h3>Appointment Management</h3>
+            <p>Integrated with Airtable to check availability, book appointments, and handle rescheduling automatically.</p>
+          </div>
+
           <div class="blueprint-card data">
-            <div class="blueprint-icon"><i class="fas fa-database"></i></div>
-            <h3>CRM Integration</h3>
-            <p>Seamlessly syncs lead data with your existing CRM system for immediate follow-up.</p>
-            <div class="connection-line left"></div>
+            <div class="blueprint-icon">🤖</div>
+            <h3>Smart Responses</h3>
+            <p>Generates friendly, personalized messages based on customer intent and appointment availability.</p>
           </div>
 
-          <!-- Email Integration -->
           <div class="blueprint-card email">
-            <div class="blueprint-icon"><i class="fas fa-envelope"></i></div>
-            <h3>Email Integration</h3>
+            <div class="blueprint-icon">📨</div>
+            <h3>Confirmations</h3>
+            <p>Sends SMS/WhatsApp/email confirmations with optional 1-click confirm/reschedule links.</p>
             <p>Automatic email notifications for you and new leads with contact details and conversation summaries when information is stored.</p>
             <div class="connection-line left"></div>
           </div>
@@ -677,12 +677,12 @@
     // Chat widget configuration
     window.ChatWidgetConfig = {
       webhook: {
-        url: 'https://areed.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+        url: 'https://areed.app.n8n.cloud/webhook/rescheduler',
         route: 'general' // Using the same route as the main site
       },
       branding: {
         logo: 'images/Icon-wyshAI-dark.png',
-        name: 'WyshAI CRM Assistant',
+        name: 'Cuts and Capes Scheduler',
         welcomeText: 'Hello! I\'m your AI assistant. How can I help you today?',
         poweredBy: {
           text: 'Powered by WyshAI',

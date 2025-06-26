@@ -2,7 +2,7 @@
 (function() {
     // Configuration
     const config = window.ChatWidgetConfig || {};
-    const webhookUrl = 'https://areed.app.n8n.cloud/webhook/chat-webhook';
+    const webhookUrl = config.webhook?.url || '';
     
     // State
     let currentConversationId = localStorage.getItem('wysh_conversation_id');
@@ -47,7 +47,7 @@
                         </button>
                     </div>
                     <div class="chat-widget-messages" id="chat-widget-messages">
-                        <div class="chat-widget-welcome">
+                        <div class="chat-message message-system">
                             <p>${config.branding?.welcomeText || 'Hello! How can I help you today?'}</p>
                         </div>
                     </div>
@@ -95,13 +95,13 @@
                 --gradient-end: #5b21b6;   /* End of gradient */
                 --hover-gradient-start: #8b5cf6;  /* Start of hover gradient */
                 --hover-gradient-end: #7c3aed;   /* End of hover gradient */
-                --background-color: ${config.style?.backgroundColor || '#ffffff'};
-                --message-bg: #f9fafb;
-                --user-message-bg: #7c3aed;
-                --font-color: ${config.style?.fontColor || '#1f2937'};
+                --background-color: #ffffff;  /* White background */
+                --message-bg: #f9fafb;  /* Light gray for assistant messages */
+                --user-message-bg: #7c3aed;  /* Purple for user messages */
+                --font-color: #1f2937;  /* Dark gray for text */
                 --border-radius: 12px;
                 --shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-                --border-color: #e5e7eb;
+                --border-color: #e5e7eb;  /* Light gray for borders */
             }
             
             .chat-widget-toggle {
@@ -138,7 +138,7 @@
                 right: 20px;
                 width: 380px;
                 height: 600px;
-                background: var(--background-color);
+                background: #ffffff;
                 border-radius: 16px;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
                 display: flex;
@@ -149,7 +149,68 @@
                 transform: translateY(20px);
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 visibility: hidden;
-                border: 1px solid var(--border-color);
+                border: 1px solid #e5e7eb;
+            }
+            
+            .chat-widget-messages {
+                flex: 1;
+                padding: 16px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                background: #ffffff;
+            }
+            
+            .chat-message {
+                max-width: 80%;
+                padding: 12px 16px;
+                border-radius: 16px;
+                line-height: 1.4;
+                position: relative;
+                animation: messageAppear 0.2s ease-out;
+            }
+            
+            .message-user {
+                align-self: flex-end;
+                background: var(--user-message-bg);
+                color: white;
+                border-bottom-right-radius: 4px;
+                margin-left: auto;
+            }
+            
+            .message-assistant {
+                align-self: flex-start;
+                background: var(--message-bg);
+                color: var(--font-color);
+                border-bottom-left-radius: 4px;
+                margin-right: auto;
+            }
+            
+            .message-system {
+                align-self: center;
+                background: var(--message-bg);
+                color: var(--font-color);
+                border-radius: 16px;
+                font-size: 0.9em;
+                padding: 8px 12px;
+                text-align: center;
+                max-width: 90%;
+            }
+            
+            .message-content {
+                word-wrap: break-word;
+            }
+            
+            @keyframes messageAppear {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
             
             .chat-widget-window.visible {
@@ -200,15 +261,10 @@
                 flex: 1;
                 padding: 16px;
                 overflow-y: auto;
-                background: var(--user-message-bg);
-                background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-                color: white;
-                border-radius: 18px 18px 4px 18px;
-                margin-left: auto;
-                box-shadow: 0 2px 8px rgba(124, 58, 237, 0.15);
+                background: #ffffff;
+                color: var(--font-color);
                 font-size: 14px;
                 line-height: 1.5;
-                max-width: 85%;
             }
             
             .message-bot {
@@ -477,10 +533,20 @@
         
         const messageDiv = document.createElement('div');
         messageDiv.className = `chat-message message-${sender}`;
-        messageDiv.textContent = content;
         
+        // Create message content with proper HTML structure
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.textContent = content;
+        
+        messageDiv.appendChild(messageContent);
         messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // Auto-scroll to bottom
+        messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: 'smooth'
+        });
     }
     
     // Show typing indicator with animation
