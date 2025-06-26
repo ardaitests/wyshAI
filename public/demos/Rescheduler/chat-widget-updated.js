@@ -369,11 +369,20 @@
                     bottom: 0;
                     right: 0;
                     border-radius: 0;
+                    z-index: 10000; /* Ensure window is above toggle */
                 }
                 
                 .chat-widget-toggle {
                     bottom: 20px;
                     right: 20px;
+                    z-index: 9999; /* Below window when open */
+                    transition: opacity 0.3s ease;
+                }
+                
+                /* Hide toggle when chat is open on mobile */
+                .chat-widget-window.visible + .chat-widget-toggle {
+                    opacity: 0;
+                    pointer-events: none;
                 }
             }
         `;
