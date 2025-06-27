@@ -196,7 +196,7 @@ const ServicesPage = () => {
       <SEO 
         title="AI Solutions & Services | Wysh AI"
         description="Comprehensive AI solutions and services to transform your business. From custom AI agents to workflow automation, we have the tools you need to succeed."
-        image="/images/og/og-services.jpg"
+        image="/images/og/og-wyshAI.jpg"
       />
       <motion.div
         variants={pageVariants}

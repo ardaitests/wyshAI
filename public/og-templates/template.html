@@ -80,7 +80,7 @@
             <p class="og-description" id="description">Custom AI solutions for modern businesses</p>
         </div>
         <div class="og-overlay"></div>
-        <div class="og-bg" id="bg-image" style="background-image: url('https://wyshai.netlify.app/images/og-bg.jpg')"></div>
+        <div class="og-bg" id="bg-image" style="background-image: url('/images/og/og-wyshAI.jpg')"></div>
     </div>
 
     <script>
@@ -88,7 +88,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const title = decodeURIComponent(urlParams.get('title') || 'Wysh AI');
         const description = decodeURIComponent(urlParams.get('description') || 'Custom AI solutions for modern businesses');
-        const bgImage = urlParams.get('bgImage') || 'https://wyshai.netlify.app/images/og-bg.jpg';
+        const bgImage = urlParams.get('bgImage') || '/images/og/og-wyshAI.jpg';
 
         // Update the content
         document.getElementById('title').textContent = title;

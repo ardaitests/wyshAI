@@ -2,10 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SEO = ({ 
-  title = 'Wysh AI - Custom AI agents and AI-powered workflows for your business',
-  description = 'Transform your business with custom AI agents and workflows. Automate tasks, enhance customer experience, and boost productivity with our AI solutions.',
+  title = 'Wysh AI - AI Solutions for Modern Businesses',
+  description = 'Transform your business with custom AI solutions tailored to your needs.',
   type = 'website',
-  image = '/images/og/og-home.jpg',
+  image = '/images/og/og-wyshAI.jpg',
   url = 'https://wyshai.netlify.app',
   siteName = 'Wysh AI',
   locale = 'en_US',

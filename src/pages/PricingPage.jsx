@@ -102,8 +102,8 @@ const PricingPage = () => {
     <>
       <SEO 
         title="Pricing & Plans | Wysh AI"
-        description="Transparent, flexible pricing for AI solutions that scale with your business. Choose the plan that fits your needs or contact us for custom solutions."
-        image="/images/og/og-pricing.jpg"
+        description="Flexible pricing plans for our AI solutions. Choose the option that best fits your business needs and budget."
+        image="/images/og/og-wyshAI.jpg"
       />
       <div className="min-h-screen bg-swiss-coffee-lighter transition-colors duration-500">
         <motion.div

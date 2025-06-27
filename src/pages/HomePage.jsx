@@ -21,9 +21,9 @@ const HomePage = () => {
   return (
     <>
       <SEO 
-        title="AI-Powered Business Automation Solutions | Wysh AI"
-        description="Transform your business with Wysh AI's custom AI agents and workflows. Automate tasks, enhance customer experience, and boost productivity with our cutting-edge AI solutions."
-        image="/images/og/og-home.jpg"
+        title="AI Solutions for Modern Businesses | Wysh AI"
+        description="Transform your business with custom AI solutions tailored to your needs. From chatbots to workflow automation, we've got you covered."
+        image="/images/og/og-wyshAI.jpg"
       />
       <motion.div variants={pageVariants} initial="initial" animate="in" exit="out">
         <motion.div variants={sectionVariants}><HeroSection /></motion.div>

@@ -137,8 +137,8 @@ const AboutPage = () => {
     <>
       <SEO 
         title="About Wysh AI - Our Story, Mission & Values"
-        description="Discover the story behind Wysh AI. Learn about our mission to make AI accessible and valuable for businesses of all sizes through innovative solutions and exceptional service."
-        image="/images/og/og-about.jpg"
+        description="Learn about our journey, mission, and the team behind Wysh AI. We're dedicated to delivering innovative AI solutions that make a difference."
+        image="/images/og/og-wyshAI.jpg"
       />
       <motion.div
         variants={pageVariants}

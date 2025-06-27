@@ -11,9 +11,9 @@ const DemosPage = () => {
   return (
     <>
       <SEO 
-        title="AI Showcase - Interactive Demos | Wysh AI"
-        description="Explore our interactive AI demos including the Home Value Estimate AI Chatbot and more. See how Wysh AI can transform your business with custom AI solutions."
-        image="/images/og/og-demos.jpg"
+        title="AI Demos & Examples | Wysh AI"
+        description="Explore our AI demos and see how Wysh AI can transform your business operations with custom AI solutions."
+        image="/images/og/og-wyshAI.jpg"
       />
     <div className="min-h-screen">
       {/* AI Showroom Section */}
