@@ -105,7 +105,7 @@ const HeroSection = () => {
               Wysh AI works with small businesses to design and build custom AI tools and agents for real results, fast.
             </p>
             <p className="text-lg md:text-xl text-primary-foreground/80 mb-8">
-              Save time, delight customers, and reduce costs with artificial intelligence.
+              Save time, delight customers, and reduce costs with AI that works for you...like magic.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button size="lg" variant="default" onClick={handleGetStarted} className="shadow-lg">

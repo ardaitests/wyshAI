@@ -98,10 +98,10 @@ const ContactSection = () => {
               className="order-1 md:order-2 text-center md:text-left"
             >
               <h2 className="text-3xl md:text-4xl font-montserrat font-semibold mb-6 text-white">
-                Don't wait to get started.
+                Get started with AI. <br />It's easier than you think.
               </h2>
               <p className="text-lg text-slate-300 max-w-xl mx-auto md:mx-0 mb-8">
-                Get in touch or request a demo to see how quickly and easily AI can begin working for you!
+                Get in touch or request a demo to see how quickly AI can begin working for you!
               </p>
               <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-3 sm:space-y-0 sm:space-x-4">
                 <Button size="lg" onClick={handleContact} className="bg-swiss-coffee-lightest text-primary hover:bg-gray-100">

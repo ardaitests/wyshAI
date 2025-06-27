@@ -10,19 +10,19 @@ const servicesOverview = [
   {
     icon: <BrainCircuit className="h-8 w-8 text-primary mb-3" />,
     title: "Task Automation",
-    description: "Eliminate repetitive and manual tasks with AI-powered automated workflows designed to optimize your time.",
+    description: <>Eliminate repetitive and manual tasks with AI-powered automations that help you do more, <em>or less</em>.</>,
     link: "/services#ai-task-automation" 
   },
   {
     icon: <Bot className="h-8 w-8 text-primary mb-3" />,
-    title: "AI Agents",
-    description: "Magically manage customer questions, new appointments, and orders with helpful AI agents.",
+    title: "Customer Assistants",
+    description: "AI can handle customer questions, new appointments, or orders automatically, so you don't have to.",
     link: "/services#ai-agents"
   },
   {
     icon: <Zap className="h-8 w-8 text-primary mb-3" />,
     title: "Seamless Integration",
-    description: "Easily and securely connect new AI tools and agents with your existing data and software.",
+    description: "Simply and securely connect your existing data and software for smart suggestions.",
     link: "/services#data-system-integration"
   },
 ];

@@ -7,7 +7,7 @@ const AboutSection = () => {
   const features = [
     {
       icon: <TrendingDown className="h-6 w-6 text-primary" />,
-      text: <><strong>Save time and money</strong> — reduce effort and waste by streamlining operations and eliminating tasks.</>,
+      text: <><strong>Save time and money</strong> — reduce effort and waste by streamlining your processes and eliminating tasks.</>,
     },
     {
       icon: <ThumbsUp className="h-6 w-6 text-primary" />,
@@ -15,7 +15,7 @@ const AboutSection = () => {
     },
     {
       icon: <CheckCircle className="h-6 w-6 text-primary" />,
-      text: <><strong>Gain an edge</strong> — get ahead and stay ahead of competitors with modern AI-powered solutions.</>,
+      text: <><strong>Gain an edge</strong> — get ahead and stay ahead of competitors with modern AI-powered assistants and features.</>,
     },
   ];
 
@@ -41,7 +41,7 @@ const AboutSection = () => {
               <i>It's smarter, faster, and cheaper.</i>
             </h2>
             <p className="text-lg text-muted-foreground-darker mb-8">
-            Wysh AI employs the latest no-code platforms and generative AI technologies to create AI tools and agents tailored to your specific business needs.
+            Wysh AI uses the latest no-code platforms and AI technologies to create AI tools and helpers tailored to your specific business needs.
             </p>
             <ul className="space-y-6">
               {features.map((feature, index) => (
