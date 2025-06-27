@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { Fragment } from 'react';
+import SEO from '@/components/seo/SEO';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import FadeInImage from '@/components/ui/FadeInImage';
@@ -191,13 +192,19 @@ const ServicesPage = () => {
   };
 
   return (
-    <motion.div
-      variants={pageVariants}
-      initial="initial"
-      animate="in"
-      exit="out"
-      className="bg-swiss-coffee-lightest text-foreground"
-    >
+    <>
+      <SEO 
+        title="AI Solutions & Services | Wysh AI"
+        description="Comprehensive AI solutions and services to transform your business. From custom AI agents to workflow automation, we have the tools you need to succeed."
+        image="/images/og/og-services.jpg"
+      />
+      <motion.div
+        variants={pageVariants}
+        initial="initial"
+        animate="in"
+        exit="out"
+        className="bg-swiss-coffee-lightest text-foreground"
+      >
       {/* Hero Section */}
       <section className="relative py-40 md:py-48 lg:py-56 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -341,6 +348,7 @@ const ServicesPage = () => {
         </div>
       </motion.section>
     </motion.div>
+    </>
   );
 };
 

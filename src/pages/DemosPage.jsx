@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '@/components/seo/SEO';
 import officeCollabImage from '@/assets/office-collab.png';
 import modernOfficeImage from '@/assets/Modern Office Workspace-2.png';
 import treehouseImage from '@/assets/Treehouse-home-estimator.jpg'; // Main image for first card
@@ -8,6 +9,12 @@ import { FileText } from 'lucide-react'; // Importing icon from lucide-react
 
 const DemosPage = () => {
   return (
+    <>
+      <SEO 
+        title="AI Showcase - Interactive Demos | Wysh AI"
+        description="Explore our interactive AI demos including the Home Value Estimate AI Chatbot and more. See how Wysh AI can transform your business with custom AI solutions."
+        image="/images/og/og-demos.jpg"
+      />
     <div className="min-h-screen">
       {/* AI Showroom Section */}
       <section className="py-32 px-4 sm:px-6 lg:px-8 bg-swiss-coffee-lighter">
@@ -133,6 +140,7 @@ const DemosPage = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

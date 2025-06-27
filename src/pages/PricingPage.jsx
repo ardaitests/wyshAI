@@ -1,4 +1,5 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, Fragment } from 'react';
+import SEO from '@/components/seo/SEO';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Zap, ArrowRight } from 'lucide-react';
@@ -98,14 +99,20 @@ const PricingPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-swiss-coffee-lighter transition-colors duration-500">
-      <motion.div
-        className="container mx-auto px-4 py-16 md:py-24"
-        initial="initial"
-        animate="in"
-        exit="out"
-        variants={pageVariants}
-      >
+    <>
+      <SEO 
+        title="Pricing & Plans | Wysh AI"
+        description="Transparent, flexible pricing for AI solutions that scale with your business. Choose the plan that fits your needs or contact us for custom solutions."
+        image="/images/og/og-pricing.jpg"
+      />
+      <div className="min-h-screen bg-swiss-coffee-lighter transition-colors duration-500">
+        <motion.div
+          className="container mx-auto px-4 py-16 md:py-24"
+          initial="initial"
+          animate="in"
+          exit="out"
+          variants={pageVariants}
+        >
         {/* Hero Section */}
         <motion.div 
           className="text-center max-w-3xl mx-auto mb-16"
@@ -133,16 +140,11 @@ const PricingPage = () => {
             />
           ))}
         </motion.div>
-      </motion.div>
 
-      {/* Spacing between cards and CTA */}
-      <div className="pt-12 md:pt-20" aria-hidden="true" />
-      
-      {/* CTA Section - Temporarily simplified */}
-      <div className="w-full bg-gradient-to-r from-primary-light to-primary/80 text-white">
+        {/* CTA Section */}
         <motion.section
           variants={itemVariants}
-          className="py-20 md:py-28 relative w-full"
+          className="py-20 md:py-28 relative w-full bg-gradient-to-r from-primary-light to-primary/80"
           aria-labelledby="cta-heading"
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -165,8 +167,9 @@ const PricingPage = () => {
             </Button>
           </div>
         </motion.section>
-      </div>
+      </motion.div>
     </div>
+    </>
   );
 };
 

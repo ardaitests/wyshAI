@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useChatbot } from '@/contexts/ChatbotContext';
+import SEO from '@/components/seo/SEO';
 
 export default function TermsOfService() {
   const { openChat } = useChatbot();
@@ -14,7 +15,14 @@ export default function TermsOfService() {
   };
 
   return (
-    <div className="min-h-screen bg-swiss-coffee-light">
+    <>
+      <SEO 
+        title="Terms of Service | Wysh AI"
+        description="Please read our Terms of Service carefully before using the Wysh AI website and services. By accessing or using our Service, you agree to be bound by these Terms."
+        noindex={true}
+        nofollow={true}
+      />
+      <div className="min-h-screen bg-swiss-coffee-light">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
@@ -110,6 +118,7 @@ export default function TermsOfService() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useChatbot } from '@/contexts/ChatbotContext';
+import SEO from '@/components/seo/SEO';
 
 export default function PrivacyPolicy() {
   const { openChat } = useChatbot();
@@ -14,7 +15,14 @@ export default function PrivacyPolicy() {
   };
 
   return (
-    <div className="min-h-screen bg-swiss-coffee-light">
+    <>
+      <SEO 
+        title="Privacy Policy | Wysh AI"
+        description="Learn how Wysh AI collects, uses, and protects your personal information. We are committed to maintaining the trust and confidence of our visitors and customers."
+        noindex={true}
+        nofollow={true}
+      />
+      <div className="min-h-screen bg-swiss-coffee-light">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
@@ -100,6 +108,7 @@ export default function PrivacyPolicy() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

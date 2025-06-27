@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import SEO from '@/components/seo/SEO';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card.jsx';
@@ -133,13 +134,19 @@ const AboutPage = () => {
 
 
   return (
-    <motion.div
-      variants={pageVariants}
-      initial="initial"
-      animate="in"
-      exit="out"
-      className="bg-swiss-coffee-lightest text-foreground max-w-[100vw] overflow-x-hidden"
-    >
+    <>
+      <SEO 
+        title="About Wysh AI - Our Story, Mission & Values"
+        description="Discover the story behind Wysh AI. Learn about our mission to make AI accessible and valuable for businesses of all sizes through innovative solutions and exceptional service."
+        image="/images/og/og-about.jpg"
+      />
+      <motion.div
+        variants={pageVariants}
+        initial="initial"
+        animate="in"
+        exit="out"
+        className="bg-swiss-coffee-lightest text-foreground max-w-[100vw] overflow-x-hidden"
+      >
       {/* Hero Section */}
       <section className="relative py-32 md:py-40 lg:py-48 flex items-center justify-center overflow-hidden">
         {/* Background Image */}
@@ -604,7 +611,8 @@ const AboutPage = () => {
           </Button>
         </div>
       </motion.section>
-    </motion.div>
+      </motion.div>
+    </>
   );
 };
 
