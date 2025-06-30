@@ -47,8 +47,10 @@
             overflow: hidden;
         }
         .chat-container {
-            height: calc(100vh - 120px);
+            height: calc(100vh - 140px);
             overflow-y: auto;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
         }
         .message {
             max-width: 80%;
@@ -85,7 +87,7 @@
         </header>
 
         <!-- Chat Messages -->
-        <div id="chat-messages" class="chat-container p-4 space-y-4 flex-1 overflow-y-auto">
+        <div id="chat-messages" class="chat-container p-4 space-y-4 flex-1 overflow-y-auto pb-24">
             <!-- Messages will be inserted here -->
             <div class="flex justify-start">
                 <div class="message bg-white p-3 rounded-lg shadow-sm max-w-xs">
@@ -95,18 +97,18 @@
         </div>
 
         <!-- Input Area -->
-        <div class="p-4 border-t border-gray-200 bg-white">
-            <div class="flex items-center space-x-2">
+        <div class="p-3 border-t border-gray-200 bg-white fixed bottom-0 left-0 right-0">
+            <div class="flex items-center space-x-2 w-full">
                 <input 
                     type="text" 
                     id="user-input" 
                     placeholder="Type your message..." 
-                    class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base"
                     onkeypress="if(event.key === 'Enter') sendMessage()"
                 >
                 <button 
                     onclick="sendMessage()"
-                    class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                    class="bg-primary-600 text-white px-4 py-3 rounded-lg hover:bg-primary-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 whitespace-nowrap"
                 >
                     Send
                 </button>
