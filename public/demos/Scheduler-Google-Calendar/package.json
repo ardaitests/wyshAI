@@ -1,18 +1,22 @@
 {
   "name": "wyshai-scheduler",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "WyshAI Scheduler - Intelligent Appointment Booking",
+  "main": "src/js/chat.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run copy-to-docs",
-    "preview": "vite preview",
-    "copy-to-docs": "rm -rf docs && mkdir -p docs && cp -r build/* docs/"
+    "build": "vite build",
+    "preview": "vite preview"
   },
+  "keywords": [
+    "scheduler",
+    "chat",
+    "wyshai",
+    "appointment"
+  ],
+  "author": "WyshAI Team",
+  "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.0.12"
+    "vite": "^6.3.5"
   }
 }

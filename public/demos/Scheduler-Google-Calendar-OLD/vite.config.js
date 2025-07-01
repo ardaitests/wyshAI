@@ -1,37 +1,31 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
 
 export default defineConfig({
-  root: '.',
   base: '/demos/scheduler-google-calendar/',
   publicDir: 'public',
+  root: '.',
   build: {
-    outDir: '../../demos/scheduler-google-calendar',
+    outDir: 'build',
     assetsDir: 'assets',
     emptyOutDir: true,
+    minify: 'terser',
+    sourcemap: false,
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html')
-      },
+      input: 'index.html',
       output: {
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
         assetFileNames: 'assets/[name].[hash][extname]'
       }
-    },
-    minify: 'terser',
-    sourcemap: true
+    }
   },
   server: {
     port: 3000,
     open: true,
-    host: true,
-    cors: true
+    host: true
   },
   preview: {
     port: 3000,
-    open: true,
-    cors: true
-  },
-  plugins: []
+    open: true
+  }
 });
