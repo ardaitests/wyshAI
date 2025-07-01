@@ -4,72 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preston's Scheduler</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        secondary: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1e293b',
-                            900: '#0f172a',
-                        },
-                    }
-                }
-            }
-        }
-    </script>
+    <meta name="description" content="Schedule appointments with Preston's AI assistant">
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/src/styles/main.css" as="style">
+    <link rel="stylesheet" href="/src/styles/main.css">
     <style>
         body {
             height: 100vh;
             margin: 0;
             padding: 0;
             overflow: hidden;
+            background: linear-gradient(135deg, #f8f5ff 0%, #f0ebff 100%);
         }
         .chat-container {
-            height: calc(100vh - 140px);
+            height: calc(100vh - 180px);
             overflow-y: auto;
-            padding-bottom: 1rem;
+            padding: 1rem 0 180px;
             -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
         .message {
             max-width: 80%;
             word-wrap: break-word;
         }
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            height: 20px;
+            padding: 0 8px;
+        }
         .typing-indicator span {
-            display: inline-block;
             width: 8px;
             height: 8px;
-            border-radius: 50%;
-            background-color: #94a3b8;
             margin: 0 2px;
-            animation: bounce 1.4s infinite ease-in-out;
-        }
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
+            background-color: #9ca3af;
+            border-radius: 50%;
+            display: inline-block;
         }
         @keyframes bounce {
             0%, 60%, 100% { transform: translateY(0); }
@@ -80,47 +50,52 @@
 <body class="bg-gray-50">
     <div class="flex flex-col h-screen">
         <!-- Header -->
-        <header class="bg-primary-700 text-white p-4 shadow-md">
-            <div class="container mx-auto flex items-center">
-                <h1 class="text-xl font-bold">WyshAI Scheduler</h1>
+        <header class="bg-gradient-to-r from-primary-600 to-primary-800 text-white p-4 shadow-lg flex-shrink-0">
+            <div class="container mx-auto flex items-center justify-center">
+                <h1 class="text-xl font-bold">Preston's Scheduling Assistant</h1>
             </div>
         </header>
 
-        <!-- Chat Messages -->
-        <div id="chat-messages" class="chat-container p-4 space-y-4 flex-1 overflow-y-auto pb-24">
-            <!-- Messages will be inserted here -->
-            <div class="flex justify-start">
-                <div class="message bg-white p-3 rounded-lg shadow-sm max-w-xs">
-                    <p class="text-sm text-gray-700">Hello! I'm Preston's scheduling assistant. How can I help you today?</p>
+        <!-- Main Content Area -->
+        <div class="flex flex-col h-[calc(100vh-73px)]">
+            <!-- Chat Messages Container -->
+            <div id="chat-container" class="flex-1 overflow-y-auto">
+                <div id="chat-messages" class="w-full max-w-3xl mx-auto px-4 py-2">
+                    <!-- Messages will be inserted by JavaScript -->
                 </div>
             </div>
-        </div>
 
-        <!-- Input Area -->
-        <div class="p-3 border-t border-gray-200 bg-white fixed bottom-0 left-0 right-0">
-            <div class="flex items-center space-x-2 w-full">
-                <input 
-                    type="text" 
-                    id="user-input" 
-                    placeholder="Type your message..." 
-                    class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base"
-                    onkeypress="if(event.key === 'Enter') sendMessage()"
-                >
-                <button 
-                    onclick="sendMessage()"
-                    class="bg-primary-600 text-white px-4 py-3 rounded-lg hover:bg-primary-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 whitespace-nowrap"
-                >
-                    Send
-                </button>
-            </div>
-            <div id="typing-indicator" class="typing-indicator mt-2 hidden">
-                <span></span>
-                <span></span>
-                <span></span>
+            <!-- Input Area -->
+            <div class="py-4 px-4">
+                <div class="max-w-3xl mx-auto w-full">
+                    <div class="relative flex items-center w-full bg-white rounded-xl shadow-lg border border-gray-200 p-1 pr-1.5">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        placeholder="Your message..." 
+                        class="flex-1 p-4 border-0 focus:outline-none focus:ring-0 text-base bg-transparent"
+                        autocomplete="off"
+                        aria-label="Type your message"
+                        onkeypress="if(event.key === 'Enter') sendMessage()"
+                    >
+                    <button 
+                        id="send-button"
+                        onclick="sendMessage()"
+                        class="bg-gradient-to-r from-primary-500 to-primary-600 text-white p-2.5 rounded-lg hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 mr-1"
+                        aria-label="Send message"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal" aria-hidden="true">
+                            <path d="m3 3 3 9-3 9 19-9Z"/>
+                            <path d="M6 12h16"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Load scripts with module type for modern browsers -->
+    <script type="module" src="/src/js/chat.js"></script>
     <script>
         // Generate a unique session ID if one doesn't exist in sessionStorage
         if (!sessionStorage.getItem('sessionId')) {
@@ -129,7 +104,6 @@
         
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
-        const typingIndicator = document.getElementById('typing-indicator');
         const sessionId = sessionStorage.getItem('sessionId');
 
         function addMessage(message, isUser = false) {
@@ -137,10 +111,10 @@
             messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
             
             const messageBubble = document.createElement('div');
-            messageBubble.className = `message p-3 rounded-lg shadow-sm max-w-xs ${
+            messageBubble.className = `message p-4 rounded-xl shadow-md max-w-xs ${
                 isUser 
-                    ? 'bg-primary-600 text-white' 
-                    : 'bg-white text-gray-700'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white' 
+                    : 'bg-white text-gray-700 border border-gray-100'
             }`;
             
             const messageText = document.createElement('p');
@@ -156,8 +130,34 @@
         }
 
         function showTypingIndicator(show) {
-            typingIndicator.style.display = show ? 'block' : 'none';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Remove any existing typing indicator
+            const existingTyping = document.getElementById('typing-indicator');
+            if (existingTyping) {
+                existingTyping.remove();
+            }
+
+            if (show) {
+                // Create and show typing indicator in the chat flow
+                const typingDiv = document.createElement('div');
+                typingDiv.id = 'typing-indicator';
+                typingDiv.className = 'flex justify-start';
+                
+                const typingBubble = document.createElement('div');
+                typingBubble.className = 'message bg-white p-4 rounded-xl shadow-md max-w-xs border border-gray-100';
+                
+                const typingContent = document.createElement('div');
+                typingContent.className = 'typing-indicator flex space-x-1';
+                typingContent.innerHTML = `
+                    <span class="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0s"></span>
+                    <span class="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.2s"></span>
+                    <span class="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.4s"></span>
+                `;
+                
+                typingBubble.appendChild(typingContent);
+                typingDiv.appendChild(typingBubble);
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
         }
 
         async function sendMessage() {
