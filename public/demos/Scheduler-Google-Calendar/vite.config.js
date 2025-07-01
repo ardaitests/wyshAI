@@ -1,14 +1,16 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: '.',
+  base: './',
+  publicDir: 'public',
   build: {
-    outDir: 'dist',
+    outDir: 'build',
     assetsDir: 'assets',
     emptyOutDir: true,
     minify: 'terser',
     sourcemap: false,
     rollupOptions: {
+      input: 'index.html',
       output: {
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
@@ -18,6 +20,11 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    open: true,
+    host: true
+  },
+  preview: {
+    port: 3000,
     open: true
   }
-})
+});
