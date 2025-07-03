@@ -1,11 +1,8 @@
-// Import DOMPurify for HTML sanitization
-import DOMPurify from 'dompurify';
-
 // Configuration
 const CONFIG = {
     API: {
         CLIENT_WEBHOOK: 'https://areed.app.n8n.cloud/webhook/scheduler-google-client',
-        ADMIN_WEBHOOK: 'https://n8n.srv893741.hstgr.cloud/webhook/scheduler-google-admin',
+        ADMIN_WEBHOOK: 'https://example.com/api/admin-webhook', // Replace with actual admin webhook URL
         TIMEOUT: 30000 // 30 seconds
     }
 };
@@ -42,6 +39,43 @@ document.addEventListener('DOMContentLoaded', () => {
         admin: "Hi Preston. You can manage and view calendar changes here."
     };
 
+    // Add welcome messages if chat history is empty
+    function addWelcomeMessages() {
+        // Check if we already have welcome messages
+        const hasClientWelcome = chatHistory.client.some(msg => 
+            msg.sender === 'bot' && msg.text === welcomeMessages.client
+        );
+        const hasAdminWelcome = chatHistory.admin.some(msg => 
+            msg.sender === 'bot' && msg.text === welcomeMessages.admin
+        );
+        
+        // Only add welcome messages if they don't already exist
+        if (!hasClientWelcome) {
+            const welcomeMsg = {
+                id: `welcome_${Date.now()}`,
+                sender: 'bot',
+                text: welcomeMessages.client,
+                timestamp: new Date().toISOString(),
+                formattedText: formatMessage(welcomeMessages.client)
+            };
+            chatHistory.client.unshift(welcomeMsg);
+        }
+        
+        if (!hasAdminWelcome) {
+            const welcomeMsg = {
+                id: `welcome_admin_${Date.now()}`,
+                sender: 'bot',
+                text: welcomeMessages.admin,
+                timestamp: new Date().toISOString(),
+                formattedText: formatMessage(welcomeMessages.admin)
+            };
+            chatHistory.admin.unshift(welcomeMsg);
+        }
+        
+        // Save after adding welcome messages
+        saveChatHistory();
+    }
+
     // Initialize chats
     function initChats() {
         // Hide typing indicator by default
@@ -52,18 +86,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedChats) {
             try {
                 const parsedChats = JSON.parse(savedChats);
-                Object.assign(chatHistory, parsedChats);
+                // Only assign if we have valid data
+                if (Array.isArray(parsedChats.client) && Array.isArray(parsedChats.admin)) {
+                    chatHistory.client = parsedChats.client;
+                    chatHistory.admin = parsedChats.admin;
+                }
             } catch (e) {
                 console.error('Error parsing chat history:', e);
-                // Initialize with welcome messages if there's an error
-                addMessage('client', 'bot', welcomeMessages.client);
-                addMessage('admin', 'bot', welcomeMessages.admin);
+                // Clear invalid data
+                localStorage.removeItem('wyshaiChatHistory');
             }
-        } else {
-            // Add welcome messages
-            addMessage('client', 'bot', welcomeMessages.client);
-            addMessage('admin', 'bot', welcomeMessages.admin);
         }
+        
+        // Add welcome messages if needed
+        addWelcomeMessages();
         
         // Render the active chat
         renderChatHistory(activeChat);
@@ -102,28 +138,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add a new message to the chat
-    function addMessage(chatType, sender, text) {
+    function addMessage(chatType, sender, text, skipSave = false) {
+        const timestamp = new Date().toISOString();
         const message = {
-            id: Date.now(),
+            id: `msg_${Date.now()}`,
             sender,
             text,
-            timestamp: new Date().toISOString()
+            timestamp,
+            formattedText: formatMessage(text)
         };
         
+        // Add to chat history
         chatHistory[chatType].push(message);
         
-        // If this is a user message in client chat, also add it to admin chat
-        if (chatType === 'client' && sender === 'user') {
-            const adminMessage = { ...message, isClientMessage: true };
-            chatHistory.admin.push(adminMessage);
+        // Save to localStorage unless skipped (for initial messages)
+        if (!skipSave) {
+            saveChatHistory();
         }
         
-        // Save to localStorage
-        saveChatHistory();
-        
-        // If the message is for the currently active chat, render it
+        // If this is the active chat, render the message
         if (chatType === activeChat) {
-            renderMessage(message);
+            const messageElement = renderMessage(message);
+            chatMessages.appendChild(messageElement);
             scrollToBottom();
         }
         
@@ -222,24 +258,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 500); // 500ms debounce time
     
-    // Format message text with XSS protection
+    // Format message text with basic XSS protection
     function formatMessage(text) {
         if (typeof text !== 'string') return '';
         
-        // First escape all HTML
-        let safeText = DOMPurify.sanitize(text, { 
-            ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'br', 'p'],
-            ALLOWED_ATTR: ['href', 'target', 'rel']
-        });
+        // Basic HTML escaping
+        const escapeHtml = (unsafe) => {
+            return unsafe
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        };
         
-        // Then process markdown patterns
+        // First escape all HTML
+        let safeText = escapeHtml(text);
+        
+        // Then process markdown patterns (only after escaping)
         safeText = safeText
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold**
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')              // *italic*
-            .replace(/\n/g, '<br>')                           // Preserve line breaks
-            .replace(/(https?:\/\/[^\s<]+)/g, (url) => {       // Convert URLs to links
-                const cleanUrl = DOMPurify.sanitize(url);
-                return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+            .replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>')  // **bold**
+            .replace(/\*([^*]+?)\*/g, '<em>$1</em>')              // *italic*
+            .replace(/\n/g, '<br>')                               // Preserve line breaks
+            .replace(/(https?:\/\/[^\s<]+)/g, (url) => {           // Convert URLs to links
+                // Only allow http/https protocols
+                if (url.match(/^https?:\/\//)) {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+                }
+                return url;
             });
             
         return safeText;
@@ -304,6 +350,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Get a mock response for development
+    function getMockResponse(chatType) {
+        const responses = MOCK_RESPONSES[chatType] || MOCK_RESPONSES.client;
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+
     // Send message to the appropriate API based on chat type
     async function sendToAPI(message, chatType = 'client') {
         let loadingId = null;
@@ -311,6 +363,19 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Show loading bubble
             loadingId = createLoadingBubble();
+            
+            // Use mock response in development
+            if (CONFIG.API.USE_MOCK || !CONFIG.API.CLIENT_WEBHOOK) {
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+                const responseText = getMockResponse(chatType);
+                
+                // Remove loading bubble
+                if (loadingId) removeLoadingBubble(loadingId);
+                
+                // Add bot response
+                addMessage(chatType, 'bot', responseText);
+                return;
+            }
             
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), CONFIG.API.TIMEOUT);
@@ -320,7 +385,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? CONFIG.API.CLIENT_WEBHOOK 
                 : CONFIG.API.ADMIN_WEBHOOK;
             
-            // Log the webhook URL and request data for debugging
+            if (!webhookUrl) {
+                throw new Error('No webhook URL configured for ' + chatType + ' chat');
+            }
+            
             console.log('Sending request to:', webhookUrl);
             const requestData = {
                 message: message.text,
@@ -420,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Add error message to the appropriate chat
             const errorMessage = error.name === 'AbortError'
-                ? 'Something went wrong. That took too long. Please try again.'
+                ? 'Request timed out. Please try again.'
                 : `Error: ${error.message || 'Failed to send message'}`;
                 
             addMessage(chatType, 'bot', errorMessage);
@@ -531,8 +599,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistory.client = [];
         chatHistory.admin = [];
         
-        // Add welcome message only for the active chat
-        addMessage(activeChat, 'bot', welcomeMessages[activeChat]);
+        // Clear localStorage
+        localStorage.removeItem('wyshaiChatHistory');
+        
+        // Add welcome messages
+        addWelcomeMessages();
         
         // Reset UI
         renderChatHistory(activeChat);

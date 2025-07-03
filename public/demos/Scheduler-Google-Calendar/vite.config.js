@@ -6,8 +6,9 @@ export default defineConfig({
   publicDir: 'public',
   build: {
     outDir: 'dist',
-    assetsDir: 'assets',
+    assetsDir: '',
     emptyOutDir: true,
+    sourcemap: true,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
@@ -18,8 +19,7 @@ export default defineConfig({
         assetFileNames: 'assets/[name].[hash][extname]'
       }
     },
-    minify: 'terser',
-    sourcemap: true
+    minify: 'terser'
   },
   server: {
     port: 3000,
