@@ -18,5 +18,8 @@
   "license": "MIT",
   "devDependencies": {
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.6"
   }
 }

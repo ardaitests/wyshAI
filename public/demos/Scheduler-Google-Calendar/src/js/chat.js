@@ -1,7 +1,10 @@
+// Import DOMPurify for HTML sanitization
+import DOMPurify from 'dompurify';
+
 // Configuration
 const CONFIG = {
     API: {
-        CLIENT_WEBHOOK: 'https://areed.app.n8n.cloud/webhook/scheduler-google',
+        CLIENT_WEBHOOK: 'https://areed.app.n8n.cloud/webhook/scheduler-google-client',
         ADMIN_WEBHOOK: 'https://example.com/api/admin-webhook', // Replace with actual admin webhook URL
         TIMEOUT: 30000 // 30 seconds
     }
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Session management
-    const sessionId = sessionStorage.getItem('chatSessionId') || `sess_${Math.random().toString(36).substr(2, 9)}`;
+    let sessionId = sessionStorage.getItem('chatSessionId') || `sess_${Math.random().toString(36).substr(2, 9)}`;
     sessionStorage.setItem('chatSessionId', sessionId);
 
     // Chat state
@@ -197,23 +200,49 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(scrollToBottom, 50);
     }
     
-    // Save chat history to localStorage
-    function saveChatHistory() {
-        localStorage.setItem('wyshaiChatHistory', JSON.stringify(chatHistory));
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
+
+    // Debounced save chat history to localStorage
+    const saveChatHistory = debounce(() => {
+        try {
+            localStorage.setItem('wyshaiChatHistory', JSON.stringify(chatHistory));
+        } catch (e) {
+            console.error('Error saving chat history:', e);
+        }
+    }, 500); // 500ms debounce time
     
-    // Format message text (simple markdown)
+    // Format message text with XSS protection
     function formatMessage(text) {
-        // Convert URLs to clickable links
-        let formattedText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+        if (typeof text !== 'string') return '';
         
-        // Simple markdown for bold and italic
-        formattedText = formattedText
+        // First escape all HTML
+        let safeText = DOMPurify.sanitize(text, { 
+            ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'br', 'p'],
+            ALLOWED_ATTR: ['href', 'target', 'rel']
+        });
+        
+        // Then process markdown patterns
+        safeText = safeText
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold**
             .replace(/\*(.*?)\*/g, '<em>$1</em>')              // *italic*
-            .replace(/\n/g, '<br>');                           // Preserve line breaks
+            .replace(/\n/g, '<br>')                           // Preserve line breaks
+            .replace(/(https?:\/\/[^\s<]+)/g, (url) => {       // Convert URLs to links
+                const cleanUrl = DOMPurify.sanitize(url);
+                return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+            });
             
-        return formattedText;
+        return safeText;
     }
     
     // Scroll to bottom of the chat
@@ -291,52 +320,92 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? CONFIG.API.CLIENT_WEBHOOK 
                 : CONFIG.API.ADMIN_WEBHOOK;
             
+            // Log the webhook URL and request data for debugging
+            console.log('Sending request to:', webhookUrl);
+            const requestData = {
+                message: message.text,
+                sessionId: sessionId,
+                timestamp: new Date().toISOString(),
+                chatType: chatType
+            };
+            console.log('Request data:', JSON.stringify(requestData, null, 2));
+            
+            // Validate webhook URL
+            if (!webhookUrl || !webhookUrl.startsWith('http')) {
+                throw new Error(`Invalid webhook URL: ${webhookUrl}`);
+            }
+            
             const response = await fetch(webhookUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 signal: controller.signal,
-                body: JSON.stringify({
-                    message: message.text,  // Using 'message' field for both client and admin
-                    sessionId: sessionId,
-                    timestamp: new Date().toISOString(),
-                    chatType: chatType      // Include chat type in the payload
-                })
+                body: JSON.stringify(requestData)
             });
             
             clearTimeout(timeoutId);
             
             if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`API request failed with status ${response.status}: ${errorText}`);
             }
             
-            const data = await response.json();
+            // Get the raw response text
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+            
+            // Check for empty response
+            if (!responseText || responseText.trim() === '') {
+                if (loadingId) removeLoadingBubble(loadingId);
+                addMessage(chatType, 'bot', "I'm sorry. I didn't understand. Please be more specific.");
+                return { response: "I'm sorry. I didn't understand. Please be more specific." };
+            }
+            
+            // Try to parse the response as JSON, but handle non-JSON responses
+            let data;
+            try {
+                data = JSON.parse(responseText);
+                console.log('Parsed response data:', data);
+            } catch (e) {
+                console.warn('Response was not valid JSON, using as plain text');
+                // If it's not JSON, use the raw text as the response
+                if (loadingId) removeLoadingBubble(loadingId);
+                addMessage(chatType, 'bot', responseText);
+                return { response: responseText };
+            }
             
             // Remove loading bubble
             if (loadingId) removeLoadingBubble(loadingId);
             
             // Handle different response formats
-            let responseMessage = 'I received your message.';
+            let responseMessage = 'Thank you for your message. I\'ll get back to you shortly.';
             
             if (typeof data === 'string') {
-                // If the response is a string, use it directly
+                console.log('Using string response');
                 responseMessage = data;
-            } else if (data.response) {
-                // If there's a response property, use that
-                responseMessage = data.response;
-            } else if (data.message) {
-                // If there's a message property, use that
-                responseMessage = data.message;
-            } else if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
-                // Handle OpenAI-style response format
-                responseMessage = data.choices[0].message.content;
-            } else if (data.answer) {
-                // Some APIs use 'answer' for the response
-                responseMessage = data.answer;
-            } else if (data.text) {
-                // Some APIs use 'text' for the response
-                responseMessage = data.text;
+            } else if (data && typeof data === 'object') {
+                console.log('Processing object response:', Object.keys(data));
+                
+                if (data.response) {
+                    console.log('Found response in data.response');
+                    responseMessage = data.response;
+                } else if (data.message) {
+                    console.log('Found response in data.message');
+                    responseMessage = data.message;
+                } else if (data.choices?.[0]?.message?.content) {
+                    console.log('Found OpenAI-style response');
+                    responseMessage = data.choices[0].message.content;
+                } else if (data.answer) {
+                    console.log('Found response in data.answer');
+                    responseMessage = data.answer;
+                } else if (data.text) {
+                    console.log('Found response in data.text');
+                    responseMessage = data.text;
+                } else {
+                    console.log('No recognized response format, using default message');
+                    console.log('Available keys:', Object.keys(data));
+                }
             }
             
             // Add the bot's response to the chat
@@ -351,11 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Add error message to the appropriate chat
             const errorMessage = error.name === 'AbortError'
-                ? 'Request timed out. Please try again.'
-                : 'Sorry, I encountered an error. Please try again.';
+                ? 'Something went wrong. That took too long. Please try again.'
+                : `Error: ${error.message || 'Failed to send message'}`;
                 
             addMessage(chatType, 'bot', errorMessage);
-            throw error; // Re-throw to allow handling in the calling function
+            throw error;
         } finally {
             setTyping(false);
         }
@@ -451,6 +520,28 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error initializing chat:', error);
         }
     }
+    
+        // Function to reset session
+    function resetSession() {
+        // Generate new session ID
+        const newSessionId = `sess_${Math.random().toString(36).substr(2, 9)}`;
+        sessionId = newSessionId;
+        
+        // Clear chat history
+        chatHistory.client = [];
+        chatHistory.admin = [];
+        
+        // Add welcome message only for the active chat
+        addMessage(activeChat, 'bot', welcomeMessages[activeChat]);
+        
+        // Reset UI
+        renderChatHistory(activeChat);
+        
+        console.log('Session reset with new ID:', newSessionId);
+    }
+
+    // Make resetSession available globally
+    window.resetChatSession = resetSession;
     
     // Start the app
     init();

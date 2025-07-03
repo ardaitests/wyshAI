@@ -501,12 +501,42 @@
                 padding: 1rem;
             }
         }
+        
+        /* Add subtle hover effect for clickable header */
+        .clickable-header {
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            position: relative;
+        }
+        
+        .clickable-header:hover {
+            opacity: 0.8;
+        }
+        
+        .clickable-header:active {
+            transform: translateY(1px);
+        }
+        
+        .clickable-header::after {
+            content: '⟳';
+            position: absolute;
+            right: -24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .clickable-header:hover::after {
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
         <header class="app-header">
-            <h1>Preston's Scheduling Assistant</h1>
+            <h1 id="chat-header" class="clickable-header">Preston's Scheduling Assistant</h1>
         </header>
 
         <main class="main-content">
@@ -555,5 +585,32 @@
     </div>
 
     <script type="module" src="src/js/chat.js"></script>
+    <script>
+        // Add click handler for the header
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('chat-header');
+            if (header) {
+                header.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (typeof window.resetChatSession === 'function') {
+                        window.resetChatSession();
+                    }
+                });
+                
+                // Enable tooltip on long press for mobile
+                let pressTimer;
+                header.addEventListener('touchstart', (e) => {
+                    pressTimer = setTimeout(() => {
+                        alert('Start a new chat session');
+                    }, 1000);
+                    e.preventDefault();
+                }, false);
+                
+                header.addEventListener('touchend', () => {
+                    clearTimeout(pressTimer);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
