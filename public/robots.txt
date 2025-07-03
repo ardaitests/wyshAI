@@ -7,5 +7,5 @@ Disallow: /demos/
 Disallow: /ai-showroom
 Disallow: /demo-gallery
 
-# Sitemap location (update with your actual sitemap URL when available)
-# Sitemap: https://wyshai.com/sitemap.xml
+# Sitemap location
+Sitemap: https://wyshai.com/sitemap.xml
