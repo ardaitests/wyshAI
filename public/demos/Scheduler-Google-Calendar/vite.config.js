@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
-export default defineConfig(({ command, mode }) => ({
-  root: '.',
-  base: command === 'build' ? '/demos/scheduler-google-calendar/' : '/',
+export default defineConfig({
+  base: './',
   publicDir: 'public',
   build: {
     outDir: 'dist',
@@ -34,4 +33,4 @@ export default defineConfig(({ command, mode }) => ({
     cors: true
   },
   plugins: []
-}));
+});
