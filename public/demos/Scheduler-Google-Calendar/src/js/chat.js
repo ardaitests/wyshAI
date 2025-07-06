@@ -1,8 +1,8 @@
 // Configuration
 const CONFIG = {
     API: {
-        CLIENT_WEBHOOK: 'https://areed.app.n8n.cloud/webhook/scheduler-google-client',
-        ADMIN_WEBHOOK: 'https://n8n.srv893741.hstgr.cloud/webhook/scheduler-google-admin', // Replace with actual admin webhook URL
+        CLIENT_WEBHOOK: 'https://n8n.srv893741.hstgr.cloud/webhook/scheduler-google-client',
+        ADMIN_WEBHOOK: 'https://n8n.srv893741.hstgr.cloud/webhook/scheduler-google-admin',
         TIMEOUT: 30000 // 30 seconds
     }
 };
