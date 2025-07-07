@@ -384,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // Create a loading message bubble
     function createLoadingBubble() {
         const loadingId = 'loading-' + Date.now();
@@ -641,6 +642,20 @@ document.addEventListener('DOMContentLoaded', () => {
         updateInputPlaceholder();
     }
     
+    // Helper function to format date and time
+    function formatDateTime(dateTimeString) {
+        if (!dateTimeString) return 'N/A';
+        
+        const date = new Date(dateTimeString);
+        return date.toLocaleString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
     // Initialize the app
     function init() {
         try {
