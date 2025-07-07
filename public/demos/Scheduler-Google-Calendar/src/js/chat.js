@@ -418,6 +418,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return responses[Math.floor(Math.random() * responses.length)];
     }
 
+    // Show or hide the typing indicator
+    function setTyping(isTyping) {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.style.display = isTyping ? 'flex' : 'none';
+            if (isTyping) {
+                // Scroll to bottom when typing starts to ensure indicator is visible
+                setTimeout(() => scrollToBottom(), 100);
+            }
+        }
+    }
+
     // Send message to the appropriate API based on chat type
     async function sendToAPI(message, chatType = 'client') {
         let loadingId = null;

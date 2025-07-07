@@ -305,15 +305,17 @@
         .typing-indicator-container {
             display: none;
             align-items: center;
-            padding: 1rem;
+            padding: 0.5rem 1rem; /* Match message bubble horizontal padding */
+            margin: 0.4rem 1rem; /* Match message bubble margin exactly */
             gap: 0.5rem;
             background: var(--background);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: relative; /* Change from absolute to relative */
             z-index: 5;
-            box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+            width: fit-content;
+            max-width: 90%;
+            border-radius: 0.75rem;
+            background-color: #F1F5F9; /* Match message bubble background */
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Match message bubble shadow */
         }
             animation: typing 1.4s infinite ease-in-out both;
         }
@@ -693,27 +695,35 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const header = document.getElementById('chat-header');
-            if (header) {
-                header.addEventListener('click', (e) => {
+            if (!header) return;
+
+            // Handle both click and touch events
+            const handleHeaderClick = (e) => {
+                e.preventDefault();
+                if (typeof window.resetChatSession === 'function') {
+                    window.resetChatSession();
+                }
+            };
+            
+            // Handle click
+            header.addEventListener('click', handleHeaderClick);
+            
+            // Handle touch with improved mobile support
+            let touchStartTime = 0;
+            
+            header.addEventListener('touchstart', (e) => {
+                touchStartTime = Date.now();
+                // Don't prevent default here to allow immediate click handling
+            }, { passive: true });
+            
+            header.addEventListener('touchend', (e) => {
+                const touchDuration = Date.now() - touchStartTime;
+                // If it was a long press (more than 800ms), show the tooltip
+                if (touchDuration > 800) {
                     e.preventDefault();
-                    if (typeof window.resetChatSession === 'function') {
-                        window.resetChatSession();
-                    }
-                });
-                
-                // Enable tooltip on long press for mobile
-                let pressTimer;
-                header.addEventListener('touchstart', (e) => {
-                    pressTimer = setTimeout(() => {
-                        alert('Start a new chat session');
-                    }, 1000);
-                    e.preventDefault();
-                }, false);
-                
-                header.addEventListener('touchend', () => {
-                    clearTimeout(pressTimer);
-                });
-            }
+                    alert('Start a new chat session');
+                }
+            });
         });
     </script>
 </body>
