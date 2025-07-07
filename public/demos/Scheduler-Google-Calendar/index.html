@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WyshAI Chat Demo</title>
     <meta name="description" content="WyshAI Chat Interface Demo">
     <!-- Fonts -->
@@ -53,11 +53,13 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            height: 100vh;
             max-width: 100%;
-            margin: 0 auto;
+            margin: 0;
+            padding: 0;
             background-color: var(--background);
             position: relative;
+            overflow: hidden;
         }
 
         .app-header {
@@ -93,11 +95,12 @@
 
         .chat-container {
             width: 100%;
-            max-width: 480px;
-            height: 600px;
-            max-height: 90vh;
+            max-width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
+            margin: 0;
+            padding: 0;
             background: var(--surface);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -106,6 +109,18 @@
             margin: 1.5rem auto 0;
         }
         
+        .chat-container .chat-window {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--surface);
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+
         .chat-window {
             display: flex;
             flex-direction: column;
@@ -148,14 +163,13 @@
         .chat-messages {
             flex: 1;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             padding: 1rem;
-            padding-bottom: 2rem; /* Extra space for typing indicator */
+            padding-bottom: 0.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            -webkit-overflow-scrolling: touch;
-            background-color: white;
-            min-height: 200px; /* Ensure minimum height */
+            min-height: 0; /* Crucial for flex scrolling */
         }
         
         /* Ensure messages are aligned to the bottom */
@@ -332,13 +346,17 @@
         .chat-input-container {
             display: flex;
             gap: 0.75rem;
-            padding: 1rem;
+            padding: 0.75rem 1rem;
             background: white;
-            position: relative;
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
             z-index: 10;
             width: 100%;
             box-sizing: border-box;
             border-top: 1px solid #f1f5f9;
+            flex-shrink: 0;
         }
         
         #chat-input {
@@ -498,7 +516,24 @@
 
         @media (max-width: 640px) {
             .chat-container {
-                padding: 1rem;
+                padding: 0;
+                border-radius: 0;
+            }
+            
+            .app-header {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .chat-tabs {
+                border-radius: 0;
+                padding: 0.5rem 1rem;
+            }
+            
+            .chat-messages {
+                padding: 0.75rem;
             }
         }
         
