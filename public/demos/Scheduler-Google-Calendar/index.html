@@ -608,11 +608,12 @@
             }
         }
         
-        /* Add subtle hover effect for clickable header */
+        /* Clickable header styles */
         .clickable-header {
             cursor: pointer;
-            transition: opacity 0.2s ease;
+            transition: all 0.2s ease;
             position: relative;
+            padding-right: 20px; /* Make space for the reload icon */
         }
         
         .clickable-header:hover {
@@ -626,15 +627,18 @@
         .clickable-header::after {
             content: '⟳';
             position: absolute;
-            right: -24px;
+            right: 0;
             top: 50%;
             transform: translateY(-50%);
             font-size: 0.8em;
             opacity: 0;
             transition: opacity 0.2s ease;
+            pointer-events: none; /* Prevent the icon from blocking clicks */
         }
         
-        .clickable-header:hover::after {
+        /* Show reload icon on hover (desktop) and when active (mobile) */
+        .clickable-header:hover::after,
+        .clickable-header.touching::after {
             opacity: 0.7;
         }
     </style>
@@ -700,6 +704,8 @@
             // Handle both click and touch events
             const handleHeaderClick = (e) => {
                 e.preventDefault();
+                // Remove the touching class when the action is complete
+                header.classList.remove('touching');
                 if (typeof window.resetChatSession === 'function') {
                     window.resetChatSession();
                 }
@@ -710,19 +716,38 @@
             
             // Handle touch with improved mobile support
             let touchStartTime = 0;
+            let touchMoved = false;
             
             header.addEventListener('touchstart', (e) => {
                 touchStartTime = Date.now();
-                // Don't prevent default here to allow immediate click handling
+                touchMoved = false;
+                // Add class to show the reload icon
+                header.classList.add('touching');
+            }, { passive: true });
+            
+            header.addEventListener('touchmove', () => {
+                touchMoved = true;
+                header.classList.remove('touching');
             }, { passive: true });
             
             header.addEventListener('touchend', (e) => {
                 const touchDuration = Date.now() - touchStartTime;
-                // If it was a long press (more than 800ms), show the tooltip
-                if (touchDuration > 800) {
+                
+                // Remove the touching class when touch ends
+                header.classList.remove('touching');
+                
+                // If it was a long press (more than 800ms) and didn't move, show the tooltip
+                if (touchDuration > 800 && !touchMoved) {
                     e.preventDefault();
                     alert('Start a new chat session');
                 }
+                
+                // If it was a short tap, let the click handler take care of it
+            });
+            
+            // Make sure to clean up if touch is cancelled
+            header.addEventListener('touchcancel', () => {
+                header.classList.remove('touching');
             });
         });
     </script>
