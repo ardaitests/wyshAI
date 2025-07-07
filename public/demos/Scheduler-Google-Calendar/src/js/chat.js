@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleChat(chatType) {
         if (chatType === activeChat) return;
         
+        // Store current scroll position
+        const previousScroll = window.scrollY;
+        
         // Update active tab
         chatTabs.forEach(tab => {
             if (tab.dataset.tab === chatType) {
@@ -128,24 +131,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update input placeholder based on active chat
         updateInputPlaceholder();
         
-        // Scroll to bottom and focus the input after a small delay
+        // Restore scroll position
+        window.scrollTo(0, previousScroll);
+        
+        // Focus the input after a small delay
         setTimeout(() => {
-            scrollToBottom();
             chatInput.focus();
             
             // For mobile viewport adjustment
             if ('virtualKeyboard' in navigator) {
                 // For browsers that support the VirtualKeyboard API
                 navigator.virtualKeyboard.show();
-            } else {
-                // Fallback for other browsers
-                window.scrollTo(0, document.body.scrollHeight);
-                
-                // Blur and refocus to ensure keyboard stays open
-                chatInput.blur();
-                setTimeout(() => chatInput.focus(), 100);
             }
-        }, 50);
+        }, 10);
     }
     
     // Update input placeholder based on active chat
@@ -155,28 +153,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add a new message to the chat
     function addMessage(chatType, sender, text, skipSave = false) {
-        const timestamp = new Date().toISOString();
+        if (!text || !chatType) return;
+        
+        // Create message object
         const message = {
-            id: `msg_${Date.now()}`,
-            sender,
-            text,
-            timestamp,
-            formattedText: formatMessage(text)
+            id: Date.now(),
+            sender: sender,
+            text: text,
+            timestamp: new Date().toISOString()
         };
         
         // Add to chat history
+        if (!chatHistory[chatType]) {
+            chatHistory[chatType] = [];
+        }
         chatHistory[chatType].push(message);
         
-        // Save to localStorage unless skipped (for initial messages)
+        // Save to localStorage (debounced)
         if (!skipSave) {
             saveChatHistory();
         }
         
         // If this is the active chat, render the message
-        if (chatType === activeChat) {
+        if (chatType === activeChat && chatMessages) {
             const messageElement = renderMessage(message);
-            chatMessages.appendChild(messageElement);
-            scrollToBottom();
+            if (messageElement) {
+                chatMessages.appendChild(messageElement);
+                
+                // Always scroll to show new messages, with a slight delay to allow rendering
+                setTimeout(() => {
+                    scrollToBottom('smooth');
+                    
+                    // Additional check after a short delay to ensure the message is fully rendered
+                    setTimeout(() => {
+                        const messageBottom = messageElement.offsetTop + messageElement.offsetHeight;
+                        const messagesBottom = chatMessages.scrollTop + chatMessages.clientHeight;
+                        
+                        // If the message is not fully visible, scroll to show it
+                        if (messageBottom > messagesBottom) {
+                            chatMessages.scrollTop = messageBottom - chatMessages.clientHeight + 80; // Add some extra space
+                        }
+                    }, 50);
+                }, 10);
+            }
         }
         
         return message;
@@ -184,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Render a single message
     function renderMessage(message) {
-        if (!message || !chatMessages) return null;
+        if (!message) return null;
         
         try {
             // Create message element
@@ -207,12 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             
-            // Add to the messages container
-            chatMessages.appendChild(messageElement);
-            
-            // Scroll to bottom after adding message
-            setTimeout(scrollToBottom, 10);
-            
             return messageElement;
         } catch (error) {
             console.error('Error rendering message:', error);
@@ -224,7 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderChatHistory(chatType) {
         if (!chatMessages) return;
         
-        // Clear the messages container
+        // Store scroll position if we're just adding new messages
+        const wasNearBottom = chatMessages.scrollHeight - chatMessages.clientHeight <= chatMessages.scrollTop + 200;
+        
+        // Clear current messages
         chatMessages.innerHTML = '';
         
         // Get messages for the current chat type
@@ -243,13 +259,26 @@ document.addEventListener('DOMContentLoaded', () => {
             saveChatHistory();
         }
         
-        // Render all messages
+        // Create a document fragment for better performance
+        const fragment = document.createDocumentFragment();
+        
+        // Render all messages into the fragment
         messages.forEach(message => {
-            renderMessage(message);
+            const messageElement = renderMessage(message);
+            if (messageElement) {
+                fragment.appendChild(messageElement);
+            }
         });
         
-        // Ensure we scroll to bottom after rendering
-        setTimeout(scrollToBottom, 50);
+        // Append all messages at once
+        chatMessages.appendChild(fragment);
+        
+        // Only scroll to bottom if we were near the bottom before rendering
+        // or if this is a new chat with just a few messages
+        if (wasNearBottom || messages.length < 5) {
+            // Use smooth scrolling when loading chat history
+            setTimeout(() => scrollToBottom('smooth'), 10);
+        }
     }
     
     // Debounce function
@@ -306,62 +335,55 @@ document.addEventListener('DOMContentLoaded', () => {
             
         return safeText;
     }
-    
+
     // Scroll to bottom of the chat
-    function scrollToBottom() {
+    function scrollToBottom(behavior = 'smooth') {
         if (!chatMessages) return;
         
-        // Use requestAnimationFrame for smoother scrolling
         requestAnimationFrame(() => {
-            // First, scroll to the very bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            // Then check if we need to adjust for the keyboard
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            if (isMobile) {
-                // For mobile, ensure the input is in view
-                const inputRect = chatInput.getBoundingClientRect();
-                const isInputVisible = (
-                    inputRect.top >= 0 &&
-                    inputRect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-                );
+            try {
+                // Calculate the target scroll position to show the full message
+                const targetScroll = chatMessages.scrollHeight - chatMessages.clientHeight;
+                const currentScroll = chatMessages.scrollTop;
+                const scrollDistance = Math.abs(targetScroll - currentScroll);
                 
-                if (!isInputVisible) {
-                    // If input is not visible, scroll to it
-                    chatInput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                // Only animate if we're not already at the bottom
+                if (scrollDistance > 100) {
+                    chatMessages.scrollTo({
+                        top: targetScroll,
+                        behavior: behavior === 'smooth' ? 'smooth' : 'auto'
+                    });
+                } else {
+                    // If we're close to the bottom, just snap to it without animation
+                    chatMessages.scrollTop = targetScroll;
+                }
+
+                // On mobile, ensure the input is visible when keyboard is open
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                if (isMobile && chatInput) {
+                    const inputRect = chatInput.getBoundingClientRect();
+                    const isInputVisible = (
+                        inputRect.top >= 0 &&
+                        inputRect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+                    );
+                    
+                    if (!isInputVisible) {
+                        // Scroll the window to make the input visible, with some padding
+                        const scrollTo = Math.max(0, inputRect.top + window.scrollY - 20);
+                        window.scrollTo({ 
+                            top: scrollTo, 
+                            behavior: behavior === 'smooth' ? 'smooth' : 'auto' 
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error scrolling to bottom:', error);
+                if (chatMessages) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
             }
-            
-            // One more scroll to bottom after a short delay to catch any dynamic content
-            setTimeout(() => {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 100);
         });
     }
-    
-    // Handle typing indicator state
-    function setTyping(isTyping) {
-        // This is a no-op since we're using loading bubbles instead
-        // Keeping the function to prevent errors
-    }
-    
-    // Get a random response for the bot
-    function getRandomResponse(chatType) {
-        if (chatType === 'customer') {
-            const responses = [
-                "I'll help you with that. What specific information do you need?",
-                "Thanks for your message! I'm looking into this for you.",
-                "I can help with that. Could you provide a few more details?",
-                "I understand. Let me check the best way to assist you.",
-                "Thanks for reaching out! I'll get back to you shortly with more information."
-            ];
-            return responses[Math.floor(Math.random() * responses.length)];
-        } else {
-            return "Message received. How can I assist you further?";
-        }
-    }
-    
     // Create a loading message bubble
     function createLoadingBubble() {
         const loadingId = 'loading-' + Date.now();
@@ -575,7 +597,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function initEventListeners() {
         // Tab click handlers
         chatTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default anchor behavior
                 const tabType = tab.dataset.tab;
                 if (tabType) {
                     toggleChat(tabType);
