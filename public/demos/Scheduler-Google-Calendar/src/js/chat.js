@@ -128,8 +128,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update input placeholder based on active chat
         updateInputPlaceholder();
         
-        // Focus the input
-        chatInput.focus();
+        // Scroll to bottom and focus the input after a small delay
+        setTimeout(() => {
+            scrollToBottom();
+            chatInput.focus();
+            
+            // For mobile viewport adjustment
+            if ('virtualKeyboard' in navigator) {
+                // For browsers that support the VirtualKeyboard API
+                navigator.virtualKeyboard.show();
+            } else {
+                // Fallback for other browsers
+                window.scrollTo(0, document.body.scrollHeight);
+                
+                // Blur and refocus to ensure keyboard stays open
+                chatInput.blur();
+                setTimeout(() => chatInput.focus(), 100);
+            }
+        }, 50);
     }
     
     // Update input placeholder based on active chat
@@ -293,11 +309,35 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Scroll to bottom of the chat
     function scrollToBottom() {
-        if (chatMessages) {
+        if (!chatMessages) return;
+        
+        // Use requestAnimationFrame for smoother scrolling
+        requestAnimationFrame(() => {
+            // First, scroll to the very bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
-            // Force reflow to ensure scrolling works
-            chatMessages.scrollIntoView(false);
-        }
+            
+            // Then check if we need to adjust for the keyboard
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // For mobile, ensure the input is in view
+                const inputRect = chatInput.getBoundingClientRect();
+                const isInputVisible = (
+                    inputRect.top >= 0 &&
+                    inputRect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+                );
+                
+                if (!isInputVisible) {
+                    // If input is not visible, scroll to it
+                    chatInput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
+            }
+            
+            // One more scroll to bottom after a short delay to catch any dynamic content
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        });
     }
     
     // Handle typing indicator state
