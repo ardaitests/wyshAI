@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
 
   const handleContactClick = () => {
     openChat({ 
-      initialMessage: "I have a question about the privacy policy.",
+      initialMessage: "Hi. How can we help you with your question about our privacy policy?",
       initialStep: 'getStarted'
     });
   };
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-lg text-muted-foreground">
-              Last updated: June 2025
+              Last updated: July 2025
             </p>
           </motion.div>
 
@@ -46,7 +46,7 @@ export default function PrivacyPolicy() {
             className="prose prose-lg max-w-none dark:prose-invert"
           >
             <div className="bg-swiss-coffee-lighter rounded-2xl p-6 md:p-8 shadow-sm">
-              <p className="text-muted-foreground mb-6">
+              <p className="text-foreground mb-6">
                 At Wysh AI, we take your privacy seriously. This Privacy Policy explains how we collect, 
                 use, disclose, and safeguard your information when you visit our website or use our services.
               </p>
@@ -60,6 +60,7 @@ export default function PrivacyPolicy() {
                 <li>Subscribe to our newsletter</li>
                 <li>Fill out a contact form</li>
                 <li>Use our chatbot or contact support</li>
+                <li>Sign up for SMS updates</li>
               </ul>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">2. How We Use Your Information</h2>
@@ -70,6 +71,7 @@ export default function PrivacyPolicy() {
                 <li>Understand and analyze how you use our services</li>
                 <li>Develop new products, services, features, and functionality</li>
                 <li>Communicate with you for customer service and support</li>
+                <li>Send you SMS messages related to your inquiries, appointments, or services, only with your prior consent.</li>
               </ul>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">3. Data Security</h2>
@@ -85,23 +87,33 @@ export default function PrivacyPolicy() {
                 please contact us using the information below.
               </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4">5. Contact Us</h2>
-              <p className="mb-6">
-                If you have any questions about this Privacy Policy, please contact us:
+              <h2 className="text-2xl font-semibold mt-8 mb-4">5. SMS Messaging and Consent</h2>
+              <p className="mb-4">
+                When you provide your phone number to Wysh AI (e.g., through a web form, chatbot, or other service), you are expressly consenting to receive SMS messages from us. These messages may include updates, follow-ups, scheduling confirmations, reminders, and customer support communications.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <p className="mb-6">
+                We will never send you promotional or marketing messages without your explicit opt-in. You may opt out of SMS communications at any time by replying STOP to any message.
+              </p>
+
+              <h2 className="text-2xl font-semibold mt-8 mb-4">6. Contact Us</h2>
+              <p className="mb-4">
+                To opt out of SMS communications, reply STOP to any text message or email us at{' '}
+                <a href="mailto:support@wyshai.com" className="text-primary-600 hover:underline">
+                  support@wyshai.com
+                </a>.
+              </p>
+              <p className="mb-6">
+                For data privacy inquiries, including SMS data or message history, contact us at:{' '}
+                <a href="mailto:privacy@wyshai.com" className="text-primary-600 hover:underline">
+                  privacy@wyshai.com
+                </a>
+              </p>
+              <div className="mt-6 flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={handleContactClick}
                   className="w-full sm:w-auto"
                 >
                   Chat with Us
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full sm:w-auto"
-                  onClick={() => window.location.href = 'mailto:adam@wyshai.com'}
-                >
-                  Email Us
                 </Button>
               </div>
             </div>

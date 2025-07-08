@@ -104,7 +104,7 @@ const SMSConsent = () => {
       // If we get here, submission was successful
       setSubmitStatus({ 
         success: true, 
-        message: data.message || 'Thank you! Your submission was successful.' 
+        message: data.message || 'Thank you! Your submission was successful. You will now receive SMS messages and updates from Wysh AI. Reply STOP to opt out.' 
       });
       
       // Reset form
@@ -258,7 +258,7 @@ const SMSConsent = () => {
               </div>
 
               <p className="text-xs text-muted-foreground-darker mb-4 leading-relaxed">
-                By providing your phone number, you agree to receive automated text messages from us.
+                By providing your phone number, you agree to receive automated SMS text messages from Wysh AI.
                 Consent is not a condition of purchase. Message frequency will vary.
                 Message and data rates may apply. Reply HELP for help or STOP to unsubscribe at any time.
               </p>
