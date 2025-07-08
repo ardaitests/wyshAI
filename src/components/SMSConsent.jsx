@@ -128,53 +128,53 @@ const SMSConsent = () => {
   };
   return (
     <div className="min-h-[calc(100vh-5rem)] bg-swiss-coffee-lightest w-full flex items-center justify-center py-12">
-      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
-              Stay Connected with us through SMS
-            </h1>
-            <p className="mt-3 text-xl text-muted-foreground-darker">
-              Send messages to us and receive updates via text message
-            </p>
-          </div>
-          
-          <div className="bg-white shadow-lg rounded-lg p-8">
+      <div className="w-full max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
+            Stay Connected with us via SMS
+          </h1>
+          {/* <p className="mt-3 text-xl text-muted-foreground-darker">
+            Send messages to us and receive updates through text messages
+          </p> */}
+        </div>
+        
+        <div className="bg-white shadow-lg rounded-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-foreground/90 mb-1">
-                    First Name <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    autoComplete="given-name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="First name"
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-foreground/90 mb-1">
-                    Last Name <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    autoComplete="family-name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Last name"
-                    disabled={isSubmitting}
-                  />
-                </div>
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="firstName" className="block text-sm font-medium text-foreground/90 mb-1">
+                  First Name <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  autoComplete="given-name"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="First name"
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="lastName" className="block text-sm font-medium text-foreground/90 mb-1">
+                  Last Name <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  autoComplete="family-name"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="Last name"
+                  disabled={isSubmitting}
+                />
               </div>
 
               <div>
@@ -226,7 +226,7 @@ const SMSConsent = () => {
                   </div>
                   <div className="ml-3 text-sm">
                     <label htmlFor="messaging-consent" className="text-foreground/90">
-                      I agree to receive marketing and customer support SMS messages from Wysh AI at the phone number provided. Message frequency may vary. Message and data rates may apply. Reply HELP for help or STOP to unsubscribe. Consent is not a condition of purchase. See our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
+                      I agree to receive marketing, customer support, and alert SMS messages from Wysh AI at the phone number provided. Message frequency may vary. Message and data rates may apply. Reply HELP for help or STOP to unsubscribe. Consent is not a condition of purchase. See our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
                         Terms of Service
                       </a>
                       {' '} & {' '}
@@ -266,28 +266,33 @@ const SMSConsent = () => {
                 </div> */}
               </div>
 
-              <p className="text-xs text-muted-foreground-darker mb-4 leading-relaxed">
-                By providing your phone number, you agree to receive automated SMS text messages from Wysh AI.
-                Consent is not a condition of purchase. Message frequency will vary.
-                Message and data rates may apply. Reply HELP for help or STOP to unsubscribe at any time.
-              </p>
+              {/* <p className="text-xs text-muted-foreground-darker mb-4 leading-relaxed">
+                Message frequency may vary. Message and data rates may apply. Reply HELP for help or STOP to unsubscribe. Consent is not a condition of purchase. See our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
+                        Terms of Service
+                      </a>
+                      {' '} & {' '}
+                      <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
+                        Privacy Policy 
+                      </a>.
+              </p> */}
 
               <div>
                 <button
                   type="submit"
                   className="w-full flex justify-center py-3 px-6 rounded-md text-base font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 shadow-sm transition-colors"
                 >
-                  {isSubmitting ? 'Submitting...' : 'Subscribe to SMS Updates'}
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
                 {submitStatus.message && (
-                  <div className="mt-4 p-3 rounded-md bg-opacity-10 text-sm ${submitStatus.success ? 'text-green-700 bg-green-50' : 'text-red-700 bg-red-50'} border border-opacity-20 ${submitStatus.success ? 'border-green-200' : 'border-red-200'}">
+                  <div className={`mt-4 p-3 rounded-md bg-opacity-10 text-sm ${submitStatus.success ? 'text-green-700 bg-green-50' : 'text-red-700 bg-red-50'} border border-opacity-20 ${submitStatus.success ? 'border-green-200' : 'border-red-200'}`}>
                     <p className="whitespace-pre-wrap">{submitStatus.message}</p>
                   </div>
                 )}
               </div>
-            </form>
-          </div>
-          </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
