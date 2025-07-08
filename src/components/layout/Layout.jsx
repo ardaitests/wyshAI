@@ -3,6 +3,7 @@ import Navbar from '@/components/layout/Navbar.jsx';
 import Footer from '@/components/layout/Footer.jsx';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import { inter, montserrat } from '@/lib/fonts';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className={`flex flex-col min-h-screen ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
+    <div className={`${inter.variable} ${montserrat.variable} font-sans flex flex-col min-h-screen ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
       <Navbar />
       <main className={`flex-grow pt-20 ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
         <motion.div

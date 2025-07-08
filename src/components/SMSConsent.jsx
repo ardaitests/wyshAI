@@ -36,7 +36,7 @@ const SMSConsent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus({ success: null, message: '' });
+    setSubmitStatus({ success: null, message: 'Submitting...' });
 
     try {
       // Validate and format phone number
@@ -44,9 +44,15 @@ const SMSConsent = () => {
       
       // Create a copy of form data with the formatted phone number
       const submissionData = {
-        ...formData,
-        phone: formattedPhone
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        phone: formattedPhone,
+        marketingConsent: formData.marketingConsent,
+        termsConsent: formData.termsConsent
       };
+      
+      console.log('Submitting form data:', submissionData);
+      
       const response = await fetch('/.netlify/functions/submitToAirtable', {
         method: 'POST',
         headers: {
@@ -55,11 +61,21 @@ const SMSConsent = () => {
         body: JSON.stringify(submissionData),
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        console.error('Error parsing JSON response:', jsonError);
+        throw new Error('Invalid response from server');
+      }
       
       if (!response.ok) {
-        console.error('Server error:', data);
-        throw new Error(data.details || data.error || `Server responded with status ${response.status}`);
+        console.error('Server error:', {
+          status: response.status,
+          statusText: response.statusText,
+          data: data
+        });
+        throw new Error(data?.error || data?.message || `Server error: ${response.status} ${response.statusText}`);
       }
       
       // If we get here, submission was successful
