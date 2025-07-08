@@ -84,9 +84,9 @@ exports.handler = async function(event, context) {
         'First name': data.firstName.trim(),
         'Last name': data.lastName.trim(),
         'Phone number': data.phone.trim(),
-        'Submission date': new Date().toISOString(),
         'Marketing consent': Boolean(data.marketingConsent),
         'Terms accepted': Boolean(data.termsConsent)
+        // Airtable will automatically add the created time
       }
     };
     
