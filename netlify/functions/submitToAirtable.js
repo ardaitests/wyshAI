@@ -1,6 +1,18 @@
 const Airtable = require('airtable');
 
 exports.handler = async function(event, context) {
+  // Set CORS headers for preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+      },
+      body: ''
+    };
+  }
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
@@ -34,12 +46,22 @@ exports.handler = async function(event, context) {
 
     return {
       statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      },
       body: JSON.stringify({ message: 'Successfully submitted to Airtable' }),
     };
   } catch (error) {
     console.error('Error submitting to Airtable:', error);
     return {
       statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      },
       body: JSON.stringify({ 
         error: 'Failed to submit form',
         details: error.message 

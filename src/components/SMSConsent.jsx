@@ -57,19 +57,25 @@ const SMSConsent = () => {
 
       const data = await response.json();
       
-      if (response.ok) {
-        setSubmitStatus({ success: true, message: 'Thank you! Your information has been submitted successfully.' });
-        // Reset form on success
-        setFormData({
-          firstName: '',
-          lastName: '',
-          phone: '',
-          marketingConsent: false,
-          termsConsent: false
-        });
-      } else {
-        throw new Error(data.error || 'Failed to submit form');
+      if (!response.ok) {
+        console.error('Server error:', data);
+        throw new Error(data.details || data.error || `Server responded with status ${response.status}`);
       }
+      
+      // If we get here, submission was successful
+      setSubmitStatus({ 
+        success: true, 
+        message: 'Thank you! Your information has been submitted successfully.' 
+      });
+      
+      // Reset form on success
+      setFormData({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        marketingConsent: false,
+        termsConsent: false
+      });
     } catch (error) {
       console.error('Submission error:', error);
       setSubmitStatus({ 
