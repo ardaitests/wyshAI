@@ -226,13 +226,19 @@ const SMSConsent = () => {
                   </div>
                   <div className="ml-3 text-sm">
                     <label htmlFor="messaging-consent" className="text-foreground/90">
-                      I agree to receive text messages from Wysh AI
+                      I agree to receive marketing and customer support SMS messages from Wysh AI at the phone number provided. Message frequency may vary. Message and data rates may apply. Reply HELP for help or STOP to unsubscribe. Consent is not a condition of purchase. See our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
+                        Terms of Service
+                      </a>
+                      {' '} & {' '}
+                      <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
+                        Privacy Policy 
+                      </a>.
                       <span className="text-red-600"> *</span>
                     </label>
                   </div>
                 </div>
 
-                <div className="flex items-start">
+                {/* <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
                       id="terms-consent"
@@ -257,7 +263,7 @@ const SMSConsent = () => {
                       <span className="text-red-600"> *</span>
                     </label>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <p className="text-xs text-muted-foreground-darker mb-4 leading-relaxed">
