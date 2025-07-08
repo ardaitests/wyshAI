@@ -77,16 +77,16 @@ exports.handler = async function(event, context) {
       apiKey: apiKey
     }).base(baseId);
 
-    // Create record in Airtable
+    // Create record in Airtable with exact field names from the API
     console.log('Creating record in table:', tableName);
     const recordData = {
       fields: {
-        'First Name': data.firstName.trim(),
-        'Last Name': data.lastName.trim(),
-        'Phone Number': data.phone.trim(),
-        'Marketing Consent': Boolean(data.marketingConsent),
-        'Terms Accepted': Boolean(data.termsConsent),
-        'Submission Date': new Date().toISOString()
+        'First name': data.firstName.trim(),
+        'Last name': data.lastName.trim(),
+        'Phone number': data.phone.trim(),
+        'Submission date': new Date().toISOString(),
+        'Marketing consent': Boolean(data.marketingConsent),
+        'Terms accepted': Boolean(data.termsConsent)
       }
     };
     
