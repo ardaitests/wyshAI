@@ -1,13 +1,10 @@
-import { Inter, Montserrat } from 'next/font/google';
+// Font family names for consistent usage
+export const fonts = {
+  sans: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  montserrat: 'Montserrat, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+};
 
-export const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
-
-export const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-montserrat',
-});
+export const fontVariables = {
+  '--font-sans': fonts.sans,
+  '--font-montserrat': fonts.montserrat
+};

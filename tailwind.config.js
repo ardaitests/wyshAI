@@ -28,8 +28,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        montserrat: ['var(--font-montserrat)', 'sans-serif'],
+        sans: ['var(--font-sans)'],
+        montserrat: ['var(--font-montserrat)'],
       },
       colors: {
         border: "hsl(var(--border))",
