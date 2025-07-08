@@ -133,9 +133,9 @@ const SMSConsent = () => {
           <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
             Stay Connected with us via SMS
           </h1>
-          {/* <p className="mt-3 text-xl text-muted-foreground-darker">
-            Send messages to us and receive updates through text messages
-          </p> */}
+          <p className="mt-3 text-xl text-muted-foreground-darker">
+            Consent to receiving SMS messages using the form below.
+          </p>
         </div>
         
         <div className="bg-white shadow-lg rounded-lg p-8">
