@@ -5,7 +5,7 @@ const SMSConsent = () => {
     firstName: '',
     lastName: '',
     phone: '',
-    marketingConsent: false,
+    messagingConsent: false,
     termsConsent: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,7 +47,7 @@ const SMSConsent = () => {
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
         phone: formattedPhone,
-        marketingConsent: formData.marketingConsent,
+        messagingConsent: formData.messagingConsent,
         termsConsent: formData.termsConsent
       };
       
@@ -112,7 +112,7 @@ const SMSConsent = () => {
         firstName: '',
         lastName: '',
         phone: '',
-        marketingConsent: false,
+        messagingConsent: false,
         termsConsent: false
       });
       
@@ -131,10 +131,10 @@ const SMSConsent = () => {
       <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
-              Stay Connected with SMS Updates
+              Stay Connected with us through SMS
             </h1>
             <p className="mt-3 text-xl text-muted-foreground-darker">
-              Communicate with us and receive notifications via text message
+              Send messages to us and receive updates via text message
             </p>
           </div>
           
@@ -215,17 +215,19 @@ const SMSConsent = () => {
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
-                      id="marketing-consent"
-                      name="marketingConsent"
+                      id="messaging-consent"
+                      name="messagingConsent"
                       type="checkbox"
-                      checked={formData.marketingConsent}
+                      checked={formData.messagingConsent}
                       onChange={handleChange}
+                      required
                       className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                       disabled={isSubmitting} />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label htmlFor="marketing-consent" className="text-foreground/90">
-                      I would like to receive offers and news
+                    <label htmlFor="messaging-consent" className="text-foreground/90">
+                      I agree to receive text messages from Wysh AI
+                      <span className="text-red-600"> *</span>
                     </label>
                   </div>
                 </div>

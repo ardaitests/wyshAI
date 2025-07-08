@@ -84,7 +84,7 @@ exports.handler = async function(event, context) {
         'First name': data.firstName.trim(),
         'Last name': data.lastName.trim(),
         'Phone number': data.phone.trim(),
-        'Marketing consent': Boolean(data.marketingConsent),
+        'Messaging consent': Boolean(data.messagingConsent),
         'Terms accepted': Boolean(data.termsConsent)
         // Airtable will automatically add the created time
       }
@@ -97,7 +97,7 @@ exports.handler = async function(event, context) {
       console.log('Airtable response:', JSON.stringify(result, null, 2));
       return createResponse(200, { 
         success: true, 
-        message: 'Thank you! Your submission was successful.' 
+        message: 'Thank you! Your submission was successful. You will now receive SMS messages from Wysh AI. Reply STOP to opt out.' 
       });
     } catch (airtableError) {
       console.error('Airtable API Error:', airtableError);
