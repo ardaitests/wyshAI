@@ -2,8 +2,8 @@ const Airtable = require('airtable');
 
 // Log environment variables (except sensitive ones) for debugging
 console.log('Environment variables:', {
-  AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID ? '***SET***' : '***MISSING***',
-  AIRTABLE_TABLE_NAME: process.env.AIRTABLE_TABLE_NAME || '***MISSING***',
+  AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID_SMS ? '***SET***' : '***MISSING***',
+  AIRTABLE_TABLE_NAME: process.env.AIRTABLE_TABLE_NAME_SMS || '***MISSING***',
   NODE_ENV: process.env.NODE_ENV || 'development'
 });
 
@@ -46,10 +46,10 @@ exports.handler = async function(event, context) {
       throw new Error('Missing required fields');
     }
     
-    // Initialize Airtable
-    const apiKey = process.env.AIRTABLE_API_KEY;
-    const baseId = process.env.AIRTABLE_BASE_ID;
-    const tableName = process.env.AIRTABLE_TABLE_NAME;
+    // Initialize Airtable with environment variables from Netlify
+    const apiKey = process.env.AIRTABLE_PersonalAccessToken_SMS;
+    const baseId = process.env.AIRTABLE_BASE_ID_SMS;
+    const tableName = process.env.AIRTABLE_TABLE_NAME_SMS;
     
     if (!apiKey || !baseId || !tableName) {
       console.error('Missing required environment variables');

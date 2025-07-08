@@ -53,7 +53,14 @@ const SMSConsent = () => {
       
       console.log('Submitting form data:', submissionData);
       
-      const response = await fetch('/.netlify/functions/submitToAirtable', {
+      // Use the full URL for local development
+      const functionUrl = import.meta.env.DEV
+        ? 'http://localhost:8888/.netlify/functions/submitToAirtable'
+        : '/.netlify/functions/submitToAirtable';
+      
+      console.log('Calling function URL:', functionUrl);
+      
+      const response = await fetch(functionUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,8 +71,11 @@ const SMSConsent = () => {
       let data;
       try {
         data = await response.json();
+        console.log('Response data:', data);
       } catch (jsonError) {
         console.error('Error parsing JSON response:', jsonError);
+        const text = await response.text();
+        console.error('Raw response text:', text);
         throw new Error('Invalid response from server');
       }
       
@@ -73,7 +83,8 @@ const SMSConsent = () => {
         console.error('Server error:', {
           status: response.status,
           statusText: response.statusText,
-          data: data
+          data: data,
+          headers: Object.fromEntries(response.headers.entries())
         });
         throw new Error(data?.error || data?.message || `Server error: ${response.status} ${response.statusText}`);
       }
