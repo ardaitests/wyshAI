@@ -101,10 +101,10 @@ const SMSConsent = () => {
         throw new Error(data?.error || data?.message || `Server error: ${response.status} ${response.statusText}`);
       }
       
-      // If we get here, submission was successful
+      // Use the success message from the server response
       setSubmitStatus({ 
         success: true, 
-        message: 'Thank you! Your submission was successful. You will now receive SMS messages from Wysh AI. Reply STOP to opt out.'
+        message: data.message
       });
       
       // Reset form
