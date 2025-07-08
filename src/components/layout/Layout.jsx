@@ -7,7 +7,9 @@ import { useLocation } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const isSmsConsentPage = location.pathname === '/sms-consent';
+  const isPrivacyPage = location.pathname === '/privacy-policy';
+  const isTermsPage = location.pathname === '/terms';
+  const isLightPage = isPrivacyPage || isTermsPage;
 
   // Add a class to the body for global transitions
   React.useEffect(() => {
@@ -18,9 +20,9 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className={`flex flex-col min-h-screen ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
+    <div className={`flex flex-col min-h-screen ${isLightPage ? 'bg-swiss-coffee-lighter' : 'bg-primary-dark'} transition-colors duration-500`}>
       <Navbar />
-      <main className={`flex-grow pt-20 ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
+      <main className={`flex-grow pt-20 ${isLightPage ? 'bg-swiss-coffee-lighter' : 'bg-primary-dark'} transition-colors duration-500`}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

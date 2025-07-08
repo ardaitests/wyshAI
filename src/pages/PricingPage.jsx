@@ -140,13 +140,14 @@ const PricingPage = () => {
             />
           ))}
         </motion.div>
+      </motion.div>
 
-        {/* CTA Section */}
-        <motion.section
-          variants={itemVariants}
-          className="py-20 md:py-28 relative w-full bg-gradient-to-r from-primary-light to-primary/80"
-          aria-labelledby="cta-heading"
-        >
+      {/* CTA Section */}
+      <motion.section
+        variants={itemVariants}
+        className="py-20 md:py-28 relative w-full bg-gradient-to-r from-primary-light to-primary/80"
+        aria-labelledby="cta-heading"
+      >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <Zap className="h-12 w-12 text-white mx-auto mb-6" aria-hidden="true" />
             <h2 id="cta-heading" className="text-3xl md:text-4xl font-montserrat font-light mb-4 text-white">
@@ -165,9 +166,8 @@ const PricingPage = () => {
             >
               Get Started Today <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </div>
-        </motion.section>
-      </motion.div>
+        </div>
+      </motion.section>
     </div>
     </>
   );

@@ -127,7 +127,8 @@ const SMSConsent = () => {
     }
   };
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-[calc(100vh-5rem)] bg-swiss-coffee-lightest w-full flex items-center justify-center py-12">
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
               Stay Connected with SMS Updates
@@ -278,7 +279,8 @@ const SMSConsent = () => {
               </div>
             </form>
           </div>
-        </div>
+          </div>
+    </div>
   );
 };
 

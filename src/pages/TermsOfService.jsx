@@ -22,7 +22,7 @@ export default function TermsOfService() {
         noindex={true}
         nofollow={true}
       />
-      <div className="min-h-screen bg-swiss-coffee-light">
+      <div className="min-h-screen bg-swiss-coffee-lightest">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
@@ -45,8 +45,8 @@ export default function TermsOfService() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="prose prose-lg max-w-none dark:prose-invert"
           >
-            <div className="bg-swiss-coffee-lighter rounded-2xl p-6 md:p-8 shadow-sm space-y-8">
-              <p className="text-muted-foreground">
+            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm space-y-8">
+              <p className="text-foreground">
                 Please read these Terms of Service ("Terms") carefully before using the Wysh AI website 
                 and services (collectively, the "Service") operated by Wysh AI ("us", "we", or "our").
               </p>
