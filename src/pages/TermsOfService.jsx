@@ -9,7 +9,7 @@ export default function TermsOfService() {
 
   const handleContactClick = () => {
     openChat({ 
-      initialMessage: "I have a question about the terms of service.",
+      initialMessage: "Hi. How can we help you?",
       initialStep: 'getStarted'
     });
   };
@@ -35,7 +35,7 @@ export default function TermsOfService() {
               Terms of Service
             </h1>
             <p className="text-lg text-muted-foreground">
-              Last updated: June 2025
+              Last updated: July 8, 2025
             </p>
           </motion.div>
 
@@ -66,6 +66,8 @@ export default function TermsOfService() {
                 <li>Transmit any malicious code or viruses</li>
                 <li>Interfere with or disrupt the Service</li>
                 <li>Attempt to gain unauthorized access to our systems</li>
+                <li>Send unsolicited or unlawful SMS messages, or to violate carrier or messaging provider policies.</li>
+                <li>Engage in any activity that violates these Terms</li>
               </ul>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">3. Intellectual Property</h2>
@@ -82,36 +84,48 @@ export default function TermsOfService() {
                 if you breach these Terms.
               </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4">5. Limitation of Liability</h2>
+              <h2 className="text-2xl font-semibold mt-8 mb-4">5. SMS Messaging and User Consent</h2>
+              <p className="mb-4">
+                By providing your mobile number to Wysh AI, you expressly consent to receive SMS messages related to your use of our services. These messages may include updates, follow-ups, appointment confirmations, and other service-related notifications. We do not send marketing or promotional messages via SMS without your explicit opt-in.
+              </p>
+              <p className="mb-4">
+                Standard messaging rates may apply as determined by your mobile carrier. You may opt out of SMS communications at any time by replying STOP to any message. You may also contact <a href="mailto:support@wyshai.com" className="text-primary-600 underline">support@wyshai.com</a> to update your communication preferences.
+              </p>
+              <p className="mb-6">
+                You agree that you have the authority to consent to receive SMS messages at the number you provide and that you will notify us if your number changes.
+              </p>
+
+              <h2 className="text-2xl font-semibold mt-8 mb-4">6. Governing Law</h2>
+              <p className="mb-6">
+                These Terms shall be governed and construed in accordance with the laws of the State of Texas, without regard to its conflict of law provisions.
+              </p>
+
+              <h2 className="text-2xl font-semibold mt-8 mb-4">7. Limitation of Liability</h2>
               <p>
                 In no event shall Wysh AI, nor its directors, employees, partners, agents, suppliers, 
                 or affiliates, be liable for any indirect, incidental, special, consequential, or punitive 
                 damages resulting from your access to or use of the Service.
               </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4">6. Changes to Terms</h2>
+              <h2 className="text-2xl font-semibold mt-8 mb-4">8. Changes to Terms</h2>
               <p>
                 We reserve the right to modify or replace these Terms at any time. We will provide notice 
                 of any changes by posting the new Terms on this page and updating the "Last updated" date.
               </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4">7. Contact Us</h2>
+              <h2 className="text-2xl font-semibold mt-8 mb-4">8. Contact Us</h2>
               <p className="mb-6">
-                If you have any questions about these Terms, please contact us:
+                For Terms of Service inquiries, contact us at:{' '}
+                <a href="mailto:support@wyshai.com" className="text-primary-600 underline">
+                  support@wyshai.com
+                </a>
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="mt-6 flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={handleContactClick}
                   className="w-full sm:w-auto"
                 >
                   Chat with Us
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full sm:w-auto"
-                  onClick={() => window.location.href = 'mailto:adam@wyshai.com'}
-                >
-                  Email Us
                 </Button>
               </div>
             </div>

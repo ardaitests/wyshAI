@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-lg text-muted-foreground">
-              Last updated: July 2025
+              Last updated: July 8, 2025
             </p>
           </motion.div>
 
@@ -98,13 +98,13 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-semibold mt-8 mb-4">6. Contact Us</h2>
               <p className="mb-4">
                 To opt out of SMS communications, reply STOP to any text message or email us at{' '}
-                <a href="mailto:support@wyshai.com" className="text-primary-600 hover:underline">
+                <a href="mailto:support@wyshai.com" className="text-primary-600 underline">
                   support@wyshai.com
                 </a>.
               </p>
               <p className="mb-6">
                 For data privacy inquiries, including SMS data or message history, contact us at:{' '}
-                <a href="mailto:privacy@wyshai.com" className="text-primary-600 hover:underline">
+                <a href="mailto:privacy@wyshai.com" className="text-primary-600 underline">
                   privacy@wyshai.com
                 </a>
               </p>
