@@ -86,16 +86,28 @@ const SMSConsent = () => {
           data: data,
           headers: Object.fromEntries(response.headers.entries())
         });
+        
+        // Handle specific error cases
+        if (response.status === 500 && data?.error) {
+          if (data.error.includes('Missing API key')) {
+            throw new Error('Server configuration error. Please contact support.');
+          } else if (data.error.includes('Missing Base ID') || data.error.includes('Missing Table Name')) {
+            throw new Error('Server configuration error. Please contact support.');
+          } else if (data.error.includes('Failed to save to database')) {
+            throw new Error('Failed to save your information. Please try again.');
+          }
+        }
+        
         throw new Error(data?.error || data?.message || `Server error: ${response.status} ${response.statusText}`);
       }
       
       // If we get here, submission was successful
       setSubmitStatus({ 
         success: true, 
-        message: 'Thank you! Your information has been submitted successfully.' 
+        message: data.message || 'Thank you! Your submission was successful.' 
       });
       
-      // Reset form on success
+      // Reset form
       setFormData({
         firstName: '',
         lastName: '',
@@ -103,11 +115,12 @@ const SMSConsent = () => {
         marketingConsent: false,
         termsConsent: false
       });
+      
     } catch (error) {
       console.error('Submission error:', error);
       setSubmitStatus({ 
         success: false, 
-        message: error.message || 'An error occurred. Please try again.' 
+        message: error.message || 'Failed to submit form. Please try again.' 
       });
     } finally {
       setIsSubmitting(false);

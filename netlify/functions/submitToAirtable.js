@@ -7,25 +7,27 @@ console.log('Environment variables:', {
   NODE_ENV: process.env.NODE_ENV || 'development'
 });
 
+// Helper function to create response with CORS headers
+const createResponse = (statusCode, body) => ({
+  statusCode,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(body)
+});
+
 exports.handler = async function(event, context) {
-  // Set CORS headers for preflight requests
+  // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
-      },
-      body: ''
-    };
+    return createResponse(200, {});
   }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    return createResponse(405, { error: 'Method not allowed' });
   }
 
   try {
@@ -50,10 +52,24 @@ exports.handler = async function(event, context) {
     const apiKey = process.env.AIRTABLE_PersonalAccessToken_SMS;
     const baseId = process.env.AIRTABLE_BASE_ID_SMS;
     const tableName = process.env.AIRTABLE_TABLE_NAME_SMS;
+
+    console.log('Airtable Config:', {
+      baseId: baseId ? '***SET***' : '***MISSING***',
+      tableName: tableName || '***MISSING***',
+      hasApiKey: !!apiKey
+    });
     
-    if (!apiKey || !baseId || !tableName) {
-      console.error('Missing required environment variables');
-      throw new Error('Server configuration error');
+    if (!apiKey) {
+      console.error('Missing AIRTABLE_PersonalAccessToken_SMS environment variable');
+      return createResponse(500, { error: 'Server configuration error: Missing API key' });
+    }
+    if (!baseId) {
+      console.error('Missing AIRTABLE_BASE_ID_SMS environment variable');
+      return createResponse(500, { error: 'Server configuration error: Missing Base ID' });
+    }
+    if (!tableName) {
+      console.error('Missing AIRTABLE_TABLE_NAME_SMS environment variable');
+      return createResponse(500, { error: 'Server configuration error: Missing Table Name' });
     }
     
     console.log('Initializing Airtable with base:', baseId);
@@ -76,31 +92,25 @@ exports.handler = async function(event, context) {
     
     console.log('Record data:', JSON.stringify(recordData, null, 2));
     
-    const result = await base(tableName).create([recordData]);
-    console.log('Airtable response:', JSON.stringify(result, null, 2));
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      },
-      body: JSON.stringify({ message: 'Successfully submitted to Airtable' }),
-    };
+    try {
+      const result = await base(tableName).create([recordData]);
+      console.log('Airtable response:', JSON.stringify(result, null, 2));
+      return createResponse(200, { 
+        success: true, 
+        message: 'Thank you! Your submission was successful.' 
+      });
+    } catch (airtableError) {
+      console.error('Airtable API Error:', airtableError);
+      return createResponse(500, { 
+        error: 'Failed to save to database',
+        details: airtableError.message 
+      });
+    }
   } catch (error) {
-    console.error('Error submitting to Airtable:', error);
-    return {
-      statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      },
-      body: JSON.stringify({ 
-        error: 'Failed to submit form',
-        details: error.message 
-      }),
-    };
+    console.error('Unhandled Error:', error);
+    return createResponse(500, { 
+      error: 'An unexpected error occurred',
+      message: error.message 
+    });
   }
 };
