@@ -245,11 +245,11 @@ const SMSConsent = () => {
                   <div className="ml-3 text-sm">
                     <label htmlFor="terms-consent" className="text-foreground/90">
                       I accept the {' '}
-                      <a href="/terms-of-service" className="text-primary-600 hover:text-primary-500 underline">
+                      <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
                         Terms of Service
                       </a>
                       {' '} & {' '}
-                      <a href="/privacy-policy" className="text-primary-600 hover:text-primary-500 underline">
+                      <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
                         Privacy Policy 
                       </a>
                       <span className="text-red-600"> *</span>
