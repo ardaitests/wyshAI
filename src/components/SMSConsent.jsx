@@ -87,7 +87,7 @@ const SMSConsent = () => {
     }
   };
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-32 md:pt-32">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
               Stay Connected with SMS Updates

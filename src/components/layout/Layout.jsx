@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
   return (
     <div className={`flex flex-col min-h-screen ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
       <Navbar />
-      <main className={`flex-grow ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
+      <main className={`flex-grow pt-20 ${isSmsConsentPage ? 'bg-swiss-coffee-lightest' : 'bg-primary-dark'} transition-colors duration-500`}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
