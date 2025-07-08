@@ -233,7 +233,7 @@ const SMSConsent = () => {
                       <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
                         Privacy Policy 
                       </a>.
-                      <span className="text-red-600"> *</span>
+                      <span className="text-red-600">*</span>
                     </label>
                   </div>
                 </div>
@@ -288,6 +288,9 @@ const SMSConsent = () => {
                     <p className="whitespace-pre-wrap">{submitStatus.message}</p>
                   </div>
                 )}
+                <p className="mt-4 text-xs text-foreground/70">
+                  <span className="text-red-600">*</span> Fields marked with an asterisk are required.
+                </p>
               </div>
             </div>
           </form>
