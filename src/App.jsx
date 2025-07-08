@@ -7,6 +7,7 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy.jsx';
 import TermsOfService from '@/pages/TermsOfService.jsx';
 import DemosPage from '@/pages/DemosPage.jsx';
 import PricingPage from '@/pages/PricingPage.jsx';
+import SMSConsent from '@/components/SMSConsent.jsx';
 import Layout from '@/components/layout/Layout.jsx';
 import { Toaster } from '@/components/ui/toaster.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -59,6 +60,7 @@ function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/sms-consent" element={<SMSConsent />} />
           </Routes>
         </AnimatePresence>
       </Layout>
