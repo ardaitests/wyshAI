@@ -272,9 +272,9 @@ const SMSConsent = () => {
                   {isSubmitting ? 'Submitting...' : 'Subscribe to SMS Updates'}
                 </button>
                 {submitStatus.message && (
-                  <p className={`mt-2 text-sm ${submitStatus.success ? 'text-green-600' : 'text-red-600'}`}>
-                    {submitStatus.message}
-                  </p>
+                  <div className="mt-4 p-3 rounded-md bg-opacity-10 text-sm ${submitStatus.success ? 'text-green-700 bg-green-50' : 'text-red-700 bg-red-50'} border border-opacity-20 ${submitStatus.success ? 'border-green-200' : 'border-red-200'}">
+                    <p className="whitespace-pre-wrap">{submitStatus.message}</p>
+                  </div>
                 )}
               </div>
             </form>
