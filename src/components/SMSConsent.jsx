@@ -151,6 +151,7 @@ const SMSConsent = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     required
+                    autoComplete="given-name"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
                     placeholder="First name"
                     disabled={isSubmitting}
@@ -167,6 +168,7 @@ const SMSConsent = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required
+                    autoComplete="family-name"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Last name"
                     disabled={isSubmitting}
@@ -185,9 +187,10 @@ const SMSConsent = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   required
+                  autoComplete="tel"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
                   placeholder="(123) 456-7890"
-                  pattern="^[0-9\s\(\)\-\.\+]{10,20}$"
+                  pattern="^[0-9\s\-\(\)\.\+]{10,20}$"
                   title="Please enter a valid phone number (e.g., (123) 456-7890 or 123-456-7890)"
                   disabled={isSubmitting}
                 />
