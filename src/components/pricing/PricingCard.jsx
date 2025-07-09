@@ -100,7 +100,7 @@ const PricingCard = React.memo(({
             <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
             {isAIChatbot && (
               <span className="ml-2 text-gray-500">
-                / agent<span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mx-0.5">1</span>
+                / agent<span className="relative inline-block align-top text-[0.7em] leading-none top-[-0.05em] mx-0.5">1</span> + 8.25% sales tax
               </span>
             )}
           </div>
@@ -117,11 +117,11 @@ const PricingCard = React.memo(({
               href={plan.buttonUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center justify-center w-full py-6 px-4 rounded-lg text-lg font-medium transition-all duration-300 ${
+              className={`inline-flex items-center justify-center w-full py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
                 plan.popular 
                   ? 'bg-gradient-to-r from-primary to-primary/90 hover:from-purple-600 hover:to-primary shadow-lg hover:shadow-purple-500/30' 
                   : 'bg-gradient-to-r from-gray-900 to-gray-800 hover:from-purple-800 hover:to-purple-600 shadow-lg hover:shadow-purple-500/20'
-              } text-white`}
+              } text-white h-12`}
               data-analytics-id={`pricing-${plan.id}-cta`}
               aria-label={`${plan.buttonText} for ${plan.title} plan`}
               onClick={() => trackButtonClick(`pricing_${plan.id}_cta`)}
