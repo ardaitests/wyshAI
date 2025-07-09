@@ -134,7 +134,7 @@ const SMSConsent = () => {
             Stay Connected with us via SMS
           </h1>
           <p className="mt-3 text-base text-muted-foreground-darker">
-            Consent to receiving SMS messages using the form below.
+            Consent to receiving text messages using the form below.
           </p>
         </div>
         
@@ -226,7 +226,7 @@ const SMSConsent = () => {
                   </div>
                   <div className="ml-3 text-sm">
                     <label htmlFor="messaging-consent" className="text-foreground/90">
-                      I agree to receive marketing, customer support, and alert SMS messages from Wysh AI at the phone number provided. Message frequency may vary. Message and data rates may apply. Reply HELP for help or STOP to unsubscribe. Consent is not a condition of purchase. See our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
+                      I agree to receive SMS messages for service and support from Wysh AI at the phone number provided. Message frequency may vary. Message and data rates may apply. Reply HELP for help or STOP to unsubscribe. Consent is not a condition of purchase. See our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">
                         Terms of Service
                       </a>
                       {' '} & {' '}
