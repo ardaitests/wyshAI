@@ -35,7 +35,7 @@ export default function TermsOfService() {
               Terms of Service
             </h1>
             <p className="text-lg text-muted-foreground">
-              Last updated: July 8, 2025
+              Last updated: July 9, 2025
             </p>
           </motion.div>
 
@@ -66,7 +66,6 @@ export default function TermsOfService() {
                 <li>Transmit any malicious code or viruses</li>
                 <li>Interfere with or disrupt the Service</li>
                 <li>Attempt to gain unauthorized access to our systems</li>
-                <li>Send unsolicited or unlawful SMS messages, or to violate carrier or messaging provider policies.</li>
                 <li>Engage in any activity that violates these Terms</li>
               </ul>
 

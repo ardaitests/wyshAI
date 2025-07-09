@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-lg text-muted-foreground">
-              Last updated: July 8, 2025
+              Last updated: July 9, 2025
             </p>
           </motion.div>
 
@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
                 <li>Subscribe to our newsletter</li>
                 <li>Fill out a contact form</li>
                 <li>Use our chatbot or contact support</li>
-                <li>Sign up for SMS updates</li>
+                <li>Sign up for SMS messages for service and support</li>
               </ul>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">2. How We Use Your Information</h2>
@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
                 <li>Understand and analyze how you use our services</li>
                 <li>Develop new products, services, features, and functionality</li>
                 <li>Communicate with you for customer service and support</li>
-                <li>Send you SMS messages related to your inquiries, appointments, or services, only with your prior consent.</li>
+                <li>Send you SMS messages related to your inquiries, appointments, or services, only with your prior consent</li>
               </ul>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">3. Data Security</h2>
@@ -106,6 +106,12 @@ export default function PrivacyPolicy() {
                 For data privacy inquiries, including SMS data or message history, contact us at:{' '}
                 <a href="mailto:privacy@wyshai.com" className="text-primary-600 underline">
                   privacy@wyshai.com
+                </a>
+              </p>
+              <p className="mb-6">
+                For general questions and information, contact us at:{' '}
+                <a href="mailto:info@wyshai.com" className="text-primary-600 underline">
+                  info@wyshai.com
                 </a>
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-4">
