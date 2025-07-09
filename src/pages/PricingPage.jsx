@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Zap, ArrowRight } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import { trackButtonClick } from '@/utils/analytics';
 import PricingCard from '@/components/pricing/PricingCard';
 // Temporarily removed Sparkles for debugging
 // import Sparkles from '@/components/common/Sparkles';
@@ -49,7 +50,8 @@ const pricingPlans = [
       'Custom reporting options available for additional fee'
     ],
     icon: 'cpu',
-    buttonText: 'Get Started',
+    buttonText: 'Buy Now',
+    buttonUrl: 'https://link.waveapps.com/e73mqm-cwevfw',
     popular: false,
   },
   {
@@ -87,6 +89,7 @@ const PricingPage = () => {
   }, [openChat]);
 
   const handleCtaClick = useCallback(() => {
+    trackButtonClick('pricing_main_cta');
     handleContactClick(pricingPlans[0]);
   }, [handleContactClick]);
 

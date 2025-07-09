@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { trackButtonClick } from '@/utils/analytics';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Check, Cpu, Settings } from 'lucide-react';
@@ -111,6 +112,23 @@ const PricingCard = React.memo(({
           {optionalFeatures}
           
           <div className={`${isAIChatbot ? 'mt-6' : 'mt-12'}`}>
+            {plan.buttonUrl ? (
+            <a
+              href={plan.buttonUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center justify-center w-full py-6 px-4 rounded-lg text-lg font-medium transition-all duration-300 ${
+                plan.popular 
+                  ? 'bg-gradient-to-r from-primary to-primary/90 hover:from-purple-600 hover:to-primary shadow-lg hover:shadow-purple-500/30' 
+                  : 'bg-gradient-to-r from-gray-900 to-gray-800 hover:from-purple-800 hover:to-purple-600 shadow-lg hover:shadow-purple-500/20'
+              } text-white`}
+              data-analytics-id={`pricing-${plan.id}-cta`}
+              aria-label={`${plan.buttonText} for ${plan.title} plan`}
+              onClick={() => trackButtonClick(`pricing_${plan.id}_cta`)}
+            >
+              {plan.buttonText}
+            </a>
+          ) : (
             <Button 
               className={`w-full py-6 text-lg font-medium transition-all duration-300 ${
                 plan.popular 
@@ -119,10 +137,11 @@ const PricingCard = React.memo(({
               }`}
               onClick={() => onContactClick(plan)}
               data-analytics-id={`pricing-${plan.id}-cta`}
-              aria-label={`Get started with ${plan.title} plan`}
+              aria-label={`${plan.buttonText} for ${plan.title} plan`}
             >
               {plan.buttonText}
             </Button>
+          )}
             
             {isAIChatbot ? (
               <p className="text-center text-gray-600 text-sm mb-4 mt-4">

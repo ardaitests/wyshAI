@@ -11,11 +11,11 @@ const AboutSection = () => {
     },
     {
       icon: <ThumbsUp className="h-6 w-6 text-primary" />,
-      text: <><strong>Accelerate growth</strong> — impress your audiences and improve customer satisfaction with personalized experiences.</>,
+      text: <><strong>Grow faster</strong> — impress your audiences and improve customer satisfaction with personalized experiences and content.</>,
     },
     {
       icon: <CheckCircle className="h-6 w-6 text-primary" />,
-      text: <><strong>Gain an edge</strong> — get ahead and stay ahead of competitors with modern AI-powered assistants and features.</>,
+      text: <><strong>Gain an edge</strong> — lead the way or simplify how your business works with modern AI-powered assistants and features.</>,
     },
   ];
 
