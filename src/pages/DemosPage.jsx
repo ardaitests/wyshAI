@@ -14,6 +14,7 @@ const DemosPage = () => {
         title="AI Demos & Examples | Wysh AI"
         description="Explore our AI demos and see how Wysh AI can transform your business operations with custom AI solutions."
         image="/images/og/og-wyshAI.jpg"
+        noIndex={true}
       />
     <div className="min-h-screen">
       {/* AI Showroom Section */}

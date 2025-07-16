@@ -6,7 +6,7 @@
     <!-- Home -->
     <url>
         <loc>https://wyshai.com/</loc>
-        <lastmod>2025-07-03</lastmod>
+        <lastmod>2025-07-16</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
@@ -14,7 +14,7 @@
     <!-- Services -->
     <url>
         <loc>https://wyshai.com/services</loc>
-        <lastmod>2025-07-03</lastmod>
+        <lastmod>2025-07-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -22,7 +22,7 @@
     <!-- About -->
     <url>
         <loc>https://wyshai.com/about</loc>
-        <lastmod>2025-07-03</lastmod>
+        <lastmod>2025-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -30,7 +30,7 @@
     <!-- Pricing -->
     <url>
         <loc>https://wyshai.com/pricing</loc>
-        <lastmod>2025-07-03</lastmod>
+        <lastmod>2025-07-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -38,7 +38,7 @@
     <!-- Privacy Policy -->
     <url>
         <loc>https://wyshai.com/privacy-policy</loc>
-        <lastmod>2025-07-03</lastmod>
+        <lastmod>2025-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
@@ -46,7 +46,7 @@
     <!-- Terms of Service -->
     <url>
         <loc>https://wyshai.com/terms-of-service</loc>
-        <lastmod>2025-07-03</lastmod>
+        <lastmod>2025-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>

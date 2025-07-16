@@ -151,10 +151,12 @@ const ChatbotUI = ({
       >
         <Button
           size="lg"
+          aria-label="Chat with WyshAI Assistant"
           className="rounded-full p-4 shadow-xl bg-gradient-to-r from-primary to-accent text-primary-foreground w-16 h-16 hover:shadow-2xl transition-all duration-300"
           onClick={openChat}
         >
           <MessageSquare className="h-8 w-8" />
+          <span className="sr-only">Chat with WyshAI Assistant</span>
         </Button>
       </motion.div>
 
