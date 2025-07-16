@@ -1,5 +1,5 @@
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import SEO from '@/components/seo/SEO';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
@@ -183,6 +183,31 @@ const servicesData = [
 
 const ServicesPage = () => {
   const { openChat } = useChatbot();
+
+  // Handle scroll to section when page loads with a hash
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Remove the # from the hash
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      
+      if (element) {
+        // Small timeout to ensure the page has rendered
+        setTimeout(() => {
+          // Calculate the position to scroll to (element position - 80px for the navbar)
+          const yOffset = -160;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          
+          // Scroll to the position
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          
+          // Update URL without adding to history
+          window.history.replaceState(null, null, ' ');
+        }, 100);
+      }
+    }
+  }, []);
 
   const handleConsultationClick = () => {
     openChat({

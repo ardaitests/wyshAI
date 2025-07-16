@@ -11,19 +11,22 @@ const servicesOverview = [
     icon: <BrainCircuit className="h-8 w-8 text-primary mb-3" />,
     title: "Task Automation",
     description: <>Eliminate repetitive and manual tasks with AI-powered automations that help you do more, <em>or less</em>.</>,
-    link: "/services#ai-task-automation" 
+    link: "/services#ai-task-automation",
+    linkText: "See Task Automation Services"
   },
   {
     icon: <Bot className="h-8 w-8 text-primary mb-3" />,
     title: "Customer Assistants",
     description: "AI can handle customer questions, new appointments, or orders automatically, so you don't have to.",
-    link: "/services#ai-agents"
+    link: "/services#enhanced-customer-service",
+    linkText: "See Customer Chat Services"
   },
   {
     icon: <Zap className="h-8 w-8 text-primary mb-3" />,
     title: "Seamless Integration",
     description: "Simply and securely connect your existing data and software for smart suggestions.",
-    link: "/services#data-system-integration"
+    link: "/services#software-data-integration",
+    linkText: "See Software & Data Services"
   },
 ];
 
@@ -70,22 +73,40 @@ const ServicesSection = () => {
               viewport={{ once: true, amount: 0.2 }}
               className="h-full"
             >
-              <Card className="bg-swiss-coffee-lightest h-full flex flex-col text-center items-center hover:shadow-lg transition-shadow duration-300 p-2">
-                <CardHeader className="items-center pt-6 pb-2">
-                  {service.icon}
-                  <CardTitle className="text-xl font-montserrat font-semibold text-foreground">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-grow pb-4">
-                  <CardDescription className="text-foreground-darker text-sm">
-                    {service.description}
-                  </CardDescription>
-                </CardContent>
-                <div className="px-4 pb-4 pt-2">
-                  <Link to={service.link || '/services'} className="text-sm font-medium text-primary hover:text-primary/80 flex items-center justify-center">
-                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
-              </Card>
+              <Link 
+                to={service.link || '/services'} 
+                className="block h-full"
+                aria-label={`${service.title} - ${service.linkText}`}
+              >
+                <Card className="bg-swiss-coffee-lightest h-full flex flex-col text-center items-center hover:shadow-lg transition-all duration-300 p-2 group hover:border-primary/30">
+                  <CardHeader className="items-center pt-6 pb-2">
+                    <div 
+                      className="group-hover:scale-110 transition-transform duration-300"
+                      aria-hidden="true"
+                    >
+                      {service.icon}
+                    </div>
+                    <CardTitle className="text-xl font-montserrat font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                      {service.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-grow pb-4">
+                    <CardDescription className="text-foreground-darker text-sm group-hover:text-foreground transition-colors duration-300">
+                      {service.description}
+                    </CardDescription>
+                  </CardContent>
+                  <div className="px-4 pb-4 pt-2">
+                    <div className="text-sm font-medium text-primary group-hover:text-primary/80 flex items-center justify-center transition-colors duration-300">
+                      <span>{service.linkText}</span>
+                      <span className="sr-only">, {service.title} services</span>
+                      <ArrowRight 
+                        className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </div>
+                </Card>
+              </Link>
             </motion.div>
           ))}
         </div>
