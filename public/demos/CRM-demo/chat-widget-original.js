@@ -46,6 +46,18 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
+        .chat-widget-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(167, 139, 250, 0.8); /* Electric violet light with 80% opacity */
+            z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        
         .n8n-chat-widget .chat-container {
             position: fixed;
             bottom: 20px;
@@ -421,6 +433,10 @@
 
     let currentSessionId = '';
 
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'chat-widget-overlay';
+    
     // Create widget container
     const widgetContainer = document.createElement('div');
     widgetContainer.className = 'n8n-chat-widget';
@@ -465,6 +481,7 @@
 
     widgetContainer.appendChild(chatContainer);
     widgetContainer.appendChild(toggleButton);
+    document.body.appendChild(overlay);
     document.body.appendChild(widgetContainer);
 
 
@@ -668,10 +685,11 @@
         }
     });
 
-    // Toggle chat
-    toggleButton.addEventListener('click', () => {
-        const isOpening = !chatContainer.classList.contains('open');
-        chatContainer.classList.toggle('open');
+    // Function to toggle chat
+    const toggleChat = (isOpening) => {
+        chatContainer.classList.toggle('open', isOpening);
+        overlay.style.display = isOpening ? 'block' : 'none';
+        document.body.style.overflow = isOpening ? 'hidden' : '';
         
         if (isOpening) {
             // Show chat interface immediately
@@ -683,6 +701,17 @@
                 startNewConversation();
             }
         }
+    };
+    
+    // Toggle chat on button click
+    toggleButton.addEventListener('click', () => {
+        const isOpening = !chatContainer.classList.contains('open');
+        toggleChat(isOpening);
+    });
+    
+    // Close chat when clicking overlay
+    overlay.addEventListener('click', () => {
+        toggleChat(false);
     });
 
     // Add close button handlers
@@ -690,7 +719,7 @@
     closeButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.stopPropagation();
-            chatContainer.classList.remove('open');
+            toggleChat(false);
         });
     });
 
@@ -698,21 +727,10 @@
     window.ChatWidget = {
         open: () => {
             const isOpening = !chatContainer.classList.contains('open');
-            chatContainer.classList.add('open');
-            
-            if (isOpening) {
-                // Show chat interface immediately
-                chatInterface.classList.add('active');
-                textarea.focus();
-                
-                // Only start a new conversation if we haven't already
-                if (messagesContainer.children.length === 0) {
-                    startNewConversation();
-                }
-            }
+            toggleChat(true);
         },
         close: () => {
-            chatContainer.classList.remove('open');
+            toggleChat(false);
         },
         sendMessage: (message) => {
             if (typeof message === 'string' && message.trim()) {

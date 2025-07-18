@@ -44,6 +44,18 @@
 (function() {
     // Create and inject styles
     const styles = `
+        .chat-widget-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(167, 139, 250, 0.8); /* Electric violet light with 80% opacity */
+            z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        
         .n8n-chat-widget {
             --chat--color-primary: var(--n8n-chat-primary-color, #4f46e5);
             --chat--color-secondary: var(--n8n-chat-secondary-color, #4338ca);
@@ -377,6 +389,10 @@
 
     let currentSessionId = '';
 
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'chat-widget-overlay';
+    
     // Create widget container
     const widgetContainer = document.createElement('div');
     widgetContainer.className = 'n8n-chat-widget';
@@ -390,24 +406,7 @@
     const chatContainer = document.createElement('div');
     chatContainer.className = `chat-container${config.style.position === 'left' ? ' position-left' : ''}`;
 
-    const newConversationHTML = `
-        <div class="brand-header">
-            <img src="${config.branding.logo}" alt="${config.branding.name}">
-            <span>${config.branding.name}</span>
-            <button class="close-button">×</button>
-        </div>
-        <div class="new-conversation">
-            <h2 class="welcome-text">${config.branding.welcomeText}</h2>
-            <button class="new-chat-btn">
-                <svg class="message-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/>
-                </svg>
-                Send a message
-            </button>
-            <!-- <p class="response-text">${config.branding.responseTimeText}</p> -->
-        </div>
-    `;
-
+    // Only include the chat interface in the initial HTML
     const chatInterfaceHTML = `
         <div class="chat-interface">
             <div class="brand-header">
@@ -426,7 +425,7 @@
         </div>
     `;
 
-    chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
+    chatContainer.innerHTML = chatInterfaceHTML;
 
     const toggleButton = document.createElement('button');
     toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
@@ -437,9 +436,9 @@
 
     widgetContainer.appendChild(chatContainer);
     widgetContainer.appendChild(toggleButton);
+    document.body.appendChild(overlay);
     document.body.appendChild(widgetContainer);
 
-    const newChatBtn = chatContainer.querySelector('.new-chat-btn');
     const chatInterface = chatContainer.querySelector('.chat-interface');
     const messagesContainer = chatContainer.querySelector('.chat-messages');
     const textarea = chatContainer.querySelector('textarea');
@@ -456,7 +455,12 @@
             sessionId: currentSessionId,
             route: config.webhook.route,
             metadata: {
-                userId: ""
+                userId: "",
+                source: "treehouse-widget",
+                timestamp: new Date().toISOString(),
+                pageUrl: window.location.href,
+                userAgent: navigator.userAgent,
+                chatStep: "initial"
             }
         }];
 
@@ -470,13 +474,14 @@
             });
 
             const responseData = await response.json();
-            chatContainer.querySelector('.brand-header').style.display = 'none';
-            chatContainer.querySelector('.new-conversation').style.display = 'none';
             chatInterface.classList.add('active');
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
+            const responseText = Array.isArray(responseData) ? 
+                (responseData[0]?.output || responseData[0]?.response || responseData[0]?.message || config.branding.welcomeText) :
+                (responseData?.output || responseData?.response || responseData?.message || config.branding.welcomeText);
+            botMessageDiv.textContent = responseText;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
@@ -523,8 +528,6 @@
     }
 
     // Event Listeners
-    newChatBtn.addEventListener('click', startNewConversation);
-
     sendButton.addEventListener('click', () => {
         const message = textarea.value.trim();
         if (message) {
@@ -544,9 +547,32 @@
         }
     });
 
-    // Toggle chat
+    // Function to toggle chat
+    const toggleChat = (isOpening) => {
+        chatContainer.classList.toggle('open', isOpening);
+        if (overlay) {
+            overlay.style.display = isOpening ? 'block' : 'none';
+        }
+        document.body.style.overflow = isOpening ? 'hidden' : '';
+        
+        if (isOpening) {
+            chatInterface.classList.add('active');
+            textarea.focus();
+            if (messagesContainer.children.length === 0) {
+                startNewConversation();
+            }
+        }
+    };
+
+    // Toggle chat on button click
     toggleButton.addEventListener('click', () => {
-        chatContainer.classList.toggle('open');
+        const isOpening = !chatContainer.classList.contains('open');
+        toggleChat(isOpening);
+    });
+
+    // Close chat when clicking overlay
+    overlay.addEventListener('click', () => {
+        toggleChat(false);
     });
 
     // Add close button handlers
@@ -554,22 +580,19 @@
     closeButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.stopPropagation();
-            chatContainer.classList.remove('open');
+            toggleChat(false);
         });
     });
 
     // Expose public API
     window.ChatWidget = {
         open: () => {
-            chatContainer.classList.add('open');
-            if (!chatInterface.classList.contains('active')) {
-                startNewConversation();
-            } else {
-                textarea.focus();
-            }
+            if (!chatContainer) return;
+            toggleChat(true);
         },
         close: () => {
-            chatContainer.classList.remove('open');
+            if (!chatContainer) return;
+            toggleChat(false);
         },
         sendMessage: (message) => {
             if (typeof message === 'string' && message.trim()) {
