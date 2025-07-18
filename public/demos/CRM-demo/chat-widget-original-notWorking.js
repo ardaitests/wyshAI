@@ -1,39 +1,3 @@
-/**
- * WyshAI Chat Widget for CRM Demo
- * 
- * This chat widget integrates with an n8n webhook to provide AI-powered chat functionality.
- * It's designed to match the behavior of the main WyshAI website's chat.
- * 
- * ===== N8N WEBHOOK INTEGRATION =====
- * 
- * REQUEST FORMAT (sent to webhook):
- * {
- *   message: string,           // The user's message or empty string for conversation start
- *   conversationId: string,    // Unique ID for the conversation session
- *   metadata: {
- *     source: string,          // "chat-widget" for this implementation
- *     timestamp: string,       // ISO 8601 timestamp
- *     pageUrl: string,         // URL of the current page
- *     userAgent: string,       // User's browser user agent
- *     chatStep: string         // Current step in chat flow ("initial" or "chatting")
- *   }
- * }
- * 
- * RESPONSE FORMAT (expected from webhook):
- * {
- *   output: string,            // The bot's response text (primary field)
- *   response?: string,         // Alternative field for response text
- *   message?: string,          // Another alternative field for response text
- *   chatStep?: string,         // Optional: Next step in chat flow
- *   userData?: object          // Optional: Additional user data
- * }
- * 
- * The webhook should return a 200 status code with the response object.
- * If the response cannot be parsed as JSON, an error will be shown to the user.
- * 
- * ===== END OF WEBHOOK DOCUMENTATION =====
- */
-
 // Chat Widget Script - Original Version
 (function() {
     // Create and inject styles
@@ -50,11 +14,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            left: 20px;
             z-index: 1000;
             display: none;
-            width: auto;
-            max-width: 380px;
+            width: 380px;
             height: 600px;
             background: var(--chat--color-background);
             border-radius: 12px;
@@ -62,15 +24,6 @@
             border: 1px solid rgba(133, 79, 255, 0.2);
             overflow: hidden;
             font-family: inherit;
-            margin: 0 auto;
-        }
-        
-        @media (min-width: 420px) {
-            .n8n-chat-widget .chat-container {
-                left: auto;
-                right: 20px;
-                width: 380px;
-            }
         }
 
         .n8n-chat-widget .chat-container.position-left {
@@ -224,56 +177,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        .n8n-chat-widget .typing-indicator {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            margin: 8px 0;
-            border-radius: 12px;
-            max-width: 80%;
-            background: var(--chat--color-background);
-            border: 1px solid rgba(133, 79, 255, 0.2);
-            align-self: flex-start;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .n8n-chat-widget .typing-indicator span {
-            height: 8px;
-            width: 8px;
-            margin: 0 2px;
-            background-color: var(--chat--color-primary);
-            border-radius: 50%;
-            display: inline-block;
-            opacity: 0.4;
-        }
-
-        .n8n-chat-widget .typing-indicator span:nth-child(1) {
-            animation: 1s pulse infinite;
-        }
-
-        .n8n-chat-widget .typing-indicator span:nth-child(2) {
-            animation: 1s pulse infinite 0.2s;
-        }
-
-        .n8n-chat-widget .typing-indicator span:nth-child(3) {
-            animation: 1s pulse infinite 0.4s;
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 0.4;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-            100% {
-                opacity: 0.4;
-                transform: scale(1);
-            }
-        }
-
         .n8n-chat-widget .chat-input {
             padding: 16px;
             background: var(--chat--color-background);
@@ -291,11 +194,7 @@
             color: var(--chat--color-font);
             resize: none;
             font-family: inherit;
-            font-size: 16px; /* Prevents iOS zoom */
-            -webkit-text-size-adjust: 100%; /* Prevents text size adjustment on rotation */
-            min-height: 44px; /* Minimum touch target size for better accessibility */
-            line-height: 1.4; /* Better text readability */
-            -webkit-appearance: none; /* Removes inner shadow on iOS */
+            font-size: 14px;
         }
 
         .n8n-chat-widget .chat-input textarea::placeholder {
@@ -385,9 +284,8 @@
     // Default configuration
     const defaultConfig = {
         webhook: {
-            url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
-            route: 'general',
-            allowFileUpload: true  // Set to true to allow file uploads
+            url: '', // Remove hardcoded URL to ensure it uses the one from config
+            route: ''
         },
         branding: {
             logo: '/demos/images/Icon-wyshAI-dark.png',
@@ -419,7 +317,9 @@
     if (window.N8NChatWidgetInitialized) return;
     window.N8NChatWidgetInitialized = true;
 
-    let currentSessionId = '';
+    // Initialize with a new UUID
+    let currentSessionId = generateUUID();
+    console.log('Initial session ID:', currentSessionId);
 
     // Create widget container
     const widgetContainer = document.createElement('div');
@@ -434,15 +334,26 @@
     const chatContainer = document.createElement('div');
     chatContainer.className = `chat-container${config.style.position === 'left' ? ' position-left' : ''}`;
 
-    // No new conversation screen - we'll show the chat interface immediately
+    const newConversationHTML = `
+        <div class="brand-header">
+            <img src="${config.branding.logo}" alt="${config.branding.name}">
+            <span>${config.branding.name}</span>
+            <button class="close-button">×</button>
+        </div>
+        <div class="new-conversation">
+            <h2 class="welcome-text">${config.branding.welcomeText}</h2>
+            <button class="new-chat-btn">
+                <svg class="message-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/>
+                </svg>
+                Send a message
+            </button>
+            <!-- <p class="response-text">${config.branding.responseTimeText}</p> -->
+        </div>
+    `;
 
     const chatInterfaceHTML = `
         <div class="chat-interface">
-            <div class="brand-header">
-                <img src="${config.branding.logo}" alt="${config.branding.name}">
-                <span>${config.branding.name}</span>
-                <button class="close-button">×</button>
-            </div>
             <div class="chat-messages"></div>
             <div class="chat-input">
                 <textarea placeholder="Type your message here..." rows="1"></textarea>
@@ -454,7 +365,14 @@
         </div>
     `;
 
-    chatContainer.innerHTML = chatInterfaceHTML;
+    chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
+
+    // Hide the welcome screen and show the chat interface by default
+    const newConversationEl = chatContainer.querySelector('.new-conversation');
+    const chatInterfaceEl = chatContainer.querySelector('.chat-interface');
+    
+    if (newConversationEl) newConversationEl.style.display = 'none';
+    if (chatInterfaceEl) chatInterfaceEl.classList.add('active');
 
     const toggleButton = document.createElement('button');
     toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
@@ -467,34 +385,47 @@
     widgetContainer.appendChild(toggleButton);
     document.body.appendChild(widgetContainer);
 
-
+    const newChatBtn = chatContainer.querySelector('.new-chat-btn');
     const chatInterface = chatContainer.querySelector('.chat-interface');
     const messagesContainer = chatContainer.querySelector('.chat-messages');
     const textarea = chatContainer.querySelector('textarea');
     const sendButton = chatContainer.querySelector('button[type="submit"]');
 
     function generateUUID() {
-        return crypto.randomUUID();
+        // Generate a proper v4 UUID
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 
     async function startNewConversation() {
-        currentSessionId = generateUUID();
-        // Match main website's format
-        const data = {
-            message: "",
+        // Only generate a new ID if we don't have one
+        if (!currentSessionId) {
+            currentSessionId = generateUUID();
+            console.log('Starting new conversation with ID:', currentSessionId);
+        } else {
+            console.log('Using existing conversation ID:', currentSessionId);
+        }
+        const requestData = {
+            action: "loadPreviousSession",
             conversationId: currentSessionId,
+            route: config.webhook.route,
             metadata: {
-                source: "chat-widget",
-                timestamp: new Date().toISOString(),
-                pageUrl: window.location.href,
-                userAgent: navigator.userAgent,
-                chatStep: "initial"
+                userId: "",
+                timestamp: new Date().toISOString()
             }
         };
+        const data = [requestData];
+        
+        console.log('Sending initial request:', JSON.stringify(data, null, 2));
 
         try {
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
+                mode: 'cors',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -502,89 +433,58 @@
                 body: JSON.stringify(data)
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            console.log('Response status:', response.status);
+            const responseData = await response.json();
+            console.log('Response data:', responseData);
+            chatContainer.querySelector('.brand-header').style.display = 'none';
+            chatContainer.querySelector('.new-conversation').style.display = 'none';
+            chatInterface.classList.add('active');
 
-            let responseText = await response.text();
-            let responseData;
-            
-            console.log('Raw response text:', responseText); // Log raw response
-            console.log('Response headers:', Object.fromEntries([...response.headers])); // Log response headers
-            
-            try {
-                // Try to parse as JSON
-                responseData = responseText ? JSON.parse(responseText) : null;
-                console.log('Parsed response data:', responseData);
-            } catch (e) {
-                console.error('Failed to parse JSON response. Error:', e);
-                console.error('Response content type:', response.headers.get('content-type'));
-                console.error('Response status:', response.status, response.statusText);
-                throw new Error('Received invalid JSON response from server: ' + e.message);
-            }
-            
-            // Debug log the response
-            console.log('Raw response data (startNewConversation):', responseData);
-            
-            // Handle response from main website's format
-            let botResponse;
-            if (responseData) {
-                // Check for main website's format first
-                if (typeof responseData === 'object') {
-                    botResponse = responseData.output || 
-                                 responseData.response || 
-                                 responseData.message ||
-                                 'Hello! How can I help you today?';
-                } else if (typeof responseData === 'string') {
-                    botResponse = responseData;
-                } else {
-                    botResponse = 'Hello! How can I help you today?';
-                }
-            } else {
-                botResponse = 'Hello! How can I help you today?';
-            }
-
+            const welcomeMessage = config.branding.welcomeText || 'Hello! How can I help you today?';
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = botResponse;
+            botMessageDiv.textContent = welcomeMessage;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            textarea.focus();
+
+            return true;
         } catch (error) {
             console.error('Error:', error);
+            return false;
         }
     }
 
     async function sendMessage(message) {
-        // Match main website's format
+        // Ensure we have a valid session ID
+        if (!currentSessionId) {
+            console.warn('No session ID found, generating a new one');
+            currentSessionId = generateUUID();
+        }
+        
         const messageData = {
-            message: message,
+            action: "sendMessage",
             conversationId: currentSessionId,
+            route: config.webhook.route,
+            message: message,
             metadata: {
-                source: "chat-widget",
-                timestamp: new Date().toISOString(),
-                pageUrl: window.location.href,
-                userAgent: navigator.userAgent,
-                chatStep: "chatting"
+                timestamp: new Date().toISOString()
             }
         };
 
-        // Add user message to chat
         const userMessageDiv = document.createElement('div');
         userMessageDiv.className = 'chat-message user';
         userMessageDiv.textContent = message;
         messagesContainer.appendChild(userMessageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-        // Show typing indicator
-        const typingIndicator = document.createElement('div');
-        typingIndicator.className = 'typing-indicator';
-        typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-        messagesContainer.appendChild(typingIndicator);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
         try {
+            console.log('Sending message:', messageData);
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
+                mode: 'cors',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -592,63 +492,39 @@
                 body: JSON.stringify(messageData)
             });
 
-            // Remove typing indicator
-            messagesContainer.removeChild(typingIndicator);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            let responseText = await response.text();
-            let responseData;
+            console.log('Response status:', response.status);
             
-            console.log('Raw response text:', responseText); // Log raw response
-            console.log('Response headers:', Object.fromEntries([...response.headers])); // Log response headers
+            // Check if response is JSON
+            const contentType = response.headers.get('content-type');
+            let data;
             
-            try {
-                // Try to parse as JSON
-                responseData = responseText ? JSON.parse(responseText) : null;
-                console.log('Parsed response data:', responseData);
-            } catch (e) {
-                console.error('Failed to parse JSON response. Error:', e);
-                console.error('Response content type:', response.headers.get('content-type'));
-                console.error('Response status:', response.status, response.statusText);
-                throw new Error('Received invalid JSON response from server: ' + e.message);
-            }
-            
-            // Debug log the response
-            console.log('Raw response data:', responseData);
-            
-            // Handle both array and object responses
-            let botResponse;
-            if (Array.isArray(responseData)) {
-                botResponse = responseData[0]?.response || 
-                             responseData[0]?.output || 
-                             responseData[0]?.message ||
-                             'I apologize, but I encountered an error processing your request.';
-            } else if (typeof responseData === 'object' && responseData !== null) {
-                botResponse = responseData.response || 
-                             responseData.output || 
-                             responseData.message ||
-                             (typeof responseData === 'string' ? responseData : 'I apologize, but I encountered an error processing your request.');
-            } else if (typeof responseData === 'string') {
-                botResponse = responseData;
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+                console.log('Response data:', data);
             } else {
-                botResponse = 'I apologize, but I received an unexpected response format.';
+                const text = await response.text();
+                console.log('Non-JSON response:', text);
+                throw new Error(`Expected JSON response but got: ${contentType}`);
             }
 
-            // Add bot response to chat
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = botResponse;
+            botMessageDiv.textContent = Array.isArray(data) ? data[0].output : data.output;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error sending message:', error);
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'chat-message bot error';
+            errorMessage.textContent = 'Sorry, I encountered an error. Please try again.';
+            messagesContainer.appendChild(errorMessage);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     }
 
     // Event Listeners
+    newChatBtn.addEventListener('click', startNewConversation);
+
     sendButton.addEventListener('click', () => {
         const message = textarea.value.trim();
         if (message) {
@@ -670,19 +546,7 @@
 
     // Toggle chat
     toggleButton.addEventListener('click', () => {
-        const isOpening = !chatContainer.classList.contains('open');
         chatContainer.classList.toggle('open');
-        
-        if (isOpening) {
-            // Show chat interface immediately
-            chatInterface.classList.add('active');
-            textarea.focus();
-            
-            // Only start a new conversation if we haven't already
-            if (messagesContainer.children.length === 0) {
-                startNewConversation();
-            }
-        }
     });
 
     // Add close button handlers
@@ -697,18 +561,11 @@
     // Expose public API
     window.ChatWidget = {
         open: () => {
-            const isOpening = !chatContainer.classList.contains('open');
             chatContainer.classList.add('open');
-            
-            if (isOpening) {
-                // Show chat interface immediately
-                chatInterface.classList.add('active');
+            if (!chatInterface.classList.contains('active')) {
+                startNewConversation();
+            } else {
                 textarea.focus();
-                
-                // Only start a new conversation if we haven't already
-                if (messagesContainer.children.length === 0) {
-                    startNewConversation();
-                }
             }
         },
         close: () => {
@@ -717,11 +574,9 @@
         sendMessage: (message) => {
             if (typeof message === 'string' && message.trim()) {
                 if (!chatInterface.classList.contains('active')) {
-                    chatInterface.classList.add('active');
-                    startNewConversation().then(() => {
-                        // Wait for the welcome message before sending the user's message
-                        setTimeout(() => sendMessage(message), 100);
-                    });
+                    startNewConversation();
+                    // Wait for chat to initialize before sending message
+                    setTimeout(() => sendMessage(message), 100);
                 } else {
                     sendMessage(message);
                 }

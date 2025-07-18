@@ -1,3 +1,45 @@
+/**
+ * Treehouse Home Estimator Chat Widget
+ * 
+ * This chat widget integrates with an n8n webhook to provide AI-powered home estimation.
+ * It's specifically designed for the Treehouse Financial home valuation demo.
+ * 
+ * ===== N8N WEBHOOK INTEGRATION =====
+ * 
+ * REQUEST FORMAT (sent to webhook):
+ * {
+ *   message: string,           // The user's message or empty string for conversation start
+ *   conversationId: string,    // Unique ID for the conversation session
+ *   metadata: {
+ *     source: string,          // Source identifier (e.g., "treehouse-widget")
+ *     timestamp: string,       // ISO 8601 timestamp
+ *     pageUrl: string,         // URL of the current page
+ *     userAgent: string,       // User's browser user agent
+ *     chatStep: string,        // Current step in home estimation flow
+ *     propertyDetails?: object  // Optional: Property information collected so far
+ *   }
+ * }
+ * 
+ * RESPONSE FORMAT (expected from webhook):
+ * {
+ *   output: string,            // The bot's response text (primary field)
+ *   response?: string,         // Alternative field for response text
+ *   message?: string,          // Another alternative field for response text
+ *   chatStep?: string,         // Next step in home estimation flow
+ *   propertyDetails?: object,  // Updated property information
+ *   estimate?: {               // Optional: Home valuation details
+ *     amount: number,          // Estimated home value
+ *     confidence: string,      // Confidence level (e.g., "high", "medium", "low")
+ *     details: object          // Additional valuation details
+ *   }
+ * }
+ * 
+ * The webhook should return a 200 status code with the response object.
+ * If the response cannot be parsed as JSON, an error will be shown to the user.
+ * 
+ * ===== END OF WEBHOOK DOCUMENTATION =====
+ */
+
 // Chat Widget Script - Original Version
 (function() {
     // Create and inject styles
@@ -14,9 +56,11 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
+            left: 20px;
             z-index: 1000;
             display: none;
-            width: 380px;
+            width: auto;
+            max-width: 380px;
             height: 600px;
             background: var(--chat--color-background);
             border-radius: 12px;
@@ -24,6 +68,15 @@
             border: 1px solid rgba(133, 79, 255, 0.2);
             overflow: hidden;
             font-family: inherit;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 420px) {
+            .n8n-chat-widget .chat-container {
+                left: auto;
+                right: 20px;
+                width: 380px;
+            }
         }
 
         .n8n-chat-widget .chat-container.position-left {
@@ -194,7 +247,11 @@
             color: var(--chat--color-font);
             resize: none;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 16px; /* Prevents iOS zoom */
+            -webkit-text-size-adjust: 100%; /* Prevents text size adjustment on rotation */
+            min-height: 44px; /* Minimum touch target size for better accessibility */
+            line-height: 1.4; /* Better text readability */
+            -webkit-appearance: none; /* Removes inner shadow on iOS */
         }
 
         .n8n-chat-widget .chat-input textarea::placeholder {

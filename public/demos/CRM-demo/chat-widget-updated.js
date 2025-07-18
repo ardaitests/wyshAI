@@ -98,10 +98,84 @@
                 --background-color: ${config.style?.backgroundColor || '#ffffff'};
                 --message-bg: #f9fafb;
                 --user-message-bg: #7c3aed;
+                /* Enable hardware acceleration for better performance */
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+                /* Ensure proper touch handling */
+                touch-action: manipulation;
                 --font-color: ${config.style?.fontColor || '#1f2937'};
                 --border-radius: 12px;
                 --shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
                 --border-color: #e5e7eb;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: auto;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                max-height: 100%;
+                border-radius: 0;
+                margin: 0;
+                z-index: 1000;
+            }
+            
+            /* Only apply pointer-events to the container when chat is closed */
+            .chat-widget-container:not(.chat-visible) {
+                pointer-events: none;
+            }
+            
+            /* Ensure the chat window and its children always receive pointer events */
+            /* Ensure chat window and its contents are interactive */
+            .chat-widget-window {
+                pointer-events: auto;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-touch-callout: none;
+                z-index: 1001; /* Ensure it's above any overlays */
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 80%;
+                max-height: 600px;
+                background: var(--background-color);
+                border-radius: 12px 12px 0 0;
+                box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.15);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                opacity: 0;
+                transform: translateY(100%);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                visibility: hidden;
+                border: 1px solid var(--border-color);
+                pointer-events: auto;
+            }
+            
+            /* Make text input and textarea fully interactive */
+            .chat-widget-input textarea,
+            .chat-widget-input input[type="text"],
+            .chat-widget-input button {
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 1002;
+            }
+            
+            /* Make messages selectable */
+            .chat-widget-messages,
+            .chat-widget-messages * {
+                user-select: text;
+                -webkit-user-select: text;
+                pointer-events: auto;
+            }
+            
+            /* Improve button tap targets for mobile */
+            .chat-widget-close,
+            #chat-widget-send,
+            #chat-widget-toggle {
+                min-height: 44px;
+                min-width: 44px;
             }
             
             .chat-widget-toggle {
@@ -119,40 +193,21 @@
                 gap: 8px !important;
                 cursor: pointer !important;
                 box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
-                z-index: 9999 !important;
+                z-index: 1001 !important;
                 font-weight: 600 !important;
                 transition: all 0.2s ease !important;
                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
                 font-size: 14px !important;
-            }
-            
-            .chat-widget-toggle:hover {
-                transform: translateY(-2px) !important;
-                box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4) !important;
-                background: linear-gradient(135deg, var(--hover-gradient-start) 0%, var(--hover-gradient-end) 100%) !important;
-            }
-            
-            .chat-widget-window {
-                position: fixed;
-                bottom: 80px;
-                right: 20px;
-                width: 380px;
-                height: 600px;
-                background: var(--background-color);
-                border-radius: 16px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-                display: flex;
-                flex-direction: column;
-                overflow: hidden;
-                z-index: 9998;
-                opacity: 0;
-                transform: translateY(20px);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                visibility: hidden;
-                border: 1px solid var(--border-color);
+                pointer-events: auto !important;
             }
             
             .chat-widget-window.visible {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+            }
+            
+            .chat-widget-container .chat-widget-window.visible {
                 opacity: 1;
                 transform: translateY(0);
                 visibility: visible;
@@ -256,19 +311,33 @@
                 display: flex;
                 gap: 8px;
                 align-items: flex-end;
+                position: relative;
+                z-index: 9990;
+                background: white;
+                pointer-events: auto;
             }
             
-            .chat-widget-input textarea {
+            .chat-widget-container .chat-widget-input textarea {
                 flex: 1;
                 border: 1px solid #e5e7eb;
-                border-radius: 20px;
-                padding: 10px 16px;
-                font-family: inherit;
-                font-size: 14px;
+                border-radius: 8px;
+                padding: 12px 16px;
+                font-size: 16px;
                 resize: none;
-                max-height: 120px;
                 outline: none;
+                transition: border-color 0.2s;
+                -webkit-text-size-adjust: 100%;
+                min-height: 44px;
+                line-height: 1.4;
+                -webkit-appearance: none;
                 transition: all 0.2s;
+                background: white;
+                position: relative;
+                z-index: 9991;
+                pointer-events: auto !important;
+                -webkit-user-select: text;
+                user-select: text;
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
             }
             
             .chat-widget-input textarea:focus {
@@ -306,18 +375,27 @@
                 transform: none;
             }
             
-            @media (max-width: 480px) {
-                .chat-widget-window {
-                    width: 100%;
-                    height: 100%;
-                    bottom: 0;
-                    right: 0;
-                    border-radius: 0;
-                }
-                
-                .chat-widget-toggle {
+            @media (min-width: 420px) {
+                .chat-widget-container {
+                    position: fixed;
                     bottom: 20px;
                     right: 20px;
+                    left: auto;
+                    width: 380px;
+                    height: 600px;
+                    max-height: none;
+                    border-radius: 12px;
+                }
+                
+                .chat-widget-container .chat-widget-window {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    left: auto;
+                    width: 100%;
+                    height: 100%;
+                    max-height: 100%;
+                    border-radius: 12px;
                 }
             }
         `;
@@ -326,52 +404,108 @@
     
     // Set up event listeners
     function setupEventListeners() {
-        // Toggle chat window
-        toggleButton?.addEventListener('click', toggleChat);
-        
-        // Close button
-        document.querySelector('.chat-widget-close')?.addEventListener('click', closeChat);
-        
-        // Send message on button click
-        sendButton?.addEventListener('click', handleSendMessage);
-        
-        // Send message on Enter (but allow Shift+Enter for new line)
-        textarea?.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
+        // Toggle chat window - handle both click and touch events
+        if (toggleButton) {
+            toggleButton.addEventListener('click', toggleChat);
+            toggleButton.addEventListener('touchend', (e) => {
                 e.preventDefault();
-                handleSendMessage();
-            }
-        });
+                toggleChat();
+            }, { passive: false });
+        }
         
-        // Auto-resize textarea
-        textarea?.addEventListener('input', () => {
-            textarea.style.height = 'auto';
-            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        // Handle all interactions with event delegation
+        const handleInteraction = (e) => {
+            const target = e.target;
+            
+            // Handle touch events
+            if (e.type === 'touchend') {
+                e.preventDefault();
+            }
+            
+            // Close button
+            if (target.closest('.chat-widget-close')) {
+                closeChat();
+                return;
+            }
+            
+            // Send button
+            if (target.closest('#chat-widget-send')) {
+                handleSendMessage();
+                return;
+            }
+            
+            // Click outside to close (only for click events, not touch)
+            if (e.type === 'click') {
+                const chatWindow = document.querySelector('.chat-widget-window');
+                if (chatWindow && chatWindow.classList.contains('visible') && 
+                    !target.closest('.chat-widget-window') && 
+                    !target.closest('#chat-widget-toggle')) {
+                    closeChat();
+                }
+            }
+        };
+        
+        // Add event listeners for both click and touch events
+        document.addEventListener('click', handleInteraction);
+        document.addEventListener('touchend', handleInteraction, { passive: false });
+        
+        // Handle text input
+        if (textarea) {
+            // Send message on Enter (but allow Shift+Enter for new line)
+            textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            });
+            
+            // Auto-resize textarea
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+            });
+            
+            // Prevent iOS zoom on focus
+            textarea.addEventListener('touchstart', (e) => {
+                e.stopPropagation();
+            }, { passive: true });
+        }
+        
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeChat();
+            }
         });
     }
     
     // Toggle chat window
     function toggleChat() {
         const chatWindow = document.getElementById('chat-widget-window');
-        if (chatWindow) {
-            const isOpening = !chatWindow.classList.contains('visible');
-            chatWindow.classList.toggle('visible');
-            if (isOpening) {
+        if (!chatWindow) return;
+        
+        const isOpening = !chatWindow.classList.contains('visible');
+        chatWindow.classList.toggle('visible');
+        
+        if (isOpening) {
+            // Focus the textarea when opening
+            if (textarea) {
                 textarea.focus();
-                // Track chat opened event
-                if (typeof gtag === 'function') {
-                    gtag('event', 'chat_open', {
-                        'event_category': 'engagement',
-                        'event_label': 'Chat Widget',
-                        'non_interaction': false
-                    });
-                } else if (window.dataLayer) {
-                    window.dataLayer.push({
-                        'event': 'chat_open',
-                        'event_category': 'engagement',
-                        'event_label': 'Chat Widget'
-                    });
-                }
+            }
+            
+            // Track chat opened event
+            if (typeof gtag === 'function') {
+                gtag('event', 'chat_open', {
+                    'event_category': 'engagement',
+                    'event_label': 'Chat Widget',
+                    'non_interaction': false
+                });
+            } else if (window.dataLayer) {
+                window.dataLayer.push({
+                    'event': 'chat_open',
+                    'event_category': 'engagement',
+                    'event_label': 'Chat Widget'
+                });
             }
         }
     }
@@ -533,6 +667,16 @@
     } else {
         initChatWidget();
     }
+    
+    // Expose the chat widget to the window object
+    window.ChatWidget = {
+        open: openChat,
+        close: closeChat,
+        sendMessage: sendChatMessage
+    };
+    
+    // Alias for backward compatibility
+    window.openChatWidget = openChat;
     
     // Expose init function
     window.initChatWidget = initChatWidget;
