@@ -36,7 +36,8 @@ const DemosPage = () => {
             >
               <div className="relative h-48 w-full overflow-hidden mb-6 rounded-lg">
                 <img 
-                  src={treehouseImage}
+                  /* src={treehouseImage} */
+                  src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80"
                   alt="Home Value Estimate AI Chatbot Preview"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
@@ -78,24 +79,55 @@ const DemosPage = () => {
               </div>
             </a>
 
-            {/* Placeholder Card */}
-            <div 
+            <a 
+              href="/demos/Scheduler-Google-Calendar/index.html" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full w-full max-w-md transition-all duration-300 hover:shadow-md hover:-translate-y-1"
             >
-              <div className="relative h-48 w-full overflow-hidden mb-6 rounded-lg bg-gray-100 flex items-center justify-center">
-                <div className="text-gray-400">
-                  <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  <p className="mt-2 text-sm">Coming Soon</p>
-                </div>
+              <div className="relative h-48 w-full overflow-hidden mb-6 rounded-lg">
+                <img 
+                  src="/demos/images/Google-calendar.png"
+                  alt="Google Calendar Scheduler Preview"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  onError={(e) => {
+                    console.error('Failed to load image:', e.target.src);
+                    e.target.src = officeCollabImage;
+                  }}
+                />
               </div>
-              <h2 className="text-xl font-montserrat font-bold mb-3 text-foreground">New Project in Development</h2>
-              <p className="text-gray-700 leading-relaxed mb-6">We're working on something exciting! Check back soon for our latest AI innovation.</p>
-              <div className="inline-block px-4 py-2 bg-gray-100 text-gray-500 rounded-md cursor-not-allowed">
-                Coming Soon
+              <h2 className="text-xl font-montserrat font-bold mb-3 text-foreground">Google Calendar Scheduler</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">Seamlessly schedule and manage meetings with Google Calendar integration and smart time suggestions.</p>
+              <div className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-md group-hover:bg-primary/90 transition-colors">
+                View Scheduler Demo
               </div>
-            </div>
+            </a>
+
+            <a 
+              href="/demos/Rescheduler/index.html" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full w-full max-w-md transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+            >
+              <div className="relative h-48 w-full overflow-hidden mb-6 rounded-lg">
+                <img 
+                  src="/demos/images/Contemporary-barbershop.webp"
+                  alt="Appointment scheduler"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  onError={(e) => {
+                    console.error('Failed to load image:', e.target.src);
+                    e.target.src = officeCollabImage;
+                  }}
+                />
+              </div>
+              <h2 className="text-xl font-montserrat font-bold mb-3 text-foreground">Appointment scheduler</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">Experience intelligent scheduling tool that finds the perfect time for all participants automatically.</p>
+              <div className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-md group-hover:bg-primary/90 transition-colors">
+                View Scheduler Demo
+              </div>
+            </a>
           </div>
         </div>
       </section>
