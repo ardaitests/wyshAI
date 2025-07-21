@@ -529,25 +529,29 @@
                 
                 // Check for different possible response formats
                 if (data) {
+                    // Handle n8n format: {"output": "message text"}
                     if (data.output) {
-                        // Handle standard output format
                         responseText = data.output;
-                    } else if (data.message) {
-                        // Handle direct message format
+                    } 
+                    // Handle direct message format
+                    else if (data.message) {
                         responseText = data.message;
-                    } else if (typeof data === 'string') {
-                        // Handle plain string response
+                    }
+                    // Handle string response
+                    else if (typeof data === 'string') {
                         responseText = data;
-                    } else if (data.json && (data.json.output || data.json.message)) {
-                        // Handle nested json response with output or message
-                        responseText = data.json.output || data.json.message;
-                    } else if (Object.keys(data).length > 0) {
-                        // If we have data but no expected fields, try to stringify it
-                        responseText = JSON.stringify(data, null, 2);
+                    }
+                    // Handle any other format by converting to string
+                    else {
+                        responseText = JSON.stringify(data);
                     }
                 }
                 
                 if (responseText) {
+                    // Remove any JSON formatting if present
+                    responseText = responseText.replace(/^\{\s*"?output"?\s*:\s*"?|\s*"?\s*\}$/g, '');
+                    // Unescape any escaped characters
+                    responseText = responseText.replace(/\\"/g, '"');
                     addMessage('bot', responseText);
                 } else {
                     console.error('Unexpected response format:', data);

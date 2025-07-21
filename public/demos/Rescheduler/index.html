@@ -145,11 +145,11 @@
     .data .blueprint-icon { background-color: #0f766e; }
     .api .blueprint-icon { background-color: #0d9488; }
 
-    .blueprint-card.interface .blueprint-icon { background-color: #3b82f6; }
+    .blueprint-card.interface .blueprint-icon { background-color: #f0f0f0; }/* Light grey background for interface card */
     .blueprint-card.ai .blueprint-icon { background-color: #f0f0f0; } /* Light grey background for AI card */
-    .blueprint-card.api .blueprint-icon { background-color: #8b5cf6; }
-    .blueprint-card.data .blueprint-icon { background-color: #ec4899; }
-    .blueprint-card.email .blueprint-icon { background-color: #7c3aed; }
+    .blueprint-card.api .blueprint-icon { background-color: #f0f0f0; } /* Light grey background for API card */
+    .blueprint-card.data .blueprint-icon { background-color: #f0f0f0; } /* Light grey background for Data card */
+    .blueprint-card.email .blueprint-icon { background-color: #f0f0f0; } /* Light grey background for Email card */
     
     .blueprint-icon.chatgpt-logo {
       padding: 8px;
@@ -537,7 +537,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1>AI-Powered Barber Scheduling Assistant</h1>
+      <h1>AI-Powered Barber Rescheduling Assistant</h1>
       <p class="subtitle">Let AI handle your appointment bookings, rescheduling, and customer inquiries 24/7 with natural language understanding.</p>
       <div class="cta-buttons">
         <button class="cta-button primary" onclick="openChatWidget()">Try the Booking Demo</button>
@@ -682,7 +682,7 @@
       },
       branding: {
         logo: 'images/Icon-wyshAI-dark.png',
-        name: 'Barbershop Scheduler',
+        name: 'Barbershop Rescheduler',
         welcomeText: 'Hello! I\'m your AI assistant. How can I help you today?',
         poweredBy: {
           text: 'Powered by WyshAI',
