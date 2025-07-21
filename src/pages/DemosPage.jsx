@@ -104,6 +104,7 @@ const DemosPage = () => {
               </div>
             </a>
 
+            {/* Temporarily commented out Rescheduler card
             <a 
               href="/demos/Rescheduler/index.html" 
               target="_blank"
@@ -128,6 +129,7 @@ const DemosPage = () => {
                 View Scheduler Demo
               </div>
             </a>
+            */}
           </div>
         </div>
       </section>
