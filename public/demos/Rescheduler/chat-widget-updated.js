@@ -493,10 +493,12 @@
                 localStorage.setItem('wysh_conversation_id', currentConversationId);
             }
             
-            // Prepare request data with only the required fields
+            // Prepare request data in the format expected by n8n
             const requestData = {
-                message: message,
-                conversationId: currentConversationId
+                json: {
+                    message: message,
+                    conversationId: currentConversationId
+                }
             };
             
             console.log('Sending message:', requestData);
@@ -514,15 +516,53 @@
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            const data = await response.json();
-            console.log('Response:', data);
+            // Get the response text first to handle potential JSON parsing errors
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
             
-            // Handle response - check for output in the response
-            if (data && data.output) {
-                addMessage('bot', data.output);
-            } else {
-                console.error('Unexpected response format:', data);
-                throw new Error('Invalid response format - missing output');
+            let data;
+            try {
+                // Try to parse the response as JSON
+                data = responseText ? JSON.parse(responseText) : null;
+                console.log('Parsed response:', data);
+                
+                // Handle the response based on its format
+                let responseText = '';
+                
+                // Check for different possible response formats
+                if (data) {
+                    if (data.output) {
+                        // Handle standard output format
+                        responseText = data.output;
+                    } else if (data.message) {
+                        // Handle direct message format
+                        responseText = data.message;
+                    } else if (typeof data === 'string') {
+                        // Handle plain string response
+                        responseText = data;
+                    } else if (data.json && (data.json.output || data.json.message)) {
+                        // Handle nested json response with output or message
+                        responseText = data.json.output || data.json.message;
+                    } else if (Object.keys(data).length > 0) {
+                        // If we have data but no expected fields, try to stringify it
+                        responseText = JSON.stringify(data, null, 2);
+                    }
+                }
+                
+                if (responseText) {
+                    addMessage('bot', responseText);
+                } else {
+                    console.error('Unexpected response format:', data);
+                    throw new Error('The response format was not recognized');
+                }
+            } catch (parseError) {
+                console.error('Error parsing response:', parseError);
+                // If we have text but couldn't parse it as JSON, show it as a message
+                if (responseText) {
+                    addMessage('bot', responseText);
+                } else {
+                    throw new Error('The server returned an empty or invalid response');
+                }
             }
             
         } catch (error) {
