@@ -493,12 +493,10 @@
                 localStorage.setItem('wysh_conversation_id', currentConversationId);
             }
             
-            // Prepare request data in the format expected by n8n
+            // Prepare request data with message at top level for n8n webhook
             const requestData = {
-                json: {
-                    message: message,
-                    conversationId: currentConversationId
-                }
+                message: message,
+                conversationId: currentConversationId
             };
             
             console.log('Sending message:', requestData);
