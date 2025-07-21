@@ -515,44 +515,66 @@
             }
             
             // Get the response text first to handle potential JSON parsing errors
-            const responseText = await response.text();
-            console.log('Raw response:', responseText);
+            const rawResponseText = await response.text();
+            console.log('Raw response from server:', rawResponseText);
             
             let data;
+            let responseText = '';
+            
             try {
-                // Try to parse the response as JSON
-                data = responseText ? JSON.parse(responseText) : null;
-                console.log('Parsed response:', data);
+                // First, try to parse as JSON
+                if (rawResponseText && rawResponseText.trim().startsWith('{')) {
+                    data = JSON.parse(rawResponseText);
+                    console.log('Parsed JSON data:', JSON.stringify(data, null, 2));
+                } else {
+                    // If not valid JSON, treat as plain text
+                    console.log('Received plain text response');
+                    responseText = rawResponseText;
+                }
                 
-                // Handle the response based on its format
-                let responseText = '';
-                
-                // Check for different possible response formats
+                // Process the response if we have JSON data
                 if (data) {
                     // Handle n8n format: {"output": "message text"}
                     if (data.output) {
-                        responseText = data.output;
+                        console.log('Found output field:', data.output);
+                        // If output is a string that looks like JSON, try to parse it
+                        if (typeof data.output === 'string' && data.output.trim().startsWith('"')) {
+                            try {
+                                responseText = JSON.parse(data.output);
+                                console.log('Parsed output string:', responseText);
+                            } catch (e) {
+                                console.log('Could not parse output as JSON, using as-is');
+                                responseText = data.output;
+                            }
+                        } else {
+                            responseText = data.output;
+                        }
                     } 
                     // Handle direct message format
                     else if (data.message) {
+                        console.log('Found message field:', data.message);
                         responseText = data.message;
                     }
                     // Handle string response
                     else if (typeof data === 'string') {
+                        console.log('Found string data in JSON:', data);
                         responseText = data;
                     }
                     // Handle any other format by converting to string
                     else {
+                        console.log('Converting data to string:', data);
                         responseText = JSON.stringify(data);
                     }
                 }
                 
                 if (responseText) {
+                    console.log('Before cleanup - responseText:', JSON.stringify(responseText));
                     // Remove any JSON formatting if present
-                    responseText = responseText.replace(/^\{\s*"?output"?\s*:\s*"?|\s*"?\s*\}$/g, '');
+                    const cleanedText = responseText.replace(/^\{\s*"?output"?\s*:\s*"?|\s*"?\s*\}$/g, '');
                     // Unescape any escaped characters
-                    responseText = responseText.replace(/\\"/g, '"');
-                    addMessage('bot', responseText);
+                    const finalText = cleanedText.replace(/\\"/g, '"');
+                    console.log('After cleanup - finalText:', finalText);
+                    addMessage('bot', finalText);
                 } else {
                     console.error('Unexpected response format:', data);
                     throw new Error('The response format was not recognized');
@@ -560,10 +582,12 @@
             } catch (parseError) {
                 console.error('Error parsing response:', parseError);
                 // If we have text but couldn't parse it as JSON, show it as a message
-                if (responseText) {
-                    addMessage('bot', responseText);
+                if (rawResponseText) {
+                    console.log('Using raw response text as message');
+                    addMessage('bot', rawResponseText);
                 } else {
-                    throw new Error('The server returned an empty or invalid response');
+                    console.error('No response text available');
+                    addMessage('bot', 'Sorry, I encountered an error processing the response.');
                 }
             }
             
