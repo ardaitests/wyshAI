@@ -92,7 +92,7 @@ export default function PrivacyPolicy() {
                 When you provide your phone number to Wysh AI (e.g., through a web form, chatbot, or other service), you are expressly consenting to receive SMS messages from us. These messages may include updates, follow-ups, scheduling confirmations, reminders, and customer support communications.
               </p>
               <p className="mb-6">
-                We will never send you promotional or marketing messages without your explicit opt-in. You may opt out of SMS communications at any time by replying STOP to any message.
+                We will never send you promotional or marketing messages without your explicit opt-in. Your mobile information will not be sold or shared with third parties for promotional or marketing purposes. You may opt out of SMS communications at any time by replying STOP to any message.
               </p>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">6. Contact Us</h2>
