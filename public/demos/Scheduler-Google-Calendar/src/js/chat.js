@@ -1,11 +1,41 @@
+// Mock responses for development
+const MOCK_RESPONSES = {
+    client: [
+        "I can help you schedule an appointment. What date works best for you?",
+        "I have availability on Monday at 2 PM or Wednesday at 11 AM. Which would you prefer?",
+        "Your appointment has been scheduled for Wednesday at 11 AM. You'll receive a confirmation email shortly.",
+        "Is there anything else I can help you with today?"
+    ],
+    admin: [
+        "As an admin, you can manage appointments and settings. What would you like to do?",
+        "Here are the upcoming appointments for this week: [Appointment List]",
+        "The settings have been updated successfully.",
+        "Is there anything else you'd like to manage?"
+    ]
+};
+
 // Configuration
 const CONFIG = {
     API: {
+        // Always use the production webhook URL
         CLIENT_WEBHOOK: 'https://n8n.srv893741.hstgr.cloud/webhook/scheduler-google-client',
         ADMIN_WEBHOOK: 'https://n8n.srv893741.hstgr.cloud/webhook/scheduler-google-admin',
-        TIMEOUT: 30000 // 30 seconds
+            
+        TIMEOUT: 30000, // 30 seconds
+        
+        // Always use real API (disable mock responses)
+        IS_DEVELOPMENT: false,
+        USE_MOCK: false
     }
 };
+
+// Log configuration for debugging
+console.log('API Configuration:', {
+    CLIENT_WEBHOOK: CONFIG.API.CLIENT_WEBHOOK,
+    ADMIN_WEBHOOK: CONFIG.API.ADMIN_WEBHOOK,
+    IS_DEVELOPMENT: CONFIG.API.IS_DEVELOPMENT,
+    USE_MOCK: CONFIG.API.USE_MOCK
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
@@ -415,8 +445,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Get a mock response for development
     function getMockResponse(chatType) {
-        const responses = MOCK_RESPONSES[chatType] || MOCK_RESPONSES.client;
-        return responses[Math.floor(Math.random() * responses.length)];
+        try {
+            // Default to client responses if chatType is not found
+            const defaultType = 'client';
+            const responses = MOCK_RESPONSES[chatType] || MOCK_RESPONSES[defaultType];
+            
+            if (!responses || !Array.isArray(responses) || responses.length === 0) {
+                console.warn(`No mock responses found for chat type: ${chatType}, using default`);
+                return "I'm here to help! How can I assist you today?";
+            }
+            
+            // Get a random response from the available ones
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            return responses[randomIndex];
+        } catch (error) {
+            console.error('Error getting mock response:', error);
+            return "I'm here to help! How can I assist you today?";
+        }
     }
 
     // Show or hide the typing indicator
@@ -439,8 +484,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show loading bubble
             loadingId = createLoadingBubble();
             
-            // Use mock response in development
-            if (CONFIG.API.USE_MOCK || !CONFIG.API.CLIENT_WEBHOOK) {
+            // Use mock response if configured
+            if (CONFIG.API.USE_MOCK) {
+                console.log('Using mock response as configured');
                 await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
                 const responseText = getMockResponse(chatType);
                 
@@ -469,7 +515,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 message: message.text,
                 sessionId: sessionId,
                 timestamp: new Date().toISOString(),
-                chatType: chatType
+                chatType: chatType,
+                source: 'wyshai-scheduler-demo',
+                version: '1.0.0'
             };
             console.log('Request data:', JSON.stringify(requestData, null, 2));
             
@@ -478,20 +526,90 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`Invalid webhook URL: ${webhookUrl}`);
             }
             
-            const response = await fetch(webhookUrl, {
+            // Prepare headers for the request
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                // Add any required CORS headers
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+            };
+            
+            // Prepare fetch options
+            const fetchOptions = {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: headers,
+                mode: 'cors', // This is important for CORS requests
+                cache: 'no-cache',
+                credentials: 'omit', // Changed from 'same-origin' to 'omit' for CORS
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
                 signal: controller.signal,
                 body: JSON.stringify(requestData)
-            });
+            };
             
-            clearTimeout(timeoutId);
+            console.log('Sending request with options:', JSON.stringify(fetchOptions, null, 2));
             
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`API request failed with status ${response.status}: ${errorText}`);
+            let response;
+            try {
+                console.log('Sending request to:', webhookUrl);
+                console.log('Request options:', JSON.stringify(fetchOptions, null, 2));
+                
+                // First, try a preflight OPTIONS request to check CORS
+                try {
+                    const preflightResponse = await fetch(webhookUrl, {
+                        method: 'OPTIONS',
+                        headers: {
+                            'Access-Control-Request-Method': 'POST',
+                            'Access-Control-Request-Headers': 'content-type',
+                            'Origin': window.location.origin
+                        },
+                        mode: 'cors'
+                    });
+                    console.log('Preflight response status:', preflightResponse.status);
+                } catch (preflightError) {
+                    console.warn('Preflight request failed, but continuing with actual request:', preflightError);
+                }
+                
+                // Make the actual request
+                response = await fetch(webhookUrl, fetchOptions);
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    let errorText;
+                    try {
+                        errorText = await response.text();
+                        console.error('API request failed with status:', response.status, 'Response:', errorText);
+                    } catch (e) {
+                        errorText = 'Could not parse error response';
+                        console.error('API request failed with status:', response.status, 'Could not parse response');
+                    }
+                    
+                    // Special handling for CORS errors
+                    if (response.status === 0) {
+                        throw new Error('CORS error: The request was blocked. Please check the server CORS configuration.');
+                    }
+                    
+                    throw new Error(`API request failed with status ${response.status}: ${errorText}`);
+                }
+            } catch (error) {
+                console.error('Error making API request:', error);
+                if (loadingId) removeLoadingBubble(loadingId);
+                
+                let errorMessage = "I'm having trouble connecting to the server. ";
+                
+                // Provide more specific error messages for common issues
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMessage += "This might be due to a network issue or CORS restrictions. ";
+                } else if (error.message.includes('CORS error')) {
+                    errorMessage = error.message + " "; // Use the specific CORS error message
+                }
+                
+                errorMessage += "Please try again in a moment or contact support if the problem persists.";
+                
+                addMessage(chatType, 'bot', errorMessage);
+                return { error: error.message, details: error.stack };
             }
             
             // Get the raw response text

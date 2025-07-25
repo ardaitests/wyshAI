@@ -9,32 +9,40 @@ export default defineConfig(({ mode }) => {
     publicDir: 'public',
     build: {
       outDir: 'dist',
-      assetsDir: 'assets',
+      assetsDir: '',
       emptyOutDir: true,
-      sourcemap: !isProduction,
+      sourcemap: false,
+      minify: false,
       rollupOptions: {
         input: {
           main: resolve(__dirname, 'index.html')
         },
         output: {
-          entryFileNames: 'assets/[name].[hash].js',
-          chunkFileNames: 'assets/[name].[hash].js',
-          assetFileNames: 'assets/[name].[hash][extname]'
+          entryFileNames: 'assets/[name].js',
+          chunkFileNames: 'assets/[name].js',
+          assetFileNames: 'assets/[name][extname]'
         }
-      },
-      minify: isProduction ? 'terser' : false
+      }
     },
     server: {
       port: 3000,
       open: true,
       host: true,
-      cors: true
+      cors: true,
+      fs: {
+        strict: false
+      }
     },
     preview: {
       port: 3000,
       open: true,
       cors: true
     },
-    plugins: []
+    optimizeDeps: {
+      include: []
+    },
+    esbuild: {
+      jsx: 'automatic'
+    }
   };
 });
