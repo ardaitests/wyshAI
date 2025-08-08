@@ -144,7 +144,7 @@ const DemosPage = () => {
           <div className="flex justify-center">
             <div className="w-full max-w-2xl">
               <a 
-                href="/resources/WyshAI-1pager-2025-06-25.pdf" 
+                href="/resources/WyshAI-1pager-2025-06-25-02.pdf" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group bg-[#2a2524] p-6 rounded-xl shadow-sm border border-swiss-coffee-darker/50 w-full transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col md:flex-row items-center gap-6 hover:border-swiss-coffee-light/30 min-h-[280px]"
