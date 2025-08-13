@@ -121,8 +121,11 @@ const useChatLogic = () => {
         localStorage.setItem('wysh_conversation_id', conversationId);
       }
 
-      // Send to n8n webhook
-      const response = await fetch('https://areed.app.n8n.cloud/webhook/chat-webhook', {
+      // Send to n8n CLOUD HOSTED WEBHOOK URL
+      // const response = await fetch('https://areed.app.n8n.cloud/webhook/chat-webhook', { 
+      
+      // Send to Hostinger VPS HOSTED WEBHOOK URL
+      const response = await fetch('https://n8n.srv893741.hstgr.cloud/webhook/chat-webhook', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
