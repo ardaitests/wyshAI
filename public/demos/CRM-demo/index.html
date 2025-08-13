@@ -988,7 +988,10 @@
     // Configure the chat widget with WyshAI CRM branding
     window.ChatWidgetConfig = {
       webhook: {
-        url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
+        // Send to n8n CLOUD HOSTED WEBHOOK URL
+        // // url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',   
+      // Send to Hostinger VPS HOSTED WEBHOOK URL
+      url: 'https://n8n.srv893741.hstgr.cloud/webhook/chat-webhook',
         route: 'general'
       },
       branding: {

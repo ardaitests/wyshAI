@@ -21,7 +21,7 @@ const HomePage = () => {
   return (
     <>
       <SEO 
-        title="AI Solutions for Modern Businesses | Wysh AI"
+        title="AI Solutions for Your Small Businesses | Wysh AI"
         description="Transform your business with custom AI solutions tailored to your needs. From chatbots to workflow automation, we've got you covered."
         image="/images/og/og-wyshAI.jpg"
       />
