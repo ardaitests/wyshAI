@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion.jsx";
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import { Mail, MessageSquare, HelpCircle } from 'lucide-react';
-import officePortraitImage from '@/assets/Office-Portrait-with-Depth.png';
+import officePortraitImage from '@/assets/Office-Portrait-with-Depth.webp';
 
 // Create Accordion component if it doesn't exist
 // For now, I'll assume it will be created or use a simplified structure.

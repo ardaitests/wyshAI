@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingDown, CheckCircle, ThumbsUp } from 'lucide-react';
-import officeCollabImage from '@/assets/office-collaboration-in-color.png';
+import officeCollabImage from '@/assets/office-collaboration-in-color.webp';
 
 const AboutSection = () => {
   const features = [

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { ArrowDown } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import { scrollToElement } from '@/utils/smoothScroll';
-import cafeImage from '@/assets/20250604-1120-cafe-owner-digital-bliss.png';
+import cafeImage from '@/assets/20250604-1120-cafe-owner-digital-bliss.webp';
 
 // Optimized Sparkles component with performance enhancements
 const Sparkles = ({ count = 30 }) => {
