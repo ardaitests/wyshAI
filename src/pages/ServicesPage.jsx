@@ -14,6 +14,7 @@ import dentalOfficeTeamImg from '@/assets/Dental-Office-Team.webp';
 import donutShopMonitoringImg from '@/assets/Donut-Shop-Monitoring.webp';
 import gymOwnerInteractionImg from '@/assets/Gym-Owner-Interaction.webp';
 import martialArtsBondingImg from '@/assets/Martial-Arts-Bonding.webp';
+import WebAppDevImg from '@/assets/Web-App-Development-1.webp';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -151,7 +152,7 @@ const servicesData = [
     imageElement: <img 
       className="w-full h-full object-cover rounded-lg" 
       alt="Developers collaborating on a modern web application with clean code" 
-      src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" 
+      src={WebAppDevImg} 
       aria-label="Development team working on web application"
       onError={(e) => {
         e.target.onerror = null;
