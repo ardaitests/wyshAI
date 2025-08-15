@@ -397,7 +397,10 @@
     // Default configuration
     const defaultConfig = {
         webhook: {
-            url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',
+            // n8n CLOUD HOSTED WEBHOOK URL
+            // url: 'https://areed.app.n8n.cloud/webhook/chat-webhook',   
+            // Hostinger VPS HOSTED WEBHOOK URL
+            url: 'https://n8n.srv893741.hstgr.cloud/webhook/chat-webhook',
             route: 'general',
             allowFileUpload: true  // Set to true to allow file uploads
         },
@@ -494,81 +497,20 @@
         return crypto.randomUUID();
     }
 
-    async function startNewConversation() {
-        currentSessionId = generateUUID();
-        // Match main website's format
-        const data = {
-            message: "",
-            conversationId: currentSessionId,
-            metadata: {
-                source: "chat-widget",
-                timestamp: new Date().toISOString(),
-                pageUrl: window.location.href,
-                userAgent: navigator.userAgent,
-                chatStep: "initial"
-            }
-        };
-
-        try {
-            const response = await fetch(config.webhook.url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            let responseText = await response.text();
-            let responseData;
-            
-            console.log('Raw response text:', responseText); // Log raw response
-            console.log('Response headers:', Object.fromEntries([...response.headers])); // Log response headers
-            
-            try {
-                // Try to parse as JSON
-                responseData = responseText ? JSON.parse(responseText) : null;
-                console.log('Parsed response data:', responseData);
-            } catch (e) {
-                console.error('Failed to parse JSON response. Error:', e);
-                console.error('Response content type:', response.headers.get('content-type'));
-                console.error('Response status:', response.status, response.statusText);
-                throw new Error('Received invalid JSON response from server: ' + e.message);
-            }
-            
-            // Debug log the response
-            console.log('Raw response data (startNewConversation):', responseData);
-            
-            // Handle response from main website's format
-            let botResponse;
-            if (responseData) {
-                // Check for main website's format first
-                if (typeof responseData === 'object') {
-                    botResponse = responseData.output || 
-                                 responseData.response || 
-                                 responseData.message ||
-                                 'Hello! How can I help you today?';
-                } else if (typeof responseData === 'string') {
-                    botResponse = responseData;
-                } else {
-                    botResponse = 'Hello! How can I help you today?';
-                }
-            } else {
-                botResponse = 'Hello! How can I help you today?';
-            }
-
-            const botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = botResponse;
-            messagesContainer.appendChild(botMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        } catch (error) {
-            console.error('Error:', error);
-        }
+    function startNewConversation() {
+        currentSessionId = `conv_${Date.now()}`; // Use timestamp-based ID to match main chat
+        
+        // Show welcome message without making a webhook call
+        const welcomeMessage = config.branding.welcomeText || 'Hello! How can I help you today?';
+        
+        const botMessageDiv = document.createElement('div');
+        botMessageDiv.className = 'chat-message bot';
+        botMessageDiv.textContent = welcomeMessage;
+        
+        // Clear any previous messages and add welcome message
+        messagesContainer.innerHTML = '';
+        messagesContainer.appendChild(botMessageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     async function sendMessage(message) {
