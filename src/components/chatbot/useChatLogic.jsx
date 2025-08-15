@@ -51,30 +51,49 @@ const useChatLogic = () => {
     addMessage(text, 'user');
   }, [addMessage]);
   
+  // Function to clear chat history and reset state
+  const clearChatHistory = useCallback(() => {
+    setMessages([{ text: chatInitialMessage, sender: 'bot', id: `bot-${Date.now()}` }]);
+    setUserData({ name: '', email: '', query: '' });
+    setChatStep(chatInitialStep);
+    localStorage.removeItem('wyshAI_chatMessages');
+    localStorage.removeItem('wyshAI_userData');
+    localStorage.removeItem('wyshAI_chatStep');
+    localStorage.removeItem('wysh_conversation_id');
+  }, [chatInitialMessage, chatInitialStep]);
+
+  // Load saved chat when chat is opened
   useEffect(() => {
     if (isChatOpen) {
-      const storedMessages = localStorage.getItem('wyshAI_chatMessages');
-      const storedUserData = localStorage.getItem('wyshAI_userData');
-      const storedChatStep = localStorage.getItem('wyshAI_chatStep');
+      try {
+        const storedMessages = localStorage.getItem('wyshAI_chatMessages');
+        const storedUserData = localStorage.getItem('wyshAI_userData');
+        const storedChatStep = localStorage.getItem('wyshAI_chatStep');
 
-      if (storedMessages && storedUserData && storedChatStep && chatStep !== 'completed_then_reopened') {
-        const parsedMessages = JSON.parse(storedMessages);
-        const parsedUserData = JSON.parse(storedUserData);
-        
-        if (parsedMessages.length > 0 && parsedUserData.name && storedChatStep !== 'completed') {
+        // If we have stored messages, try to restore the chat
+        if (storedMessages) {
+          const parsedMessages = JSON.parse(storedMessages);
+          const parsedUserData = storedUserData ? JSON.parse(storedUserData) : {};
+          
+          // Always restore messages if they exist and we're not in a completed state
+          if (parsedMessages.length > 0 && storedChatStep !== 'completed') {
             setMessages(parsedMessages);
             setUserData(parsedUserData);
-            setChatStep(storedChatStep);
-            return; 
+            setChatStep(storedChatStep || chatInitialStep);
+            return;
+          }
         }
+      } catch (error) {
+        console.error('Error loading chat history:', error);
+        // If there's an error, clear the corrupted data
+        clearChatHistory();
+        return;
       }
       
-      setMessages([]);
-      addBotMessage(chatInitialMessage);
-      setChatStep(chatInitialStep);
-      setUserData({ name: '', email: '', query: '' });
+      // If we get here, either there's no saved chat or we're in a completed state
+      clearChatHistory();
     }
-  }, [isChatOpen, addBotMessage, chatInitialMessage, chatInitialStep]);
+  }, [isChatOpen, chatInitialMessage, chatInitialStep, clearChatHistory]);
 
 
   useEffect(() => {
@@ -189,10 +208,20 @@ const useChatLogic = () => {
   }, [chatStep, userData, addBotMessage, addUserMessage]);
 
   const handleSendMessage = useCallback(() => {
-    if (inputValue.trim() === '' || isSubmitting) return;
-    processUserInput(inputValue);
+    const message = inputValue.trim();
+    if (message === '' || isSubmitting) return;
+    
+    // Check for clear command
+    if (message.toLowerCase() === '/clear' || message.toLowerCase() === 'clear' || 
+        message.toLowerCase() === 'start over' || message.toLowerCase() === 'new chat') {
+      clearChatHistory();
+      setInputValue('');
+      return;
+    }
+    
+    processUserInput(message);
     setInputValue('');
-  }, [inputValue, isSubmitting, processUserInput]);
+  }, [inputValue, isSubmitting, processUserInput, clearChatHistory]);
 
   return {
     isOpen: isChatOpen,
