@@ -6,14 +6,14 @@ import { Button } from '@/components/ui/button.jsx';
 import FadeInImage from '@/components/ui/FadeInImage';
 import { BrainCircuit, Zap, MessageCircle, MessagesSquare, Settings2, BarChart3, Users, ArrowRight, Check, Lightbulb, Target, Code, Rocket, ThumbsUp, Megaphone, Cable, Bot } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
-import warmOfficeImg from '@/assets/Warm-Office-Collaboration-2.png';
-import mechanicOnPhoneImg from '@/assets/Mechanic-on-Phone-2.png';
-import aiChatOnPhoneImg from '@/assets/AI-Chat-on-iPhone-1.png';
-import landscaperTechMomentImg from '@/assets/Landscaper-Tech-Moment.png';
-import dentalOfficeTeamImg from '@/assets/Dental-Office-Team.png';
-import donutShopMonitoringImg from '@/assets/Donut-Shop-Monitoring.png';
-import gymOwnerInteractionImg from '@/assets/Gym-Owner-Interaction.png';
-import martialArtsBondingImg from '@/assets/Martial-Arts-Bonding.png';
+import warmOfficeImg from '@/assets/Warm-Office-Collaboration-2.webp';
+import mechanicOnPhoneImg from '@/assets/Mechanic-on-Phone-2.webp';
+import aiChatOnPhoneImg from '@/assets/AI-Chat-on-iPhone-1.webp';
+import landscaperTechMomentImg from '@/assets/Landscaper-Tech-Moment.webp';
+import dentalOfficeTeamImg from '@/assets/Dental-Office-Team.webp';
+import donutShopMonitoringImg from '@/assets/Donut-Shop-Monitoring.webp';
+import gymOwnerInteractionImg from '@/assets/Gym-Owner-Interaction.webp';
+import martialArtsBondingImg from '@/assets/Martial-Arts-Bonding.webp';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
