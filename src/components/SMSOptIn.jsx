@@ -214,8 +214,29 @@ const SMSOptIn = () => {
                 />
               </div>
 
-              <div className="mt-4 text-sm text-foreground/70">
+              {/* <div className="mt-4 text-sm text-foreground/70">
               By providing your phone number and clicking 'Submit,' you agree to receive SMS service updates from Wysh AI. Message frequency may vary. Standard Message and Data Rates may apply. Reply STOP to opt out. Reply HELP for help. Consent is not a condition of purchase. Your mobile information will not be sold or shared with third parties for promotional or marketing purposes. View our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">Terms of Service</a> and <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">Privacy Policy</a>.
+              </div> */}
+
+              <div className="mt-4">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="messaging-consent"
+                      name="messagingConsent"
+                      type="checkbox"
+                      checked={formData.messagingConsent}
+                      onChange={handleChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label htmlFor="messaging-consent" className="text-foreground/90">
+                      By providing your phone number and clicking 'Submit,' you agree to receive SMS service updates from Wysh AI. Message frequency may vary. Standard Message and Data Rates may apply. Reply STOP to opt out. Reply HELP for help. Consent is not a condition of purchase. Your mobile information will not be sold or shared with third parties for promotional or marketing purposes. View our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">Terms of Service</a> and <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-500 underline">Privacy Policy</a>.
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div>
