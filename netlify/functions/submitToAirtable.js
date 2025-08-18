@@ -45,7 +45,7 @@ exports.handler = async function(event, context) {
     
     // Validate required fields
     if (!data.firstName?.trim() || !data.lastName?.trim() || !data.phone?.trim()) {
-      throw new Error('Missing required fields');
+      throw new Error('Missing required fields: First name, last name, and phone number are required');
     }
     
     // Initialize Airtable with environment variables from Netlify

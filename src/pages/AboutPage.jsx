@@ -23,10 +23,9 @@ import {
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import FadeInImage from '@/components/ui/FadeInImage';
-import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3b.png';
-import designTeamImg from '@/assets/Design-Team-Collaboration.png';
-import creativeOfficeCollab from '@/assets/Creative-Office-Collaboration-2.png';
-import whimsicalPaperSwirl from '@/assets/Whimsical-Paper-Swirl-2.png';
+import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3b.webp';
+import creativeOfficeCollab from '@/assets/Creative-Office-Collaboration-2.webp';
+import whimsicalPaperSwirl from '@/assets/Whimsical-Paper-Swirl-2.webp';
 
 // Optimized Sparkles component with performance enhancements
 const Sparkles = ({ count = 20 }) => {
