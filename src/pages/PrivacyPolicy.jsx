@@ -94,6 +94,9 @@ export default function PrivacyPolicy() {
               <p className="mb-6">
                 We will never send you promotional or marketing messages without your explicit opt-in. Your mobile information will not be sold or shared with third parties for promotional or marketing purposes. You may opt out of SMS communications at any time by replying STOP to any message.
               </p>
+              <p className="mb-6">
+              We will not share your opt-in to an SMS campaign with any third party for purposes unrelated to providing you with the services of that campaign. We may share your Personal Data, including your SMS opt-in or consent status, with third parties that help us provide our messaging services, including but not limited to platform providers, phone companies, and any other vendors who assist us in the delivery of text messages. All of the above categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.
+              </p>
 
               <h2 className="text-2xl font-semibold mt-8 mb-4">6. Contact Us</h2>
               <p className="mb-4">
