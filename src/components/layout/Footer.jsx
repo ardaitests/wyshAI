@@ -21,6 +21,7 @@ const Footer = () => {
   const legalLinks = [
     { name: 'Privacy Policy', path: '/privacy-policy', analyticsId: 'footer-legal-privacy' },
     { name: 'Terms of Service', path: '/terms-of-service', analyticsId: 'footer-legal-terms' },
+    { name: 'SMS opt-in', path: '/sms-opt-in', analyticsId: 'footer-legal-sms-optin' },
     // { name: 'Cookie Settings', path: '/cookie-settings', analyticsId: 'footer-legal-cookies' }, // Assuming not yet implemented
   ];
 
