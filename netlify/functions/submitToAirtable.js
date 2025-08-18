@@ -84,7 +84,8 @@ exports.handler = async function(event, context) {
         'First name': data.firstName.trim(),
         'Last name': data.lastName.trim(),
         'Phone number': data.phone.trim(),
-        'Messaging consent': Boolean(data.messagingConsent || data.termsConsent)
+        'Messaging consent': true,  // Always set to true for the opt-in form
+        'Terms accepted': true  // Also set this to true as it's a required field
         // Airtable will automatically add the created time
       }
     };
