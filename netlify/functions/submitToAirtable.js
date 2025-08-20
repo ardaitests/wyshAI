@@ -1,4 +1,20 @@
 const Airtable = require('airtable');
+const rateLimit = require('lambda-rate-limiter');
+const validator = require('validator');
+
+// Configure rate limiting - 4 requests per minute per IP
+const limiter = rateLimit({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 100 // Tracks up to 100 unique IPs per minute
+}).check;
+
+// Allowed domains - replace with your production domain
+const ALLOWED_ORIGINS = [
+  'https://wyshai.com',
+  'https://www.wyshai.com',
+  'http://localhost:3000',
+  'http://localhost:8888'
+];
 
 // Log environment variables (except sensitive ones) for debugging
 console.log('Environment variables:', {
@@ -8,21 +24,65 @@ console.log('Environment variables:', {
 });
 
 // Helper function to create response with CORS headers
-const createResponse = (statusCode, body) => ({
-  statusCode,
-  headers: {
-    'Access-Control-Allow-Origin': '*',
+const createResponse = (statusCode, body, origin = null) => {
+  const headers = {
+    'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(body)
-});
+    'Access-Control-Allow-Origin': origin || ALLOWED_ORIGINS[0],
+    'Vary': 'Origin' // Important for caching
+  };
+
+  return {
+    statusCode,
+    headers,
+    body: JSON.stringify(body)
+  };
+};
+
+// Input validation and sanitization
+const validateAndSanitizeInput = (data) => {
+  const errors = [];
+  const sanitized = {
+    firstName: (data.firstName || '').trim().substring(0, 100),
+    lastName: (data.lastName || '').trim().substring(0, 100),
+    phone: (data.phone || '').trim()
+  };
+
+  // Validate name fields
+  if (!sanitized.firstName) errors.push('First name is required');
+  if (!sanitized.lastName) errors.push('Last name is required');
+  
+  // Validate and format phone number
+  const phoneDigits = sanitized.phone.replace(/\D/g, '');
+  if (phoneDigits.length < 10) {
+    errors.push('Please enter a valid 10-digit phone number');
+  } else {
+    sanitized.phone = `+1${phoneDigits.slice(-10)}`; // Format as E.164
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    data: sanitized
+  };
+};
 
 exports.handler = async function(event, context) {
+  // Get origin from headers and validate against allowed origins
+  const origin = event.headers.origin || event.headers.Origin || '';
+  const isAllowedOrigin = ALLOWED_ORIGINS.includes(origin) || 
+                         process.env.NODE_ENV === 'development';
+  
   // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
-    return createResponse(200, {});
+    return createResponse(200, {}, isAllowedOrigin ? origin : ALLOWED_ORIGINS[0]);
+  }
+
+  // Enforce CORS
+  if (!isAllowedOrigin) {
+    console.warn('Blocked request from unauthorized origin:', origin);
+    return createResponse(403, { error: 'Forbidden' });
   }
 
   // Only allow POST requests
@@ -31,21 +91,49 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    console.log('Received request with body:', event.body);
+    // Apply rate limiting
+    try {
+      const ip = event.headers['x-nf-client-connection-ip'] || 
+                event.headers['client-ip'] || 
+                'unknown-ip';
+      await limiter(4, ip); // 4 requests per minute per IP
+    } catch (rateLimitError) {
+      console.warn('Rate limit exceeded:', rateLimitError);
+      return createResponse(429, { 
+        error: 'Too many requests',
+        message: 'Please try again in a minute.'
+      }, origin);
+    }
+
+    console.log('Received request from:', origin);
     
-    // Parse the form data
+    // Parse and validate the form data
     let data;
     try {
       data = JSON.parse(event.body);
-      console.log('Parsed data:', JSON.stringify(data, null, 2));
+      console.log('Received data:', { 
+        hasFirstName: !!data.firstName,
+        hasLastName: !!data.lastName,
+        hasPhone: !!data.phone,
+        hasMessagingConsent: !!data.messagingConsent
+      });
     } catch (parseError) {
       console.error('Error parsing request body:', parseError);
-      throw new Error('Invalid request body');
+      return createResponse(400, { 
+        error: 'Invalid request',
+        message: 'Could not parse request body'
+      }, origin);
     }
-    
-    // Validate required fields
-    if (!data.firstName?.trim() || !data.lastName?.trim() || !data.phone?.trim()) {
-      throw new Error('Missing required fields: First name, last name, and phone number are required');
+
+    // Validate and sanitize input
+    const { isValid, errors, data: sanitizedData } = validateAndSanitizeInput(data);
+    if (!isValid) {
+      console.warn('Validation failed:', errors);
+      return createResponse(400, { 
+        error: 'Validation failed',
+        message: 'Please check your input',
+        details: errors
+      }, origin);
     }
     
     // Initialize Airtable with environment variables from Netlify
@@ -81,12 +169,14 @@ exports.handler = async function(event, context) {
     console.log('Creating record in table:', tableName);
     const recordData = {
       fields: {
-        'First name': data.firstName.trim(),
-        'Last name': data.lastName.trim(),
-        'Phone number': data.phone.trim(),
+        'First name': sanitizedData.firstName,
+        'Last name': sanitizedData.lastName,
+        'Phone number': sanitizedData.phone,
         'Messaging consent': true,  // Always set to true for the opt-in form
-        'Terms accepted': true  // Also set this to true as it's a required field
-        // Airtable will automatically add the created time
+        'Terms accepted': true,  // Also set this to true as it's a required field
+        'Source': 'Web Form',
+        'IP Address': event.headers['x-nf-client-connection-ip'] || 'unknown',
+        'User Agent': event.headers['user-agent'] || 'unknown'
       }
     };
     
