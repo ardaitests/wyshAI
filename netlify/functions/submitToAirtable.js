@@ -1,12 +1,17 @@
 const Airtable = require('airtable');
-const rateLimit = require('lambda-rate-limiter');
+const rateLimit = require('express-rate-limit');
 const validator = require('validator');
 
 // Configure rate limiting - 4 requests per minute per IP
 const limiter = rateLimit({
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 100 // Tracks up to 100 unique IPs per minute
-}).check;
+  windowMs: 60 * 1000, // 1 minute
+  max: 4, // Limit each IP to 4 requests per windowMs
+  keyGenerator: (req) => {
+    return req.headers['x-nf-client-connection-ip'] || 'unknown-ip';
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 // Allowed domains - replace with your production domain
 const ALLOWED_ORIGINS = [
@@ -68,7 +73,7 @@ const validateAndSanitizeInput = (data) => {
   };
 };
 
-exports.handler = async function(event, context) {
+exports.handler = async (event, context) => {
   // Get origin from headers and validate against allowed origins
   const origin = event.headers.origin || event.headers.Origin || '';
   const isAllowedOrigin = ALLOWED_ORIGINS.includes(origin) || 
@@ -92,16 +97,32 @@ exports.handler = async function(event, context) {
 
   try {
     // Apply rate limiting
-    try {
-      const ip = event.headers['x-nf-client-connection-ip'] || 
-                event.headers['client-ip'] || 
-                'unknown-ip';
-      await limiter(4, ip); // 4 requests per minute per IP
-    } catch (rateLimitError) {
-      console.warn('Rate limit exceeded:', rateLimitError);
-      return createResponse(429, { 
+    const ip = event.headers['x-nf-client-connection-ip'] || 
+              event.headers['client-ip'] || 
+              'unknown-ip';
+              
+    const rateLimitCheck = await new Promise((resolve) => {
+      limiter({
+        ip,
+        headers: event.headers,
+        method: event.httpMethod,
+        path: event.path,
+        query: {},
+        connection: { remoteAddress: ip }
+      }, {}, (rateLimitError) => {
+        if (rateLimitError) {
+          console.warn('Rate limit exceeded:', rateLimitError);
+          resolve({ statusCode: 429, message: 'Too many requests, please try again in a minute.' });
+        } else {
+          resolve(null);
+        }
+      });
+    });
+    
+    if (rateLimitCheck) {
+      return createResponse(rateLimitCheck.statusCode, { 
         error: 'Too many requests',
-        message: 'Please try again in a minute.'
+        message: rateLimitCheck.message
       }, origin);
     }
 

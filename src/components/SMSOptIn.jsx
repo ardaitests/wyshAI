@@ -20,12 +20,16 @@ const SMSOptIn = () => {
   };
 
   const validatePhoneNumber = (phone) => {
-    // Remove all non-digit characters except leading +
+    if (!phone) {
+      throw new Error('Phone number is required');
+    }
+    
+    // Remove all non-digit characters
     const digitsOnly = phone.replace(/\D/g, '');
     
     // Check if the cleaned number has at least 10 digits
     if (digitsOnly.length < 10) {
-      throw new Error('Please enter a valid phone number with area code');
+      throw new Error('Please enter a valid 10-digit phone number with area code');
     }
     
     // Format as E.164 standard (e.g., +11234567890)
