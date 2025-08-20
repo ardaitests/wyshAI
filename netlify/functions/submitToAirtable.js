@@ -212,10 +212,7 @@ exports.handler = async (event, context) => {
         'Last name': sanitizedData.lastName,
         'Phone number': sanitizedData.phone,
         'Messaging consent': true,  // Always set to true for the opt-in form
-        'Terms accepted': true,  // Also set this to true as it's a required field
-        'Source': 'Web Form',
-        'IP Address': event.headers['x-nf-client-connection-ip'] || 'unknown',
-        'User Agent': event.headers['user-agent'] || 'unknown'
+        'Terms accepted': true  // Also set this to true as it's a required field
       }
     };
     
