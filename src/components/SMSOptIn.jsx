@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const SMSOptIn = () => {
   const [formData, setFormData] = useState({
@@ -7,8 +7,9 @@ const SMSOptIn = () => {
     phone: '',
     messagingConsent: false
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitLock = useRef(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -34,6 +35,11 @@ const SMSOptIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Prevent multiple submissions
+    if (submitLock.current) return;
+    
+    submitLock.current = true;
     setIsSubmitting(true);
     setSubmitStatus({ success: null, message: 'Submitting...' });
 
@@ -140,6 +146,7 @@ const SMSOptIn = () => {
       });
     } finally {
       setIsSubmitting(false);
+      submitLock.current = false;
     }
   };
 
