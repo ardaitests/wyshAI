@@ -19,6 +19,20 @@
 [[plugins]]
   package = "@netlify/plugin-sitemap"
 
+# Redirect from Netlify subdomain to custom domain
+[[redirects]]
+  from = "https://wyshai.netlify.app/*"
+  to = "https://wyshai.com/:splat"
+  status = 301
+  force = true
+
+# Redirect www to non-www
+[[redirects]]
+  from = "www.wyshai.com/*"
+  to = "https://wyshai.com/:splat"
+  status = 301
+  force = true
+
 # SPA fallback
 [[redirects]]
   from = "/*"
