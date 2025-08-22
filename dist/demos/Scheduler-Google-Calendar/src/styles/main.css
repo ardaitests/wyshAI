@@ -1,0 +1,24 @@
+/* Main styles for WyshAI Scheduler */
+/* Note: Most styles are inlined in index.html for better performance */
+
+/* Add any additional styles here */
+:root {
+  --primary: #7C3AED;
+  --primary-light: #8B5CF6;
+  --primary-dark: #6D28D9;
+  --background: #F9FAFB;
+  --surface: #FFFFFF;
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+  --border: #E5E7EB;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+}
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add any additional styles that should be in a separate CSS file */

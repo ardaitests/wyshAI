@@ -310,7 +310,7 @@ const ChatbotUI = ({
             </div>
           </div>
         </DialogContent>
-      <style jsx global>{`
+      <style>{`
         [data-radix-dialog-overlay] {
           background-color: rgba(20, 8, 40, 0.8) !important;
           backdrop-filter: blur(20px);

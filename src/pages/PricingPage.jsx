@@ -3,8 +3,9 @@ import SEO from '@/components/seo/SEO';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import { Zap, ArrowRight } from 'lucide-react';
-import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import usePageTracking from '@/hooks/usePageTracking.jsx';
 import { trackButtonClick } from '@/utils/analytics';
+import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import PricingCard from '@/components/pricing/PricingCard';
 // Temporarily removed Sparkles for debugging
 // import Sparkles from '@/components/common/Sparkles';

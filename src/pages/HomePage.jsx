@@ -3,6 +3,7 @@ import HeroSection from '@/components/sections/HeroSection.jsx';
 import AboutSection from '@/components/sections/AboutSection.jsx';
 import ServicesSection from '@/components/sections/ServicesSection.jsx';
 import ContactSection from '@/components/sections/ContactSection.jsx';
+import usePageTracking from '@/hooks/usePageTracking';
 import SEO from '@/components/seo/SEO';
 import { motion } from 'framer-motion';
 

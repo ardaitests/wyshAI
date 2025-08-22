@@ -6,6 +6,7 @@ import modernOfficeImage from '@/assets/Modern Office Workspace-2.webp';
 import treehouseImage from '@/assets/Treehouse-home-estimator.jpg'; // Main image for first card
 import infoSheetImage from '@/assets/WyshAI-1pager-2025-06-25.1.jpeg'; // Info sheet thumbnail
 import { FileText } from 'lucide-react'; // Importing icon from lucide-react
+import usePageTracking from '@/hooks/usePageTracking';
 
 const DemosPage = () => {
   usePageTracking('AI Demos & Examples | Wysh AI');

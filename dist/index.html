@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-759L0RDEG8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-759L0RDEG8');
+    </script>
+    <meta name="generator" content="Wysh AI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="visual-edit" content="false" />
+    <title>AI Solutions to Grow Your Business | Wysh AI</title>
+    <meta name="description" content="Transform your business with custom AI solutions tailored to your needs. From chatbots to workflow automation, we've got you covered.">
+    <link rel="canonical" href="https://wyshai.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wyshai.com/" />
+    <meta property="og:title" content="AI Solutions to Grow Your Business | Wysh AI" />
+    <meta property="og:description" content="Transform your business with custom AI solutions tailored to your needs. From chatbots to workflow automation, we've got you covered." />
+    <meta property="og:image" content="https://wyshai.com/images/og/og-wyshAI.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI Solutions to Grow Your Business | Wysh AI" />
+    <meta name="twitter:description" content="Transform your business with custom AI solutions tailored to your needs. From chatbots to workflow automation, we've got you covered." />
+    <meta name="twitter:image" content="https://wyshai.com/images/og/og-wyshAI.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/index-COReEPeE.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CotaQ4Xg.css">
+    <script type="module">
+window.onerror = (message, source, lineno, colno, errorObj) => {
+	const errorDetails = errorObj ? JSON.stringify({
+		name: errorObj.name,
+		message: errorObj.message,
+		stack: errorObj.stack,
+		source,
+		lineno,
+		colno,
+	}) : null;
+
+	window.parent.postMessage({
+		type: 'horizons-runtime-error',
+		message,
+		error: errorDetails
+	}, '*');
+};
+</script>
+    <script type="module">
+const observer = new MutationObserver((mutations) => {
+	for (const mutation of mutations) {
+		for (const addedNode of mutation.addedNodes) {
+			if (
+				addedNode.nodeType === Node.ELEMENT_NODE &&
+				(
+					addedNode.tagName?.toLowerCase() === 'vite-error-overlay' ||
+					addedNode.classList?.contains('backdrop')
+				)
+			) {
+				handleViteOverlay(addedNode);
+			}
+		}
+	}
+});
+
+observer.observe(document.documentElement, {
+	childList: true,
+	subtree: true
+});
+
+function handleViteOverlay(node) {
+	if (!node.shadowRoot) {
+		return;
+	}
+
+	const backdrop = node.shadowRoot.querySelector('.backdrop');
+
+	if (backdrop) {
+		const overlayHtml = backdrop.outerHTML;
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(overlayHtml, 'text/html');
+		const messageBodyElement = doc.querySelector('.message-body');
+		const fileElement = doc.querySelector('.file');
+		const messageText = messageBodyElement ? messageBodyElement.textContent.trim() : '';
+		const fileText = fileElement ? fileElement.textContent.trim() : '';
+		const error = messageText + (fileText ? ' File:' + fileText : '');
+
+		window.parent.postMessage({
+			type: 'horizons-vite-error',
+			error,
+		}, '*');
+	}
+}
+</script>
+    <script type="module">
+const originalConsoleError = console.error;
+console.error = function(...args) {
+	originalConsoleError.apply(console, args);
+
+	let errorString = '';
+
+	for (let i = 0; i < args.length; i++) {
+		const arg = args[i];
+		if (arg instanceof Error) {
+			errorString = arg.stack || `${arg.name}: ${arg.message}`;
+			break;
+		}
+	}
+
+	if (!errorString) {
+		errorString = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(' ');
+	}
+
+	window.parent.postMessage({
+		type: 'horizons-console-error',
+		error: errorString
+	}, '*');
+};
+</script>
+    <script type="module">
+const originalFetch = window.fetch;
+
+window.fetch = function(...args) {
+	const url = args[0] instanceof Request ? args[0].url : args[0];
+
+	// Skip WebSocket URLs
+	if (url.startsWith('ws:') || url.startsWith('wss:')) {
+		return originalFetch.apply(this, args);
+	}
+
+	return originalFetch.apply(this, args)
+		.then(async response => {
+			const contentType = response.headers.get('Content-Type') || '';
+
+			// Exclude HTML document responses
+			const isDocumentResponse =
+				contentType.includes('text/html') ||
+				contentType.includes('application/xhtml+xml');
+
+			if (!response.ok && !isDocumentResponse) {
+					const responseClone = response.clone();
+					const errorFromRes = await responseClone.text();
+					const requestUrl = response.url;
+					console.error(`Fetch error from ${requestUrl}: ${errorFromRes}`);
+			}
+
+			return response;
+		})
+		.catch(error => {
+			if (!url.match(/.html?$/i)) {
+				console.error(error);
+			}
+
+			throw error;
+		});
+};
+</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Block visual editor injection
+      Object.defineProperty(window, 'visualEditorConfig', {
+        get() { return null; },
+        set() {}
+      });
+      
+      // Prevent visual editor scripts from loading
+      const originalCreateElement = document.createElement;
+      document.createElement = function(tagName) {
+        if (tagName === 'script') {
+          const script = originalCreateElement.call(document, tagName);
+          Object.defineProperty(script, 'src', {
+            set(value) {
+              if (value && value.includes('visual-editor')) {
+                console.log('Blocked visual editor script:', value);
+                return;
+              }
+              originalCreateElement.call(script, 'setAttribute', 'src', value);
+            }
+          });
+          return script;
+        }
+        return originalCreateElement.call(document, tagName);
+      };
+    </script>
+  </body>
+</html>

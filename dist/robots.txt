@@ -1,0 +1,11 @@
+# Allow all user agents to crawl the main site
+User-agent: *
+Allow: /
+
+# Disallow demo pages and showroom
+Disallow: /demos/
+Disallow: /ai-showroom
+Disallow: /demo-gallery
+
+# Sitemap location
+Sitemap: https://wyshai.com/sitemap.xml

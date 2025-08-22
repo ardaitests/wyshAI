@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import usePageTracking from '@/hooks/usePageTracking';
 import { useChatbot } from '@/contexts/ChatbotContext';
 import SEO from '@/components/seo/SEO';
 

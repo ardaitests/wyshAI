@@ -22,6 +22,7 @@ import {
   Users2
 } from 'lucide-react';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
+import usePageTracking from '@/hooks/usePageTracking';
 import FadeInImage from '@/components/ui/FadeInImage';
 import vintageShopImage from '@/assets/Vintage-Shop-Collaboration-3b.webp';
 import creativeOfficeCollab from '@/assets/Creative-Office-Collaboration-2.webp';

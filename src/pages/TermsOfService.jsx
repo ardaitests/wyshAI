@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useChatbot } from '@/contexts/ChatbotContext';
 import SEO from '@/components/seo/SEO';
-import { usePageTracking } from '@/contexts/TrackingContext';
+import usePageTracking from '@/hooks/usePageTracking';
 
 export default function TermsOfService() {
   usePageTracking('Terms of Service | Wysh AI');

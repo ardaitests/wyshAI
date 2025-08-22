@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 248, 245, 255;
+  --background-end-rgb: 240, 235, 255;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--background-start-rgb)) 0%,
+    rgba(var(--background-end-rgb)) 100%
+  );
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Main container for the chat */
+#chat-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 1rem 0 2rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Force scrollbar to always be visible */
+#chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+  background-color: #c7d2fe;
+  border-radius: 3px;
+}
+
+/* Ensure messages take full width of their container */
+#chat-messages {
+  width: 100%;
+  max-width: 48rem; /* Match the input width */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Space between messages */
+  padding: 0 1rem 2rem;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+/* Style for individual message containers */
+#chat-messages > div {
+  margin-bottom: 0.75rem; /* Extra space between messages */
+}
+
+/* Remove extra margin from last message */
+#chat-messages > div:last-child {
+  margin-bottom: 0;
+}
+
+.message {
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  margin: 0 2px;
+  background-color: #9ca3af;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}

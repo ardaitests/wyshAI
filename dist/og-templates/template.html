@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wysh AI - OpenGraph Image</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1200px;
+            height: 630px;
+            overflow: hidden;
+        }
+        .og-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            padding: 60px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .og-logo {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .og-content {
+            max-width: 800px;
+            margin-top: 150px;
+        }
+        .og-title {
+            font-size: 64px;
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .og-description {
+            font-size: 32px;
+            line-height: 1.4;
+            opacity: 0.9;
+            max-width: 90%;
+        }
+        .og-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 40%;
+            background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(30,58,138,0.8) 100%);
+            z-index: 1;
+        }
+        .og-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="og-container">
+        <div class="og-logo">WYSH AI</div>
+        <div class="og-content">
+            <h1 class="og-title" id="title">Wysh AI - Transform Your Business</h1>
+            <p class="og-description" id="description">Custom AI solutions for modern businesses</p>
+        </div>
+        <div class="og-overlay"></div>
+        <div class="og-bg" id="bg-image" style="background-image: url('/images/og/og-wyshAI.jpg')"></div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = decodeURIComponent(urlParams.get('title') || 'Wysh AI');
+        const description = decodeURIComponent(urlParams.get('description') || 'Custom AI solutions for modern businesses');
+        const bgImage = urlParams.get('bgImage') || '/images/og/og-wyshAI.jpg';
+
+        // Update the content
+        document.getElementById('title').textContent = title;
+        document.getElementById('description').textContent = description;
+        document.getElementById('bg-image').style.backgroundImage = `url('${bgImage}')`;
+
+        // Optional: Add a subtle animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.og-container').style.opacity = 1;
+        });
+    </script>
+</body>
+</html>

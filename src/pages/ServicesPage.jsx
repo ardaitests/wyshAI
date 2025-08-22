@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button.jsx';
 import FadeInImage from '@/components/ui/FadeInImage';
 import { BrainCircuit, Zap, MessageCircle, MessagesSquare, Settings2, BarChart3, Users, ArrowRight, Check, Lightbulb, Target, Code, Rocket, ThumbsUp, Megaphone, Cable, Bot } from 'lucide-react';
+import usePageTracking from '@/hooks/usePageTracking.jsx';
 import { useChatbot } from '@/contexts/ChatbotContext.jsx';
 import warmOfficeImg from '@/assets/Warm-Office-Collaboration-2.webp';
 import mechanicOnPhoneImg from '@/assets/Mechanic-on-Phone-2.webp';
