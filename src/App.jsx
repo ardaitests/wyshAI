@@ -7,7 +7,7 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy.jsx';
 import TermsOfService from '@/pages/TermsOfService.jsx';
 import DemosPage from '@/pages/DemosPage.jsx';
 import PricingPage from '@/pages/PricingPage.jsx';
-import SMSConsent from './components/SMSConsent';
+import SMSConsent from './components/SMSConsent.jsx';
 import SMSOptIn from './components/SMSOptIn.jsx';
 import Layout from '@/components/layout/Layout.jsx';
 import { Toaster } from '@/components/ui/toaster.jsx';

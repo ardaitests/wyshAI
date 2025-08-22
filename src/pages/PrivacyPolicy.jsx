@@ -5,6 +5,7 @@ import { useChatbot } from '@/contexts/ChatbotContext';
 import SEO from '@/components/seo/SEO';
 
 export default function PrivacyPolicy() {
+  usePageTracking('Privacy Policy | Wysh AI');
   const { openChat } = useChatbot();
 
   const handleContactClick = () => {

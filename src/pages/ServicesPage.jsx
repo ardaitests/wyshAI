@@ -183,6 +183,7 @@ const servicesData = [
 ];
 
 const ServicesPage = () => {
+  usePageTracking('AI Solutions & Services | Wysh AI');
   const { openChat } = useChatbot();
 
   // Handle scroll to section when page loads with a hash

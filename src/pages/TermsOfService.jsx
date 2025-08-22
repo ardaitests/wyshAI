@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useChatbot } from '@/contexts/ChatbotContext';
 import SEO from '@/components/seo/SEO';
+import { usePageTracking } from '@/contexts/TrackingContext';
 
 export default function TermsOfService() {
+  usePageTracking('Terms of Service | Wysh AI');
   const { openChat } = useChatbot();
 
   const handleContactClick = () => {

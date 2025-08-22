@@ -74,6 +74,7 @@ const pricingPlans = [
 ];
 
 const PricingPage = () => {
+  usePageTracking('Pricing & Plans | Wysh AI');
   const { openChat } = useChatbot();
 
   const handleContactClick = useCallback((plan) => {

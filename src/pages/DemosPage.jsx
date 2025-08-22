@@ -8,6 +8,7 @@ import infoSheetImage from '@/assets/WyshAI-1pager-2025-06-25.1.jpeg'; // Info s
 import { FileText } from 'lucide-react'; // Importing icon from lucide-react
 
 const DemosPage = () => {
+  usePageTracking('AI Demos & Examples | Wysh AI');
   return (
     <>
       <SEO 

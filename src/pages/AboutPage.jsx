@@ -122,6 +122,7 @@ const valuesData = [
 ];
 
 const AboutPage = () => {
+  usePageTracking('About Wysh AI - Our Story, Mission & Values');
   const { openChat } = useChatbot();
 
   const handleGetStarted = () => {
