@@ -28,7 +28,7 @@
 
 # Redirect www to non-www
 [[redirects]]
-  from = "www.wyshai.com/*"
+  from = "https://www.wyshai.com/*"
   to = "https://wyshai.com/:splat"
   status = 301
   force = true
