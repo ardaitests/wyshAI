@@ -208,6 +208,7 @@
             background: var(--chat--color-background);
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .n8n-chat-widget .chat-message {
